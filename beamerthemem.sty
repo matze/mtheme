@@ -44,9 +44,14 @@
 \setmainfont{Fira Sans}
 \setsansfont{Fira Sans Light}
 \setmonofont{Fira Mono}
+\newfontfamily\ExtraLight{Fira Sans ExtraLight}
 \newfontfamily\Light{Fira Sans Light}
 \newfontfamily\Book{Fira Sans}
 \newfontfamily\Medium{Fira Sans Medium}
+
+\setbeamerfont{title}{family=\Book, size=\Large}
+\setbeamerfont{author}{family=\ExtraLight, size=\normalsize}
+\setbeamerfont{date}{family=\ExtraLight, size=\normalsize}
 
 \setbeamerfont{section title}{family=\Book, size=\LARGE}
 
@@ -62,6 +67,42 @@
 %{{{ --- Titlepage --------------------
 
 \def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
+
+\def\titlepage{\usebeamertemplate{title page}}
+\setbeamertemplate{title page}
+{
+  \begin{minipage}[b][\paperheight]{\textwidth}
+    \vfill
+    \ifx\inserttitle\@empty%
+    \else%
+    {\raggedright\linespread{0.8}\usebeamerfont{title}\usebeamercolor[fg]{title}\scshape\MakeLowercase{\inserttitle}\par}%
+    \vspace*{0.5em}
+    \fi%
+    \ifx\insertsubtitle\@empty%
+    \else%
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \vspace*{0.5em}
+    \fi%
+    \begin{tikzpicture}\draw[mLightBrown] (0, 0) -- (\textwidth, 0);\end{tikzpicture}%
+    \vspace*{0.5em}
+    \ifx\insertauthor\@empty%
+    \else%
+    {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+    \vspace*{0.25em}
+    \fi%
+    \ifx\insertdate\@empty%
+    \else%
+    {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+    \fi%
+    \ifx\insertinstitut\@empty%
+    \else%
+    \vspace*{3mm}
+    {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
+    \fi%
+    \vfill
+    \vspace*{5mm}
+  \end{minipage}
+}
 
 %}}}
 %{{{ --- Progressbar ------------------
@@ -109,12 +150,12 @@
 
 \newcommand{\rightTextArrow}{→}
 
-\newcommand{\questions}{%
+\newcommand{\statement}[1]{%
   \begingroup
   \setbeamercolor{background canvas}{bg=mDarkTeal}
   \begin{frame}[plain]
     \centering
-    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape Questions?}\vfill
+    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape #1}\vfill
   \end{frame}
   \endgroup
 }
