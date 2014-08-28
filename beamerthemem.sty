@@ -36,8 +36,6 @@
 \setbeamercolor{palette quaternary}{fg=white, bg=mDarkTeal}
 \setbeamercolor{frametitle}{parent=palette quaternary}
 
-% \setbeamercolor{block title}{parent=palette tertiary}
-
 \setbeamercolor{page number in head/foot}{fg=mDarkTeal}
 %}}}
 %{{{ --- Fonts ------------------------
@@ -149,8 +147,9 @@
 
 %}}}
 %{{{ --- Frametitle -------------------
-\setbeamertemplate{frametitle}{
-\begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=3ex,dp=1.5ex]{frametitle}
+\setbeamertemplate{frametitle}{%
+\nointerlineskip
+\begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
   \usebeamerfont{frametitle}\MakeLowercase{\insertframetitle}%
 \end{beamercolorbox}
 }
