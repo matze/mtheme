@@ -9,4 +9,4 @@ $(PDF): $(SRC)
 
 clean:
 	@rm -f $(PDF)
-	@git clean
+	@git clean -xf
