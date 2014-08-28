@@ -102,7 +102,22 @@
 %}}}
 %{{{ --- Commands ---------------------
 
+\newcommand{\insertsectionHEAD}{%
+  \expandafter\insertsectionHEADaux\insertsectionhead}
+  \newcommand{\insertsectionHEADaux}[3]{\textsc{\MakeLowercase{#3}}
+}
+
 \newcommand{\rightTextArrow}{→}
+
+\newcommand{\questions}{%
+  \begingroup
+  \setbeamercolor{background canvas}{bg=mDarkTeal}
+  \begin{frame}[plain]
+    \centering
+    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape Questions?}\vfill
+  \end{frame}
+  \endgroup
+}
 
 %}}}
 %{{{ --- Itemize ----------------------
@@ -115,10 +130,6 @@
 %}}}
 %{{{ --- Sections ---------------------
 
-\newcommand{\insertsectionHEAD}{%
-  \expandafter\insertsectionHEADaux\insertsectionhead}
-  \newcommand{\insertsectionHEADaux}[3]{\textsc{\MakeLowercase{#3}}
-}
 \if@doSectionPage\@empty
 \else
 % Insert frame with section title at every section start
