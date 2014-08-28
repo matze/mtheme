@@ -58,6 +58,11 @@
 \setbeamerfont{caption}{size=\small}
 \setbeamerfont{caption name}{family=\Book}
 %}}}
+%{{{ --- Titlepage --------------------
+
+\def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
+
+%}}}
 %{{{ --- Progressbar ------------------
 
 \makeatletter
@@ -154,3 +159,9 @@
 \end{beamercolorbox}
 }
 %}}}
+
+\mode
+<all>
+
+\let\otp\titlepage
+\renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
