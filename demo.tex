@@ -2,72 +2,100 @@
 
 \usetheme{m}
 
-\title{Titel der supertollen Arbeit}
-\subtitle{Untertitel}
+\usepackage{booktabs}
+
+\title{A clean, modern beamer theme}
+\subtitle{}
 \date{\today}
-\author{Max Mustermann --- max.mustermann@foo.com}
-\institute{Institut für so und so\\Universtität Bla}
+\author{Matthias Vogelgesang}
+\institute{Institute for foo bar}
 
 
 \begin{document}
 
 \maketitle
 
+\begin{frame}{The mtheme}
 
-\section{Motivation}
+  The \emph{mtheme} is a clean beamer theme based on Fira Sans.
 
-\begin{frame}{Viel text}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-sanctus est Lorem ipsum dolor sit amet.
+  Sections separate frames of the same topic. They also have a nice progress
+  indicator.
+
 \end{frame}
-
 
 \section{Elements}
 
+\begin{frame}{Typography}
+  This is with \emph{emphasis} on that sometimes sets \alert{accents} but never
+  comes across outright \textbf{bold}. The class style is hosted at
+  \url{http://github.com/matze/mtheme}.
+
+  How much space do we need?
+\end{frame}
+
 \begin{frame}{Lists}
   \begin{itemize}
-    \item Hello
-    \item Hello \emph{you}
-    \item htt \url{http://google.com}
+    \item Milk
+    \item Eggs
+    \item Potatos
   \end{itemize}
 
   \begin{enumerate}
-    \item \alert{important}
-    \item Two
-    \item Three
+    \item First,
+    \item Second and
+    \item Last.
   \end{enumerate}
+
+  \begin{description}
+    \item[PowerPoint] Meeh.
+    \item[Beamer] Yeeeha.
+  \end{description}
 \end{frame}
 
 \begin{frame}{Animation}
   \begin{itemize}[<+- | alert@+>]
-    \item Hey
-    \item \alert<4>{Ho}
+    \item \alert<4>{Hey}
+    \item Ho
     \item Let's go
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Figures}
+  Figures play a vital role to \emph{visualize} an idea. Here's one made with
+  TikZ:
+
   \begin{figure}
     \begin{tikzpicture}
       \node[circle, draw=black] at (0, 0) {foo};
       \node[rectangle, draw=black] at (2, 0) {bar};
     \end{tikzpicture}
-    \caption{Circle and rectangle}
+    \caption{A circle and a rectangle.}
   \end{figure}
 \end{frame}
 
+\begin{frame}{Tables}
+  \begin{table}
+    \caption{A table}
+    \begin{tabular}{lll}
+      \toprule
+      Foo & Bar & Baz\\
+      \midrule
+      Foo & Bar & Baz\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
 \begin{frame}{Blocks}
-  \begin{block}{Fancy block title}
-    Block inside
+
+  \begin{block}{A descriptive title}
+    Blocks can give your slides structure. Unfortunately, most themes put fling
+    them right at your face.
   \end{block}
 
-  Outside
+  Maybe we should play outside.
+
 \end{frame}
 
 \begin{frame}{Math}
@@ -88,7 +116,15 @@ sanctus est Lorem ipsum dolor sit amet.
 \section{Conclusion}
 
 \begin{frame}{Summary}
-  Last words.
+  Get it at
+
+  \begin{center}\url{github.com/matze/mtheme}\end{center}
+
+  or read some non-fiction at
+
+  \begin{center}\url{bloerg.net}\end{center}
+
+  Oh, it's licensed \textsc{cc-by-sa} but you don't need to slap my name on every slide.
 \end{frame}
 
 \statement{Questions?}
