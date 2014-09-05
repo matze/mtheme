@@ -5,6 +5,7 @@
 %{{{ --- Packages ---------------------
 
 \usepackage[no-math]{fontspec}
+\usepackage{etoolbox}
 \usepackage{tikz}
 
 \usetikzlibrary{backgrounds}
@@ -28,6 +29,7 @@
 \definecolor{mLightBrown}{HTML}{EB811B}
 \definecolor{mMediumBrown}{HTML}{C87A2F}
 
+\setbeamercolor{background canvas}{bg=black!2}
 \setbeamercolor{normal text}{fg=mDarkTeal}
 \setbeamercolor{alerted text}{fg=mLightBrown}
 \setbeamercolor{structure}{fg=mDarkTeal}
@@ -42,17 +44,18 @@
 %{{{ --- Fonts ------------------------
 
 \defaultfontfeatures{Mapping=tex-text}
-\setmainfont{Fira Sans}
-\setsansfont{Fira Sans Light}
+\setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}
 \setmonofont{Fira Mono}
 \newfontfamily\ExtraLight{Fira Sans ExtraLight}
 \newfontfamily\Light{Fira Sans Light}
 \newfontfamily\Book{Fira Sans}
 \newfontfamily\Medium{Fira Sans Medium}
 
+\AtBeginEnvironment{tabular}{\setsansfont[BoldFont={Fira Sans}, Numbers={Monospaced}]{Fira Sans Light}}
+
 \setbeamerfont{title}{family=\Book, size=\Large}
-\setbeamerfont{author}{family=\ExtraLight, size=\normalsize}
-\setbeamerfont{date}{family=\ExtraLight, size=\normalsize}
+\setbeamerfont{author}{family=\ExtraLight, size=\small}
+\setbeamerfont{date}{family=\ExtraLight, size=\small}
 
 \setbeamerfont{section title}{family=\Book, size=\LARGE}
 
@@ -62,10 +65,12 @@
 \setbeamerfont{subtitle}{family=\Light, size=\fontsize{12}{14}}
 \setbeamerfont{frametitle}{family=\Book, series=\scshape, size=\large}
 
-\setbeamerfont{alerted text}{family=\Book}
+\setbeamerfont{alerted text}{family=\Light}
 
 \setbeamerfont{caption}{size=\small}
 \setbeamerfont{caption name}{family=\Book}
+
+\setbeamerfont{description item}{family=\Book}
 %}}}
 %{{{ --- Titlepage --------------------
 
@@ -219,5 +224,9 @@
 \mode
 <all>
 
+% {{{ misc
 \let\otp\titlepage
 \renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
+
+\linespread{1.15}
+%}}}
