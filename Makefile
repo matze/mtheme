@@ -9,7 +9,7 @@ TEXC_OPTS += -shell-escape
 all: $(PDF)
 
 $(AUX):
-	$(TEXC) $(SRC)
+	$(TEXC) $(TEXC_OPTS) $(SRC)
 
 $(PDF): $(AUX) $(SRC)
 	$(TEXC) $(TEXC_OPTS) $(SRC)
