@@ -91,11 +91,28 @@ text, \alert{accent} parts or show \textbf{bold} results.
 \end{frame}
 \begin{frame}{Figures}
   \begin{figure}
+    \newcounter{density}
+    \setcounter{density}{20}
     \begin{tikzpicture}
-      \node[circle, draw=black] at (0, 0) {foo};
-      \node[rectangle, draw=black] at (2, 0) {bar};
+      \def\couleur{mLightBrown}
+      \path[coordinate] (0,0)  coordinate(A)
+                  ++( 90:5cm) coordinate(B)
+                  ++(0:5cm) coordinate(C)
+                  ++(-90:5cm) coordinate(D);
+      \draw[fill=\couleur!\thedensity] (A) -- (B) -- (C) --(D) -- cycle;
+      \foreach \x in {1,...,40}{%
+          \pgfmathsetcounter{density}{\thedensity+20}
+          \setcounter{density}{\thedensity}
+          \path[coordinate] coordinate(X) at (A){};
+          \path[coordinate] (A) -- (B) coordinate[pos=.10](A)
+                              -- (C) coordinate[pos=.10](B)
+                              -- (D) coordinate[pos=.10](C)
+                              -- (X) coordinate[pos=.10](D);
+          \draw[fill=\couleur!\thedensity] (A)--(B)--(C)-- (D) -- cycle;
+      }
     \end{tikzpicture}
-    \caption{A circle and a rectangle.}
+    \caption{Rotated square from
+    \href{http://www.texample.net/tikz/examples/rotated-polygons/}{texample.net}.}
   \end{figure}
 \end{frame}
 \begin{frame}{Tables}
