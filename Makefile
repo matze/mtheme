@@ -2,6 +2,7 @@ SRC = demo.tex
 PDF = demo.pdf
 AUX = demo.aux
 TEXC := xelatex
+TEXC_OPTS += -shell-escape
 
 .PHONY: clean
 
@@ -11,7 +12,7 @@ $(AUX):
 	$(TEXC) $(SRC)
 
 $(PDF): $(AUX) $(SRC)
-	$(TEXC) $(SRC)
+	$(TEXC) $(TEXC_OPTS) $(SRC)
 
 clean:
 	@rm -f $(PDF)

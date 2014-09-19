@@ -3,68 +3,93 @@
 \usetheme{m}
 
 \usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{minted}
+
+\usemintedstyle{trac}
 
 \title{A clean, modern beamer theme}
 \subtitle{}
 \date{\today}
 \author{Matthias Vogelgesang}
-\institute{Institute for foo bar}
-
+\institute{Institute or miscellaneous information}
 
 \begin{document}
 
 \maketitle
 
-\begin{frame}{The mtheme}
+\begin{frame}[fragile]
+  \frametitle{mtheme}
 
-  The \emph{mtheme} is a clean beamer theme based on Fira Sans.
+  The \emph{mtheme} is a Beamer theme with minimal visual noise inspired by the
+  \href{https://github.com/hsrmbeamertheme/hsrmbeamertheme}{\textsc{hsrm} Beamer
+  Theme} by Benjamin Weiss.
 
-  Sections separate frames of the same topic. They also have a nice progress
-  indicator.
+  Enable the theme by loading
 
+  \begin{minted}[fontsize=\small]{latex}
+    \documentclass{beamer}
+    \usetheme{m}
+  \end{minted}
+
+  Note, that you have to have Mozilla's \emph{Fira Sans} font and XeTeX
+  installed to enjoy this wonderful typography.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sections}
+  Sections group slides of the same topic
+
+  \begin{minted}[fontsize=\small]{latex}
+    \section{Elements}
+  \end{minted}
+
+  for which the \emph{mtheme} provides a nice progress indicator \ldots
 \end{frame}
 
 \section{Elements}
 
-\begin{frame}{Typography}
-  This is with \emph{emphasis} on that sometimes sets \alert{accents} but never
-  comes across outright \textbf{bold}. The class style is hosted at
-  \url{http://github.com/matze/mtheme}.
+\begin{frame}[fragile]
+  \frametitle{Typography}
+      \begin{minted}[fontsize=\small]{latex}
+The theme provides sensible defaults to \emph{emphasis}
+text, \alert{accent} parts or show \textbf{bold} results.
+      \end{minted}
 
-  How much space do we need?
+  \begin{center}becomes\end{center}
+
+  The theme provides sensible defaults to \emph{emphasis} text,
+  \alert{accent} parts or show \textbf{bold} results.
 \end{frame}
-
 \begin{frame}{Lists}
-  \begin{itemize}
-    \item Milk
-    \item Eggs
-    \item Potatos
-  \end{itemize}
+  \begin{columns}[onlytextwidth]
+    \column{0.5\textwidth}
+      Items
+      \begin{itemize}
+        \item Milk \item Eggs \item Potatos
+      \end{itemize}
 
-  \begin{enumerate}
-    \item First,
-    \item Second and
-    \item Last.
-  \end{enumerate}
-
+    \column{0.5\textwidth}
+      Enumerations
+      \begin{enumerate}
+        \item First, \item Second and \item Last.
+      \end{enumerate}
+  \end{columns}
+\end{frame}
+\begin{frame}{Descriptions}
   \begin{description}
     \item[PowerPoint] Meeh.
     \item[Beamer] Yeeeha.
   \end{description}
 \end{frame}
-
 \begin{frame}{Animation}
   \begin{itemize}[<+- | alert@+>]
-    \item \alert<4>{Hey}
-    \item Ho
-    \item Let's go
+    \item \alert<4>{This is\only<4>{ really} important}
+    \item Now this
+    \item And now this
   \end{itemize}
 \end{frame}
-
 \begin{frame}{Figures}
-  Figures play a vital role to \emph{visualize} an idea. Here's one made with
-  TikZ:
-
   \begin{figure}
     \begin{tikzpicture}
       \node[circle, draw=black] at (0, 0) {foo};
@@ -73,40 +98,33 @@
     \caption{A circle and a rectangle.}
   \end{figure}
 \end{frame}
-
 \begin{frame}{Tables}
   \begin{table}
-    \caption{A table}
-    \begin{tabular}{lll}
+    \caption{Largest cities in the world (source: Wikipedia)}
+    \begin{tabular}{lr}
       \toprule
-      Foo & Bar & Baz\\
+      City & Population\\
       \midrule
-      Foo & Bar & Baz\\
+      Mexico City & 20,116,842\\
+      Shanghai & 19,210,000\\
+      Peking & 15,796,450\\
+      Istanbul & 14,160,467\\
       \bottomrule
     \end{tabular}
   \end{table}
 \end{frame}
-
 \begin{frame}{Blocks}
 
-  \begin{block}{A descriptive title}
-    Blocks can give your slides structure. Unfortunately, most themes put fling
-    them right at your face.
+  \begin{block}{This is a block title}
+    This is soothing.
   \end{block}
 
-  Maybe we should play outside.
-
 \end{frame}
-
 \begin{frame}{Math}
   \begin{equation*}
-    I_c(x,y) = \sum_{i=-n}^n\sum_{j=-n}^n w\left(
-      \mathcal{N}_{x,y},\ \mathcal{N}_{x-i, y-j}\right)
-      \cdot
-      I_r(x-i,y-j)
+    e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
   \end{equation*}
 \end{frame}
-
 \begin{frame}{Quotes}
   \begin{quote}
     Veni, Vidi, Vici
@@ -116,15 +134,17 @@
 \section{Conclusion}
 
 \begin{frame}{Summary}
-  Get it at
+
+  Get the source of this theme and the demo presentation from
 
   \begin{center}\url{github.com/matze/mtheme}\end{center}
 
-  or read some non-fiction at
+  The theme \emph{itself} is licensed under a
+  \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
+  Attribution-ShareAlike 4.0 International License}.
 
-  \begin{center}\url{bloerg.net}\end{center}
+  \begin{center}\ccbysa\end{center}
 
-  Oh, it's licensed \textsc{cc-by-sa} but you don't need to slap my name on every slide.
 \end{frame}
 
 \statement{Questions?}
