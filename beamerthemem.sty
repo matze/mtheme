@@ -165,12 +165,12 @@
 
 \newcommand{\rightTextArrow}{→}
 
-\newcommand{\statement}[1]{%
+\newcommand{\plain}[2]{%
   \begingroup
   \setbeamercolor{background canvas}{bg=mDarkTeal}
-  \begin{frame}[plain]
+  \begin{frame}{#1}
     \centering
-    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape #1}\vfill
+    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape #2}\vfill
   \end{frame}
   \endgroup
 }
