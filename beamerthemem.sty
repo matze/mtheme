@@ -163,8 +163,6 @@
   \newcommand{\insertsectionHEADaux}[3]{\textsc{\MakeLowercase{#3}}
 }
 
-\newcommand{\rightTextArrow}{→}
-
 \newcommand{\plain}[2]{%
   \begingroup
   \setbeamercolor{background canvas}{bg=mDarkTeal}
@@ -177,10 +175,11 @@
 
 %}}}
 %{{{ --- Itemize ----------------------
+\newcommand{\itemBullet}{∙}
 
-\setbeamertemplate{itemize item}{\rightTextArrow}
-\setbeamertemplate{itemize subitem}{\rightTextArrow}
-\setbeamertemplate{itemize subsubitem}{\rightTextArrow}
+\setbeamertemplate{itemize item}{\itemBullet}
+\setbeamertemplate{itemize subitem}{\itemBullet}
+\setbeamertemplate{itemize subsubitem}{\itemBullet}
 \setlength{\parskip}{0.5em}
 
 %}}}
