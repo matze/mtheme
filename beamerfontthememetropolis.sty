@@ -1,0 +1,46 @@
+% Beamer mtheme
+%
+% Copyright 2014 Matthias Vogelgesang
+% Licensed under CC-BY-SA 4.0 International.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
+% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+%
+
+\ProvidesPackage{beamerfontthememetropolis}
+
+\usepackage[no-math]{fontspec}
+\usepackage{etoolbox}
+
+
+\defaultfontfeatures{Mapping=tex-text}
+\setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}
+\setmonofont{Fira Mono}
+\newfontfamily\ExtraLight{Fira Sans ExtraLight}
+\newfontfamily\Light{Fira Sans Light}
+\newfontfamily\Book{Fira Sans}
+\newfontfamily\Medium{Fira Sans Medium}
+
+\AtBeginEnvironment{tabular}{\setsansfont[BoldFont={Fira Sans}, Numbers={Monospaced}]{Fira Sans Light}}
+
+\setbeamerfont{title}{family=\Book, size=\Large}
+\setbeamerfont{author}{family=\ExtraLight, size=\small}
+\setbeamerfont{date}{family=\ExtraLight, size=\small}
+
+\setbeamerfont{section title}{family=\Book, size=\LARGE}
+
+\setbeamerfont{block title}{family=\Book,size=\normalsize}
+\setbeamerfont{block title alerted}{family=\Book,size=\normalsize}
+
+\setbeamerfont{subtitle}{family=\Light, size=\fontsize{12}{14}}
+\setbeamerfont{frametitle}{family=\Book, series=\scshape, size=\large}
+
+\setbeamerfont{alerted text}{family=\Light}
+
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption name}{family=\Book}
+
+\setbeamerfont{description item}{family=\Book}
+
+
+\linespread{1.15}
