@@ -105,6 +105,18 @@
   }
 }
 
+\def\progressbar@progressbarfoo{%
+  \progressbar@tmpcounta=\insertframenumber
+  \progressbar@tmpcountb=\inserttotalframenumber
+  \progressbar@tmpdim=\paperwidth
+  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+  \divide\progressbar@tmpdim by \progressbar@tmpcountb
+
+  \begin{tikzpicture}[tight background]
+    \draw[mDarkBrown, fill=mDarkBrown] (0, 0) rectangle (\paperwidth, 0.2pt);
+    \draw[mLightBrown, fill=mLightBrown] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
+  \end{tikzpicture}
+}
 %}}}
 %{{{ --- Commands ---------------------
 
@@ -170,9 +182,13 @@
 %}}}
 %{{{ --- Frametitle -------------------
 \setbeamertemplate{frametitle}{%
-\nointerlineskip
+% \nointerlineskip
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
   \usebeamerfont{frametitle}\MakeLowercase{\insertframetitle}%
+\end{beamercolorbox}%
+\vspace{-.5em}
+\begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
+  \progressbar@progressbarfoo
 \end{beamercolorbox}
 }
 %}}}
