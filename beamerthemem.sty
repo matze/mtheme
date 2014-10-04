@@ -23,10 +23,11 @@
 %}}}
 %{{{ --- Options ----------------------
 
-\newif\if@doSectionPage
-\@doSectionPagefalse
-\DeclareOption{nosectionpages}{\@doSectionPagetrue}
-\ProcessOptions
+\newif\if@useTitleProgressBar
+\@useTitleProgressBarfalse
+\DeclareOption{titleprogressbar}{\@useTitleProgressBartrue}
+
+\ProcessOptions\relax
 
 %}}}
 %{{{ --- Titlepage --------------------
@@ -73,7 +74,8 @@
 %{{{ --- Progressbar ------------------
 
 \makeatletter
-\def\progressbar@progressbar{}  % the progress bar
+\def\progressbar@sectionprogressbar{}
+\def\progressbar@titleprogressbar{}
 \newcount\progressbar@tmpcounta % auxiliary counter
 \newcount\progressbar@tmpcountb % auxiliary counter
 \newdimen\progressbar@pbht      % progressbar height
@@ -84,7 +86,7 @@
 \progressbar@pbht=0.5pt
 
 % the progress bar
-\def\progressbar@progressbar{%
+\def\progressbar@sectionprogressbar{%
   \progressbar@tmpcounta=\insertframenumber
   \progressbar@tmpcountb=\inserttotalframenumber
   \progressbar@tmpdim=\progressbar@pbwd
@@ -105,18 +107,20 @@
   }
 }
 
-\def\progressbar@progressbarfoo{%
-  \progressbar@tmpcounta=\insertframenumber
-  \progressbar@tmpcountb=\inserttotalframenumber
-  \progressbar@tmpdim=\paperwidth
-  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-  \divide\progressbar@tmpdim by \progressbar@tmpcountb
+\if@useTitleProgressBar
+  \def\progressbar@titleprogressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\paperwidth
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
 
-  \begin{tikzpicture}[tight background]
-    \draw[mDarkBrown, fill=mDarkBrown] (0, 0) rectangle (\paperwidth, 0.2pt);
-    \draw[mLightBrown, fill=mLightBrown] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
-  \end{tikzpicture}
-}
+    \begin{tikzpicture}[tight background]
+      \draw[mDarkBrown, fill=mDarkBrown] (0, 0) rectangle (\paperwidth, 0.2pt);
+      \draw[mLightBrown, fill=mLightBrown] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
+    \end{tikzpicture}
+  }
+\fi
 %}}}
 %{{{ --- Commands ---------------------
 
@@ -147,8 +151,6 @@
 %}}}
 %{{{ --- Sections ---------------------
 
-\if@doSectionPage\@empty
-\else
 % Insert frame with section title at every section start
 \AtBeginSection[]
 {
@@ -156,11 +158,10 @@
   \setbeamercolor{background canvas}{bg=mDarkTeal}
   \begin{frame}[plain]
     \vspace{2em}\usebeamerfont{section title}
-    \progressbar@progressbar%
+    \progressbar@sectionprogressbar%
   \end{frame}
   \endgroup
 }
-\fi
 
 %}}}
 %{{{ --- Captions ---------------------
@@ -187,9 +188,11 @@
   \usebeamerfont{frametitle}\MakeLowercase{\insertframetitle}%
 \end{beamercolorbox}%
 \vspace{-.5em}
-\begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
-  \progressbar@progressbarfoo
-\end{beamercolorbox}
+\if@useTitleProgressBar
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
+    \progressbar@titleprogressbar
+  \end{beamercolorbox}
+\fi
 }
 %}}}
 

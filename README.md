@@ -17,6 +17,10 @@ Thus to compile the demo with `make` you must
 * install the [Fira Sans](https://github.com/mozilla/Fira) font and
 * have a usable TikZ installation.
 
+### Package options
+
+* `titleprogressbar` adds a thin progress bar similar to the section progress
+  bar underneath *each* slide.
 
 ### License
 
