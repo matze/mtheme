@@ -14,9 +14,9 @@ As of now, fonts, colors and the section indicator are hardcoded into the theme.
 Thus to compile the demo with `make` you must
 
 * use XeLaTeX,
-* install the [Fira Sans](https://github.com/mozilla/Fira) font and
-* have a usable TikZ installation.
-
+* install the [Fira Sans](https://github.com/mozilla/Fira) font,
+* have a usable TikZ installation, and
+* install the Python package [Pygments](http://pygments.org/) (`pip install pygments`).
 
 ### Package options
 
