@@ -6,6 +6,8 @@
 \usepackage[scale=2]{ccicons}
 \usepackage{minted}
 
+\usepgfplotslibrary{dateplot}
+
 \usemintedstyle{trac}
 
 \title{A modern beamer theme}
@@ -142,13 +144,49 @@ text, \alert{accent} parts or show \textbf{bold} results.
     e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
   \end{equation*}
 \end{frame}
+\begin{frame}{Line plots}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=0.9\textwidth,
+        height=6cm,
+      ]
+
+        \addplot {sin(deg(x))};
+        \addplot+[samples=100] {sin(deg(2*x))};
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+\begin{frame}{Bar charts}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mbarplot,
+        xlabel={Foo},
+        ylabel={Bar},
+        width=0.9\textwidth,
+        height=6cm,
+      ]
+
+      \addplot plot coordinates {(1, 20) (2, 25) (3, 22.4) (4, 12.4)};
+      \addplot plot coordinates {(1, 18) (2, 24) (3, 23.5) (4, 13.2)};
+      \addplot plot coordinates {(1, 10) (2, 19) (3, 25) (4, 15.2)};
+
+      \legend{lorem, ipsum, dolor}
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
 \begin{frame}{Quotes}
   \begin{quote}
     Veni, Vidi, Vici
   \end{quote}
 \end{frame}
 
-\plain{Dark background}{\vspace{-2em}\begin{center}\includegraphics[width=\textwidth]{images/valley.jpg}\end{center}}
 
 \section{Conclusion}
 

@@ -29,6 +29,13 @@ Thus to compile the demo with `make` you must
 * `\plain{title=[]}{body}` sets a slice in plain dark colors.
 
 
+### pgfplot styles
+
+The beamer theme also contains pre-defined pgfplot styles. Use the `mlineplot`
+key to plot line data and `mbarplot` or `horizontal mbarplot` to plot bar
+charts.
+
+
 ### License
 
 The theme itself is licensed under a [Creative Commons Attribution-ShareAlike

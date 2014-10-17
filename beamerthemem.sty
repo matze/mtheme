@@ -14,6 +14,7 @@
 \usepackage[no-math]{fontspec}
 \usepackage{etoolbox}
 \usepackage{tikz}
+\usepackage{pgfplots}
 
 \usetikzlibrary{backgrounds}
 
@@ -201,6 +202,119 @@
   \end{beamercolorbox}
 \fi
 }
+%}}}
+%{{{ --- pgfplots ---------------------
+
+%{{{ Colors
+
+% TolColors from http://www.r-bloggers.com/the-paul-tol-21-color-salute/
+\definecolor{TolColor1}{HTML}{332288}   % dark purple
+\definecolor{TolColor2}{HTML}{6699CC}   % dark blue
+\definecolor{TolColor3}{HTML}{88CCEE}   % light blue
+\definecolor{TolColor4}{HTML}{44AA99}   % light green
+\definecolor{TolColor5}{HTML}{117733}   % dark green
+\definecolor{TolColor6}{HTML}{999933}   % dark brown
+\definecolor{TolColor7}{HTML}{DDCC77}   % light brown
+\definecolor{TolColor8}{HTML}{661100}   % dark red
+\definecolor{TolColor9}{HTML}{CC6677}   % light red
+\definecolor{TolColor10}{HTML}{AA4466}  % light pink
+\definecolor{TolColor11}{HTML}{882255}  % dark pink
+\definecolor{TolColor12}{HTML}{AA4499}  % light purple
+
+%}}}
+%{{{ Color cycles
+
+\pgfplotscreateplotcyclelist{mbarplot cycle}{%
+  {draw=TolColor2, fill=TolColor2!70},
+  {draw=TolColor7, fill=TolColor7!70},
+  {draw=TolColor4, fill=TolColor4!70},
+  {draw=TolColor11, fill=TolColor11!70},
+  {draw=TolColor8, fill=TolColor8!70},
+  {draw=TolColor6, fill=TolColor6!70},
+  {draw=TolColor1, fill=TolColor1!70},
+  {draw=TolColor9, fill=TolColor9!70},
+  {draw=TolColor10, fill=TolColor10!70},
+  {draw=TolColor12, fill=TolColor12!70},
+  {draw=TolColor3, fill=TolColor3!70},
+  {draw=TolColor5, fill=TolColor5!70},
+}
+
+\pgfplotscreateplotcyclelist{mlineplot cycle}{%
+  {TolColor2, mark=*, mark size=1.5pt},
+  {TolColor7, mark=square*, mark size=1.3pt},
+  {TolColor4, mark=triangle*, mark size=1.5pt},
+  {TolColor7, mark=diamond*, mark size=1.5pt},
+}
+
+%}}}
+%{{{ Styles
+
+\pgfplotsset{
+  compat=1.9,
+  mbaseplot/.style={
+    legend style={
+      draw=none,
+      fill=none,
+      cells={anchor=west},
+    },
+    x tick label style={
+      font=\footnotesize
+    },
+    y tick label style={
+      font=\footnotesize
+    },
+    legend style={
+      font=\footnotesize
+    },
+    major grid style={
+      dotted,
+    },
+    axis x line*=bottom,
+  },
+  mlineplot/.style={
+    mbaseplot,
+    xmajorgrids=true,
+    ymajorgrids=true,
+    major grid style={dotted},
+    axis x line=bottom,
+    axis y line=left,
+    legend style={
+      cells={anchor=west},
+      draw=none
+    },
+    cycle list name=mlineplot cycle,
+  },
+  mbarplot base/.style={
+    mbaseplot,
+    bar width=6pt,
+    axis y line*=none,
+  },
+  mbarplot/.style={
+    mbarplot base,
+    ybar,
+    xmajorgrids=false,
+    ymajorgrids=true,
+    area legend,
+    legend image code/.code={%
+      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
+    },
+    cycle list name=mbarplot cycle,
+  },
+  horizontal mbarplot/.style={
+    mbarplot base,
+    xmajorgrids=true,
+    ymajorgrids=false,
+    xbar stacked,
+    area legend,
+    legend image code/.code={%
+      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
+    },
+    cycle list name=mbarplot cycle,
+  },
+}
+
+%}}}
+
 %}}}
 
 \mode
