@@ -26,7 +26,7 @@ Thus to compile the demo with `make` you must
 
 ### Commands
 
-* `\plain{title=[]}{body}` sets a slice in plain dark colors.
+* `\plain{title=[]}{body}` sets a slide in plain dark colors.
 
 
 ### pgfplot styles
