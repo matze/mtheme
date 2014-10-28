@@ -17,15 +17,23 @@
 \definecolor{mLightBrown}{HTML}{EB811B}
 \definecolor{mMediumBrown}{HTML}{C87A2F}
 
-\setbeamercolor{background canvas}{bg=black!2}
+\setbeamercolor{palette primary}{fg=mDarkTeal, bg=black!2}
+\setbeamercolor{palette secondary}{fg=white, bg=mDarkTeal}
+\setbeamercolor{palette quaternary}{fg=mDarkBrown}
+\setbeamercolor{palette tertiary}{fg=white, bg=mMediumBrown}
+
+\setbeamercolor{title}{parent=palette primary}
+\setbeamercolor{subtitle}{parent=palette primary}
+\setbeamercolor{author}{parent=palette primary}
+\setbeamercolor{date}{parent=palette primary}
+\setbeamercolor{institute}{parent=palette primary}
+
+\setbeamercolor{frametitle}{parent=palette secondary}
+\setbeamercolor{background canvas}{parent=palette primary}
+\setbeamercolor{structure}{fg=mDarkTeal}
+
 \setbeamercolor{normal text}{fg=mDarkTeal}
 \setbeamercolor{alerted text}{fg=mLightBrown}
-\setbeamercolor{structure}{fg=mDarkTeal}
-\setbeamercolor{palette primary}{fg=mDarkBrown}
-\setbeamercolor{palette secondary}{fg=mDarkBrown}
-\setbeamercolor{palette tertiary}{fg=white, bg=mMediumBrown}
-\setbeamercolor{palette quaternary}{fg=white, bg=mDarkTeal}
-\setbeamercolor{frametitle}{parent=palette quaternary}
 
 \setbeamercolor{page number in head/foot}{fg=mDarkTeal}
 
