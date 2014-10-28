@@ -183,24 +183,25 @@
 \setbeamertemplate{footline}
 {%
 \begin{beamercolorbox}[wd=\textwidth,ht=3ex,dp=3ex,leftskip=0.3cm,rightskip=0.3cm]{structure}%
-\hfill\usebeamerfont{page number in head/foot}%
-\insertframenumber%
+  \hfill\usebeamerfont{page number in head/foot}%
+  \insertframenumber%
 \end{beamercolorbox}%
 }
 
 %}}}
 %{{{ --- Frametitle -------------------
+
 \setbeamertemplate{frametitle}{%
 % \nointerlineskip
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
   \usebeamerfont{frametitle}\MakeLowercase{\insertframetitle}%
 \end{beamercolorbox}%
-\vspace{-.5em}
 \if@useTitleProgressBar
   \begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
     \progressbar@titleprogressbar
   \end{beamercolorbox}
 \fi
+\vspace{3em}
 }
 %}}}
 %{{{ --- pgfplots ---------------------
