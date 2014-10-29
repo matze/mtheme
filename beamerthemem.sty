@@ -177,7 +177,7 @@
 \setbeamertemplate{caption label separator}{: }
 
 %}}}
-%{{{ --- Footline ---------------------
+%{{{ --- Footline/footnote ------------
 
 \usenavigationsymbolstemplate{}
 \setbeamertemplate{footline}
@@ -186,6 +186,13 @@
   \hfill\usebeamerfont{page number in head/foot}%
   \insertframenumber%
 \end{beamercolorbox}%
+}
+
+\setbeamertemplate{footnote}
+{%
+  \parindent 0em\noindent%
+  \raggedright
+  \usebeamercolor{footnote}\hbox to 0.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
 }
 
 %}}}
