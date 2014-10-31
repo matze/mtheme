@@ -18,10 +18,13 @@ Thus to compile the demo with `make` you must
 * have a usable TikZ installation, and
 * install the Python package [Pygments](http://pygments.org/) (`pip install pygments`).
 
+
 ### Package options
 
 * `titleprogressbar` adds a thin progress bar similar to the section progress
-  bar underneath *each* slide.
+  bar underneath *each* frame title
+
+  ![Progressbar](http://i.imgur.com/4BXHU4K.png)
 
 
 ### Commands
@@ -29,11 +32,14 @@ Thus to compile the demo with `make` you must
 * `\plain{title=[]}{body}` sets a slide in plain dark colors.
 
 
+
 ### pgfplot styles
 
 The beamer theme also contains pre-defined pgfplot styles. Use the `mlineplot`
 key to plot line data and `mbarplot` or `horizontal mbarplot` to plot bar
 charts.
+
+![Charts](http://i.imgur.com/yuEqU3j.png)
 
 
 ### License
