@@ -319,6 +319,10 @@
     },
     cycle list name=mbarplot cycle,
   },
+  disable thousands separator/.style={
+    /pgf/number format/.cd,
+      1000 sep={}
+  },
 }
 
 %}}}
