@@ -83,8 +83,8 @@
 \newdimen\progressbar@pbwd      % progressbar width
 \newdimen\progressbar@tmpdim    % auxiliary dimension
 
-\progressbar@pbwd=20em
-\progressbar@pbht=0.5pt
+\progressbar@pbwd=22em
+\progressbar@pbht=0.4pt
 
 % the progress bar
 \def\progressbar@sectionprogressbar{%
@@ -97,12 +97,12 @@
   \makebox[\textwidth][c]{
     \begin{tikzpicture}[tight background]
 
-      \node[anchor=west, white, inner sep=0pt] at (0pt, 0pt) {\insertsectionHEAD};
+      \node[anchor=west, mDarkTeal, inner sep=0pt] at (0pt, 0pt) {\insertsectionHEAD};
 
-      \draw[anchor=west, mDarkBrown, fill=mDarkBrown, inner sep=0pt]
+      \draw[anchor=west, mDarkTeal!20, fill=mDarkTeal!20, inner sep=0pt]
       (2pt, -16pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
 
-      \draw[anchor=west, mMediumBrown, fill=mMediumBrown, inner sep=0pt]
+      \draw[anchor=west, mDarkTeal, fill=mDarkTeal, inner sep=0pt]
       (2pt, -16pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
     \end{tikzpicture}%
   }
@@ -163,7 +163,7 @@
 \AtBeginSection[]
 {
   \begingroup
-  \setbeamercolor{background canvas}{bg=mDarkTeal}
+  \setbeamercolor{background canvas}{bg=black!2}
   \begin{frame}[plain]
     \vspace{2em}\usebeamerfont{section title}
     \progressbar@sectionprogressbar%
