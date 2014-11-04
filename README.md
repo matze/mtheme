@@ -18,6 +18,10 @@ Thus to compile the demo with `make` you must
 * have a usable TikZ installation, and
 * install the Python package [Pygments](http://pygments.org/) (`pip install pygments`).
 
+Depending on the Linux distribution, the packaged name of Fira Sans might be
+`Fira Sans OT` instead of `Fira Sans`. In that case, you may have to edit
+`beamerfontthememetropolis.sty`.
+
 
 ### Package options
 
