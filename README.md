@@ -22,25 +22,35 @@ Depending on the Linux distribution, the packaged name of Fira Sans might be
 `Fira Sans OT` instead of `Fira Sans`. In that case, you may have to edit
 `beamerfontthememetropolis.sty`.
 
+### Installing and compiling
+
 To install the theme either run `make install` or copy the style files ending
 with `.sty` to the source files of your presentation.
 
+To use this theme with [Pandoc](http://johnmacfarlane.net/pandoc/), you can run
+the following command
 
-### Package options
+    $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 
-* `titleprogressbar` adds a thin progress bar similar to the section progress
-  bar underneath *each* frame title
+
+### Customization
+
+#### Package options
+
+The `titleprogressbar` option adds a thin progress bar similar to the section
+progress bar underneath *each* frame title
 
   ![Progressbar](http://i.imgur.com/4BXHU4K.png)
 
 
-### Commands
+#### Commands
 
-* `\plain{title=[]}{body}` sets a slide in plain dark colors.
+The `\plain{title=[]}{body}` command sets a slide in plain dark colors which can
+be useful to focus attentation on a single image.
 
 
 
-### pgfplot styles
+#### pgfplot styles
 
 The beamer theme also contains pre-defined pgfplot styles. Use the `mlineplot`
 key to plot line data and `mbarplot` or `horizontal mbarplot` to plot bar
