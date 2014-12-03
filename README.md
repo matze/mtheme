@@ -8,27 +8,28 @@ Not convinced?  Have a look at the [demo slides](demo.pdf).
 ![Sample](http://i.imgur.com/wP4uGbS.png)
 
 
-### Requirements
+### Installation
 
-As of now, fonts, colors and the section indicator are hardcoded into the theme.
-Thus to compile the demo with `make` you must
+To install the theme either run `make install` or copy the style files ending
+with `.sty` to the source files of your presentation. As of now, fonts, colors
+and the section indicator are hardcoded into the theme. For the demo you need
 
-* use XeLaTeX,
-* install the [Fira Sans](https://github.com/mozilla/Fira) font,
-* have a usable TikZ installation, and
-* install the Python package [Pygments](http://pygments.org/) (`pip install pygments`).
+* XeLaTeX,
+* the [Fira Sans](https://github.com/mozilla/Fira) font,
+* TikZ and
+* the Python package [Pygments](http://pygments.org/) that you can get with `pip
+  install pygments`.
 
 Depending on the Linux distribution, the packaged name of Fira Sans might be
 `Fira Sans OT` instead of `Fira Sans`. In that case, you may have to edit
 `beamerfontthememetropolis.sty`.
 
-### Installing and compiling
 
-To install the theme either run `make install` or copy the style files ending
-with `.sty` to the source files of your presentation.
+### Usage
 
-To use this theme with [Pandoc](http://johnmacfarlane.net/pandoc/), you can run
-the following command
+To build the demo slides just run `make` in the top-level directory. To use this
+theme with [Pandoc](http://johnmacfarlane.net/pandoc/)-based presentations, you
+can run the following command
 
     $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 
