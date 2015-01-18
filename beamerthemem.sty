@@ -17,6 +17,7 @@
 \usepackage{pgfplots}
 
 \usetikzlibrary{backgrounds}
+\usetikzlibrary{calc}
 
 \usecolortheme{metropolis}
 \usefonttheme{metropolis}
@@ -91,8 +92,10 @@
   \progressbar@tmpcounta=\insertframenumber
   \progressbar@tmpcountb=\inserttotalframenumber
   \progressbar@tmpdim=\progressbar@pbwd
+    \divide\progressbar@tmpdim by 100
   \multiply\progressbar@tmpdim by \progressbar@tmpcounta
   \divide\progressbar@tmpdim by \progressbar@tmpcountb
+    \multiply\progressbar@tmpdim by 100
 
   \makebox[\textwidth][c]{
     \begin{tikzpicture}[tight background]
@@ -113,11 +116,13 @@
     \progressbar@tmpcounta=\insertframenumber
     \progressbar@tmpcountb=\inserttotalframenumber
     \progressbar@tmpdim=\paperwidth
+      \divide\progressbar@tmpdim by 100
     \multiply\progressbar@tmpdim by \progressbar@tmpcounta
     \divide\progressbar@tmpdim by \progressbar@tmpcountb
+      \multiply\progressbar@tmpdim by 100
 
     \begin{tikzpicture}[tight background]
-      \draw[mDarkBrown, fill=mDarkBrown] (0, 0) rectangle (\paperwidth, 0.2pt);
+      \draw[mDarkBrown, fill=mDarkBrown] (0, 0) rectangle ($(\paperwidth, 0.2pt) - (0.4pt, 0)$);
       \draw[mLightBrown, fill=mLightBrown] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
     \end{tikzpicture}
   }
