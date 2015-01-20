@@ -43,6 +43,10 @@ progress bar underneath *each* frame title
 
   ![Progressbar](http://i.imgur.com/4BXHU4K.png)
 
+In order to use `\cite`, `\ref` and similar commands in a frame title you have
+to protect the title. This can be done automatically with the
+`protectframetitle` option.
+
 
 #### Commands
 
