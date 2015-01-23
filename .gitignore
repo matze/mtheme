@@ -1,5 +1,6 @@
 demo.pdf
 
+*.fls
 *.acn
 *.acr
 *.alg
