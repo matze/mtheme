@@ -39,5 +39,13 @@
 \setbeamercolor{footnote}{fg=mDarkTeal!50}
 \setbeamercolor{page number in head/foot}{fg=mDarkTeal}
 
+\setbeamercolor{block title}{parent=palette secondary}
+\setbeamercolor{block title alerted}{use=alerted text,fg=mDarkTeal,bg=alerted text.fg!75!bg}
+\setbeamercolor{block title example}{use=example text,fg=mDarkTeal,bg=example text.fg!75!bg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
 \mode
 <all>
