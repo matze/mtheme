@@ -9,12 +9,22 @@
 
 \ProvidesPackage{beamercolorthememetropolis}
 
-\newif\if@blockbg
-\@blockbgfalse
-\DeclareOption{blockbg}{\@blockbgtrue}
 
-\ProcessOptions\relax
+%}}}
+%{{{ --- Options ----------------------
 
+\newif\if@beamer@metropolis@blockbg
+\@beamer@metropolis@blockbgfalse
+\DeclareOptionBeamer{blockbg}{\@beamer@metropolis@blockbgtrue}
+
+\DeclareOptionBeamer*{%
+  \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
+}
+
+\ProcessOptionsBeamer
+
+%}}}
+%{{{ --- Colors ---------------------
 
 % http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
 
@@ -47,7 +57,7 @@
 \setbeamercolor{footnote mark}{fg=.}
 \setbeamercolor{page number in head/foot}{fg=mDarkTeal}
 
-\if@blockbg
+\if@beamer@metropolis@blockbg
 
 \setbeamercolor{block title}{parent=palette primary,bg=palette primary.bg!80!fg}
 \setbeamercolor{block title alerted}{use=alerted text,parent=palette primary,fg=alerted text.fg}

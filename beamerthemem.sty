@@ -9,6 +9,26 @@
 
 \ProvidesPackage{beamerthemem}
 
+%{{{ --- Options ----------------------
+
+\newif\if@useTitleProgressBar
+\@useTitleProgressBarfalse
+\DeclareOptionBeamer{useTitleProgressBar}{\@useTitleProgressBartrue}
+
+\newif\if@protectFrameTitle
+\@protectFrameTitlefalse
+\DeclareOptionBeamer{protectframetitle}{\@protectFrameTitletrue}
+
+\DeclareOptionBeamer{blockbg}{\PassOptionsToPackage{blockbg}{beamercolorthememetropolis}}
+
+\DeclareOptionBeamer*{%
+  \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
+}
+
+\ProcessOptionsBeamer
+
+
+%}}}
 %{{{ --- Packages ---------------------
 
 \usepackage[no-math]{fontspec}
@@ -22,18 +42,6 @@
 \usecolortheme{metropolis}
 \usefonttheme{metropolis}
 
-%}}}
-%{{{ --- Options ----------------------
-
-\newif\if@useTitleProgressBar
-\@useTitleProgressBarfalse
-\DeclareOption{titleprogressbar}{\@useTitleProgressBartrue}
-
-\newif\if@protectFrameTitle
-\@protectFrameTitlefalse
-\DeclareOption{protectframetitle}{\@protectFrameTitletrue}
-
-\ProcessOptions\relax
 
 %}}}
 %{{{ --- Titlepage --------------------
