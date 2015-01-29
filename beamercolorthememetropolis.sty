@@ -9,6 +9,13 @@
 
 \ProvidesPackage{beamercolorthememetropolis}
 
+\newif\if@blockbg
+\@blockbgfalse
+\DeclareOption{blockbg}{\@blockbgtrue}
+
+\ProcessOptions\relax
+
+
 % http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
 
 \definecolor{mDarkBrown}{HTML}{604c38}
@@ -40,13 +47,17 @@
 \setbeamercolor{footnote mark}{fg=.}
 \setbeamercolor{page number in head/foot}{fg=mDarkTeal}
 
-\setbeamercolor{block title}{parent=palette secondary}
-\setbeamercolor{block title alerted}{use=alerted text,fg=mDarkTeal,bg=alerted text.fg!75!bg}
-\setbeamercolor{block title example}{use=example text,fg=mDarkTeal,bg=example text.fg!75!bg}
+\if@blockbg
 
-\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
-\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
-\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+\setbeamercolor{block title}{parent=palette primary,bg=palette primary.bg!80!fg}
+\setbeamercolor{block title alerted}{use=alerted text,parent=palette primary,fg=alerted text.fg}
+\setbeamercolor{block title example}{use=example text,parent=palette primary,fg=example text.fg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg}
+
+\fi
 
 \mode
 <all>
