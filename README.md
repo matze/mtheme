@@ -47,6 +47,9 @@ In order to use `\cite`, `\ref` and similar commands in a frame title you have
 to protect the title. This can be done automatically with the
 `protectframetitle` option.
 
+The `blockbg` option defines extra colors used in defining the blocks.
+The blocks then have a gray background similar to other beamer themes.
+
 
 #### Commands
 

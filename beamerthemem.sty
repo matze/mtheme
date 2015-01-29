@@ -9,6 +9,26 @@
 
 \ProvidesPackage{beamerthemem}
 
+%{{{ --- Options ----------------------
+
+\newif\if@useTitleProgressBar
+\@useTitleProgressBarfalse
+\DeclareOptionBeamer{useTitleProgressBar}{\@useTitleProgressBartrue}
+
+\newif\if@protectFrameTitle
+\@protectFrameTitlefalse
+\DeclareOptionBeamer{protectframetitle}{\@protectFrameTitletrue}
+
+\DeclareOptionBeamer{blockbg}{\PassOptionsToPackage{blockbg}{beamercolorthememetropolis}}
+
+\DeclareOptionBeamer*{%
+  \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
+}
+
+\ProcessOptionsBeamer
+
+
+%}}}
 %{{{ --- Packages ---------------------
 
 \usepackage[no-math]{fontspec}
@@ -22,18 +42,6 @@
 \usecolortheme{metropolis}
 \usefonttheme{metropolis}
 
-%}}}
-%{{{ --- Options ----------------------
-
-\newif\if@useTitleProgressBar
-\@useTitleProgressBarfalse
-\DeclareOption{titleprogressbar}{\@useTitleProgressBartrue}
-
-\newif\if@protectFrameTitle
-\@protectFrameTitlefalse
-\DeclareOption{protectframetitle}{\@protectFrameTitletrue}
-
-\ProcessOptions\relax
 
 %}}}
 %{{{ --- Titlepage --------------------
@@ -55,7 +63,7 @@
     {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
     \vspace*{0.5em}
     \fi%
-    \begin{tikzpicture}\draw[mLightBrown] (0, 0) -- (\textwidth, 0);\end{tikzpicture}%
+    \begin{tikzpicture}\draw[alerted text.fg] (0, 0) -- (\textwidth, 0);\end{tikzpicture}%
     \vspace*{1em}
     \ifx\insertauthor\@empty%
     \else%
@@ -93,45 +101,51 @@
 
 % the progress bar
 \def\progressbar@sectionprogressbar{%
-  \progressbar@tmpcounta=\insertframenumber
-  \progressbar@tmpcountb=\inserttotalframenumber
-  \progressbar@tmpdim=\progressbar@pbwd
+  {\usebeamercolor{palette primary}%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
     \divide\progressbar@tmpdim by 100
-  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-  \divide\progressbar@tmpdim by \progressbar@tmpcountb
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
     \multiply\progressbar@tmpdim by 100
 
-  \makebox[\textwidth][c]{
-    \begin{tikzpicture}[tight background]
+    \makebox[\textwidth][c]{
+      \begin{tikzpicture}[tight background]
 
-      \node[anchor=west, mDarkTeal, inner sep=0pt] at (0pt, 0pt) {\insertsectionHEAD};
+        \node[anchor=west, fg, inner sep=0pt] at (0pt, 0pt) {\insertsectionHEAD};
 
-      \draw[anchor=west, mDarkTeal!20, fill=mDarkTeal!20, inner sep=0pt]
-      (2pt, -16pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+        \draw[anchor=west, fg!20, fill=fg!20, inner sep=0pt]
+        (2pt, -16pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
 
-      \draw[anchor=west, mDarkTeal, fill=mDarkTeal, inner sep=0pt]
-      (2pt, -16pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
-    \end{tikzpicture}%
-  }
+        \draw[anchor=west, fg, fill=fg, inner sep=0pt]
+        (2pt, -16pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+      \end{tikzpicture}%
+    }
+  } % end usebeamercolor{palette primary}
 }
 
 \if@useTitleProgressBar
-  \def\progressbar@titleprogressbar{%
-    \progressbar@tmpcounta=\insertframenumber
-    \progressbar@tmpcountb=\inserttotalframenumber
-    \progressbar@tmpdim=\paperwidth
-      \divide\progressbar@tmpdim by 100
-    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-    \divide\progressbar@tmpdim by \progressbar@tmpcountb
-      \multiply\progressbar@tmpdim by 100
+\def\progressbar@titleprogressbar{%
+  \progressbar@tmpcounta=\insertframenumber
+  \progressbar@tmpcountb=\inserttotalframenumber
+  \progressbar@tmpdim=\paperwidth
+  \divide\progressbar@tmpdim by 100
+  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+  \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \multiply\progressbar@tmpdim by 100
 
+  {%
+    \usebeamercolor{palette quaternary}%
+    \usebeamercolor{alerted text}%
     \begin{tikzpicture}[tight background]
-      \draw[mDarkBrown, fill=mDarkBrown] (0, 0) rectangle ($(\paperwidth, 0.2pt) - (0.4pt, 0)$);
-      \draw[mLightBrown, fill=mLightBrown] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
-    \end{tikzpicture}
-  }
+      \draw[palette quaternary.fg, fill=palette quaternary.fg] (0, 0) rectangle ($(\paperwidth, 0.2pt) - (0.4pt, 0)$);
+      \draw[alerted text.fg, fill=alerted text.fg] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
+    \end{tikzpicture}%
+  }%
+}
 \fi
-%}}}
+% }}}
 %{{{ --- Commands ---------------------
 
 \newcommand{\insertsectionHEAD}{%
@@ -141,7 +155,7 @@
 
 \newcommand{\plain}[2][]{%
   \begingroup
-  \setbeamercolor{background canvas}{bg=mDarkTeal}
+  \setbeamercolor{background canvas}{use=palette primary,bg=palette primary.fg}
   \begin{frame}{#1}
     \centering
     \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape #2}\vfill
@@ -172,7 +186,7 @@
 \AtBeginSection[]
 {
   \begingroup
-  \setbeamercolor{background canvas}{bg=black!2}
+  \setbeamercolor{background canvas}{parent=palette primary}
   \begin{frame}[plain]
     \vspace{2em}\usebeamerfont{section title}
     \progressbar@sectionprogressbar%
