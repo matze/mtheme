@@ -12,14 +12,20 @@
 %{{{ --- Options ----------------------
 
 \newif\if@useTitleProgressBar
-\@useTitleProgressBarfalse
-\DeclareOptionBeamer{useTitleProgressBar}{\@useTitleProgressBartrue}
-
 \newif\if@protectFrameTitle
-\@protectFrameTitlefalse
-\DeclareOptionBeamer{protectframetitle}{\@protectFrameTitletrue}
 
-\DeclareOptionBeamer{blockbg}{\PassOptionsToPackage{blockbg}{beamercolorthememetropolis}}
+\@useTitleProgressBarfalse
+\@protectFrameTitlefalse
+
+\newlength{\@mtheme@voffset}
+\setlength{\@mtheme@voffset}{2em}
+
+\DeclareOptionBeamer{useTitleProgressBar}{\@useTitleProgressBartrue}
+\DeclareOptionBeamer{protectframetitle}{\@protectFrameTitletrue}
+\DeclareOptionBeamer{blockbg}{%
+  \PassOptionsToPackage{blockbg}{beamercolorthememetropolis}%
+}
+\DeclareOptionBeamer{nooffset}{\setlength{\@mtheme@voffset}{0em}}
 
 \DeclareOptionBeamer*{%
   \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
@@ -27,21 +33,22 @@
 
 \ProcessOptionsBeamer
 
-
 %}}}
+
+\mode<presentation>
+
 %{{{ --- Packages ---------------------
 
-\usepackage[no-math]{fontspec}
-\usepackage{etoolbox}
-\usepackage{tikz}
-\usepackage{pgfplots}
+\RequirePackage[no-math]{fontspec}
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
 
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{calc}
 
 \usecolortheme{metropolis}
 \usefonttheme{metropolis}
-
 
 %}}}
 %{{{ --- Titlepage --------------------
@@ -145,7 +152,7 @@
   }%
 }
 \fi
-% }}}
+%}}}
 %{{{ --- Commands ---------------------
 
 \newcommand{\insertsectionHEAD}{%
@@ -236,8 +243,9 @@
     \progressbar@titleprogressbar
   \end{beamercolorbox}
 \fi
-\vspace{2em}
+\vspace{\@mtheme@voffset}
 }
+
 %}}}
 %{{{ --- pgfplots ---------------------
 
@@ -355,15 +363,13 @@
 
 %}}}
 
-%}}}
+\mode<all>
 
-\mode
-<all>
-
-% {{{ misc
+%{{{ misc
 \let\otp\titlepage
 \renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
 \newcommand{\mreducelistspacing}{\vspace{-\topsep}}
 
 \linespread{1.15}
+
 %}}}

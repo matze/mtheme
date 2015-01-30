@@ -50,12 +50,16 @@ to protect the title. This can be done automatically with the
 The `blockbg` option defines extra colors used in defining the blocks.
 The blocks then have a gray background similar to other beamer themes.
 
+By default, this package adds `\vspace{2em}` after the frametitle to
+make content more centered on the frame. If using more content per
+slide, this can be turned off at the package-level by passing the
+`nooffset` option.
+
 
 #### Commands
 
-The `\plain{title=[]}{body}` command sets a slide in plain dark colors which can
-be useful to focus attentation on a single image.
-
+The `\plain{title=[]}{body}` command sets a slide in plain dark colors
+which can be useful to focus attentation on a single image.
 
 
 #### pgfplot styles
