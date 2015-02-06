@@ -141,13 +141,12 @@
   \multiply\progressbar@tmpdim by \progressbar@tmpcounta
   \divide\progressbar@tmpdim by \progressbar@tmpcountb
   \multiply\progressbar@tmpdim by 100
-
   {%
     \usebeamercolor{palette quaternary}%
     \usebeamercolor{alerted text}%
     \begin{tikzpicture}[tight background]
-      \draw[palette quaternary.fg, fill=palette quaternary.fg] (0, 0) rectangle ($(\paperwidth, 0.2pt) - (0.4pt, 0)$);
-      \draw[alerted text.fg, fill=alerted text.fg] (0, 0) rectangle (\progressbar@tmpdim, 0.2pt);
+      \draw[palette quaternary.fg, fill=palette quaternary.fg] (0, 0) rectangle ($(\paperwidth, 0.6pt) - (0.4pt, 0)$);
+      \draw[alerted text.fg, fill=alerted text.fg] (0, 0) rectangle (\progressbar@tmpdim, 0.6pt);
     \end{tikzpicture}%
   }%
 }
@@ -238,7 +237,7 @@
 \fi
 \end{beamercolorbox}%
 \if@useTitleProgressBar
-  \vspace{-.6em}
+  \vspace{-.5em}
   \begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
     \progressbar@titleprogressbar
   \end{beamercolorbox}
