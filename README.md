@@ -38,7 +38,7 @@ can run the following command
 
 #### Package options
 
-The `titleprogressbar` option adds a thin progress bar similar to the section
+The `usetitleprogressbar` option adds a thin progress bar similar to the section
 progress bar underneath *each* frame title
 
   ![Progressbar](http://i.imgur.com/4BXHU4K.png)
