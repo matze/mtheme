@@ -59,12 +59,21 @@
 \setbeamertemplate{title page}
 {
   \begin{minipage}[b][\paperheight]{\textwidth}
-    \vfill
+    \vspace*{\@mtheme@voffset}
     \ifx\inserttitlegraphic\@empty%
     \else%
-    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}%
-    \vspace*{0.5em}
+    {
+    	% actual output of titlegraphic
+   	    \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par%
+    	% measurement and add negative vspace
+		\newdimen\logoheight
+		\setbox0=\vbox{\inserttitlegraphic}%
+		\logoheight=\ht0 \advance\logoheight by \dp0 %
+		\vspace*{-\logoheight}%
+		\vspace*{-1em}% I don't know why this additional negative space is needed
+    }%
     \fi%
+    \vfill
     \ifx\inserttitle\@empty%
     \else%
     {\raggedright\linespread{1.0}\usebeamerfont{title}\usebeamercolor[fg]{title}\scshape\MakeLowercase{\inserttitle}\par}%
@@ -92,7 +101,7 @@
     {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
     \fi%
     \vfill
-    \vspace*{5mm}
+    \vspace*{\@mtheme@voffset}
   \end{minipage}
 }
 
