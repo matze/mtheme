@@ -60,6 +60,11 @@
 {
   \begin{minipage}[b][\paperheight]{\textwidth}
     \vfill
+    \ifx\inserttitlegraphic\@empty%
+    \else%
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}%
+    \vspace*{0.5em}
+    \fi%
     \ifx\inserttitle\@empty%
     \else%
     {\raggedright\linespread{1.0}\usebeamerfont{title}\usebeamercolor[fg]{title}\scshape\MakeLowercase{\inserttitle}\par}%
