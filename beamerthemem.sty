@@ -131,16 +131,19 @@
     \divide\progressbar@tmpdim by \progressbar@tmpcountb
     \multiply\progressbar@tmpdim by 100
 
+    % fixes very high linespacing introduced via \textsc{\MakeLowercase{...}}
+    \fontsize{1em}{1em}\selectfont
+
     \makebox[\textwidth][c]{
       \begin{tikzpicture}[tight background]
 
-        \node[anchor=west, fg, inner sep=0pt] at (0pt, 0pt) {\insertsectionHEAD};
+        \node[anchor=south west, fg, inner sep=0pt, text width=\progressbar@pbwd] at (0pt, 0pt) {\insertsectionHEAD};
 
         \draw[anchor=west, fg!20, fill=fg!20, inner sep=0pt]
-        (2pt, -16pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+        (0, -1ex) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
 
         \draw[anchor=west, fg, fill=fg, inner sep=0pt]
-        (2pt, -16pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+        (0, -1ex) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
       \end{tikzpicture}%
     }
   } % end usebeamercolor{palette primary}
