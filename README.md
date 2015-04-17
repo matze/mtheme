@@ -15,10 +15,9 @@ with `.sty` to the source files of your presentation. As of now, fonts, colors
 and the section indicator are hardcoded into the theme. For the demo you need
 
 * XeLaTeX,
-* the [Fira Sans](https://github.com/mozilla/Fira) font,
+* the [Fira Sans](https://github.com/mozilla/Fira) and Mono font,
 * TikZ and
-* the Python package [Pygments](http://pygments.org/) that you can get with `pip
-  install pygments`.
+* the Python package [Pygments](http://pygments.org/) and the `pygmentize` binary.
 
 Depending on the Linux distribution, the packaged name of Fira Sans might be
 `Fira Sans OT` instead of `Fira Sans`. In that case, you may have to edit
