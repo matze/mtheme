@@ -18,7 +18,7 @@ $(PDF): beamerthemem.sty $(AUX) $(SRC)
 
 clean:
 	@rm -f $(PDF)
-	@git clean -xf
+	@git clean -xfd
 
 install:
 	mkdir -p $(INSTALL_DIR)
