@@ -60,12 +60,12 @@
 \if@beamer@metropolis@blockbg
 
 \setbeamercolor{block title}{use=palette primary,parent=palette primary,bg=palette primary.bg!80!fg}
-\setbeamercolor{block title alerted}{use=alerted text,parent=palette primary,fg=alerted text.fg}
-\setbeamercolor{block title example}{use=example text,parent=palette primary,fg=example text.fg}
+\setbeamercolor{block title alerted}{use={palette primary,alerted text},parent=palette primary,fg=alerted text.fg,bg=palette primary.bg!80!fg}
+\setbeamercolor{block title example}{use={palette primary,example text},parent=palette primary,fg=example text.fg,bg=palette primary.bg!80!fg}
 
-\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg}
-\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg}
-\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg}
+\setbeamercolor{block body}{use=block title,parent=normal text,bg=block title.bg!50}
+\setbeamercolor{block body alerted}{use={normal text,block body},parent=normal text,bg=block body.bg}
+\setbeamercolor{block body example}{use={normal text,block body},parent=normal text,bg=block body.bg}
 
 \fi
 
