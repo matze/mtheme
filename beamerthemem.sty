@@ -13,9 +13,15 @@
 
 \newif\if@useTitleProgressBar
 \newif\if@protectFrameTitle
+\newif\if@useSmallCapitalsInTitle
+\newif\if@useSectionSlide
+\newif\if@noTotalSlides
 
 \@useTitleProgressBarfalse
 \@protectFrameTitlefalse
+\@useSmallCapitalsInTitlefalse
+\@useSectionSlidefalse
+\@noTotalSlidesfalse
 
 \newlength{\@mtheme@voffset}
 \setlength{\@mtheme@voffset}{2em}
@@ -30,6 +36,10 @@
 \DeclareOptionBeamer*{%
   \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
 }
+
+\DeclareOptionBeamer{usesmallcapitalsintitle}{\@useSmallCapitalsInTitletrue}
+\DeclareOptionBeamer{usesectionslide}{\@useSectionSlidetrue}
+\DeclareOptionBeamer{nototalslides}{\@noTotalSlidestrue}
 
 \ProcessOptionsBeamer
 
@@ -76,7 +86,7 @@
     \vfill
     \ifx\inserttitle\@empty%
     \else%
-    {\raggedright\linespread{1.0}\usebeamerfont{title}\usebeamercolor[fg]{title}\scshape\MakeLowercase{\inserttitle}\par}%
+    {\raggedright\linespread{1.0}\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
     \vspace*{0.5em}
     \fi%
     \ifx\insertsubtitle\@empty%
@@ -173,8 +183,11 @@
 
 \newcommand{\insertsectionHEAD}{%
   \expandafter\insertsectionHEADaux\insertsectionhead}
-  \newcommand{\insertsectionHEADaux}[3]{\textsc{\MakeLowercase{#3}}
-}
+\if@useSmallCapitalsInTitle
+\newcommand{\insertsectionHEADaux}[3]{\textsc{\MakeLowercase{#3}}}
+\else
+\newcommand{\insertsectionHEADaux}[3]{#3}
+\fi
 
 \newcommand{\plain}[2][]{%
   \begingroup
@@ -206,6 +219,7 @@
 %{{{ --- Sections ---------------------
 
 % Insert frame with section title at every section start
+\if@useSectionSlide
 \AtBeginSection[]
 {
   \begingroup
@@ -216,6 +230,7 @@
   \end{frame}
   \endgroup
 }
+\fi
 
 %}}}
 %{{{ --- Captions ---------------------
@@ -231,7 +246,11 @@
 {%
 \begin{beamercolorbox}[wd=\textwidth,ht=3ex,dp=3ex,leftskip=0.3cm,rightskip=0.3cm]{structure}%
   \hfill\usebeamerfont{page number in head/foot}%
-  \insertframenumber%
+  \if@noTotalSlides
+  \insertpagenumber%
+  \else
+  \insertpagenumber/\insertpresentationendpage%
+  \fi
 \end{beamercolorbox}%
 }
 
@@ -249,9 +268,9 @@
 \nointerlineskip
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
 \if@protectFrameTitle
-  \usebeamerfont{frametitle}\MakeLowercase{\protect\insertframetitle}%
+  \usebeamerfont{frametitle}\protect\insertframetitle%
 \else
-  \usebeamerfont{frametitle}\MakeLowercase{\insertframetitle}%
+  \usebeamerfont{frametitle}\insertframetitle%
 \fi
 \end{beamercolorbox}%
 \if@useTitleProgressBar
