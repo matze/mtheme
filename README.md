@@ -54,6 +54,16 @@ make content more centered on the frame. If using more content per
 slide, this can be turned off at the package-level by passing the
 `nooffset` option.
 
+With option `nosectionslide`, no dedicated slide is produced when a new section
+starts. By default when using the `\section` command, a slide is created with
+just the title on it.
+
+The `nosmallcapitals` option supresses the usage of small capitals on
+title page, frame titles and dedicated section slides.
+
+Option `usetotalslideindicator` creates slide numbering in lower right corner
+in following format: #current/#total. By default, just current page number is
+printed.
 
 #### Commands
 
