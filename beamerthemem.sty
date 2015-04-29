@@ -72,14 +72,13 @@
     \ifx\inserttitlegraphic\@empty%
     \else%
     {
-    	% actual output of titlegraphic
-   	    \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par%
-    	% measurement and add negative vspace
-		\newdimen\logoheight
-		\setbox0=\vbox{\inserttitlegraphic}%
-		\logoheight=\ht0 \advance\logoheight by \dp0 %
-		\vspace*{-\logoheight}%
-		\nointerlineskip%
+      \vbox to 0pt
+      {% display title graphic without changing the position of other elements
+        \vspace*{2em}
+        \usebeamercolor[fg]{titlegraphic}%
+        \inserttitlegraphic{}%
+      }%
+      \nointerlineskip%
     }%
     \fi%
     \vfill
