@@ -4,11 +4,9 @@
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
-\usepackage{minted}
 
 \usepgfplotslibrary{dateplot}
 
-\usemintedstyle{trac}
 
 \title{A modern beamer theme}
 \subtitle{}
@@ -29,10 +27,8 @@
 
   Enable the theme by loading
 
-  \begin{minted}[fontsize=\small]{latex}
-    \documentclass{beamer}
-    \usetheme{m}
-  \end{minted}
+  \begin{verbatim}    \documentclass{beamer}
+    \usetheme{m}\end{verbatim}
 
   Note, that you have to have Mozilla's \emph{Fira Sans} font and XeTeX
   installed to enjoy this wonderful typography.
@@ -42,9 +38,7 @@
   \frametitle{Sections}
   Sections group slides of the same topic
 
-  \begin{minted}[fontsize=\small]{latex}
-    \section{Elements}
-  \end{minted}
+  \begin{verbatim}    \section{Elements}\end{verbatim}
 
   for which the \emph{mtheme} provides a nice progress indicator \ldots
 \end{frame}
@@ -53,10 +47,9 @@
 
 \begin{frame}[fragile]
   \frametitle{Typography}
-      \begin{minted}[fontsize=\small]{latex}
-The theme provides sensible defaults to \emph{emphasize}
-text, \alert{accent} parts or show \textbf{bold} results.
-      \end{minted}
+      \begin{verbatim}The theme provides sensible defaults to
+\emph{emphasize} text, \alert{accent} parts
+or show \textbf{bold} results.\end{verbatim}
 
   \begin{center}becomes\end{center}
 
@@ -96,7 +89,7 @@ text, \alert{accent} parts or show \textbf{bold} results.
     \newcounter{density}
     \setcounter{density}{20}
     \begin{tikzpicture}
-      \def\couleur{mLightBrown}
+      \def\couleur{alerted text.fg}
       \path[coordinate] (0,0)  coordinate(A)
                   ++( 90:5cm) coordinate(B)
                   ++(0:5cm) coordinate(C)
