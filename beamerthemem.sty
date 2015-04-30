@@ -112,9 +112,10 @@
     \end{tikzpicture}%
     \vspace*{1em}%
 
-    \ifx\insertauthor\@empty\else
-    {{% \insertauthor is always nonempty by beamer's definition, so this
-      % code is always inserted:
+    \ifx\beamer@shortauthor\@empty\else
+    {{% \insertauthor is always nonempty by beamer's definition, so we must
+      % test another macro which is initialized by \author{...}
+      % For details, see http://tex.stackexchange.com/questions/241306/
       \usebeamerfont{author}%
       \usebeamercolor[fg]{author}%
       \insertauthor%
