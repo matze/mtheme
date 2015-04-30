@@ -49,7 +49,6 @@
 
 %{{{ --- Packages ---------------------
 
-\RequirePackage{etoolbox}
 \RequirePackage{tikz}
 \RequirePackage{pgfplots}
 
@@ -63,56 +62,87 @@
 %{{{ --- Titlepage --------------------
 
 \def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
-
 \def\titlepage{\usebeamertemplate{title page}}
+
 \setbeamertemplate{title page}
 {
   \begin{minipage}[b][\paperheight]{\textwidth}
     \vspace*{\@mtheme@voffset}
-    \ifx\inserttitlegraphic\@empty%
-    \else%
-    {
-    	% actual output of titlegraphic
-   	    \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par%
-    	% measurement and add negative vspace
-		\newdimen\logoheight
-		\setbox0=\vbox{\inserttitlegraphic}%
-		\logoheight=\ht0 \advance\logoheight by \dp0 %
-		\vspace*{-\logoheight}%
-		\vspace*{-1em}% I don't know why this additional negative space is needed
-    }%
-    \fi%
-    \vfill
-    \ifx\inserttitle\@empty%
-    \else%
-    \if@noSmallCapitals%
-    {\raggedright\linespread{1.0}\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
-    \else%
-    {\raggedright\linespread{1.0}\usebeamerfont{title}\usebeamercolor[fg]{title}\scshape\MakeLowercase{\inserttitle}\par}%
-    \fi%
-    \vspace*{0.5em}
-    \fi%
-    \ifx\insertsubtitle\@empty%
-    \else%
-    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-    \vspace*{0.5em}
-    \fi%
-    \begin{tikzpicture}\draw[alerted text.fg] (0, 0) -- (\textwidth, 0);\end{tikzpicture}%
-    \vspace*{1em}
-    \ifx\insertauthor\@empty%
-    \else%
-    {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
-    \vspace*{0.25em}
-    \fi%
-    \ifx\insertdate\@empty%
-    \else%
-    {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
-    \fi%
-    \ifx\insertinstitut\@empty%
-    \else%
-    \vspace*{3mm}
-    {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
-    \fi%
+
+    \ifx\inserttitlegraphic\@empty\else
+    {% \inserttitlegraphic is nonempty
+      \vbox to 0pt
+      {% display title graphic without changing the position of other elements
+        \vspace*{2em}
+        \usebeamercolor[fg]{titlegraphic}%
+        \inserttitlegraphic%
+      }%
+      \nointerlineskip%
+    }
+    \fi
+
+    \vfill%
+
+    \ifx\inserttitle\@empty\else
+    {{% \inserttitle is nonempty
+      \raggedright%
+      \linespread{1.0}%
+      \usebeamerfont{title}%
+      \usebeamercolor[fg]{title}%
+      \if@noSmallCapitals%
+        \inserttitle%
+      \else%
+        \scshape\MakeLowercase{\inserttitle}%
+      \fi%
+      \vspace*{0.5em}
+    }}
+    \fi
+
+    \ifx\insertsubtitle\@empty\else
+    {{% \insertsubtitle is nonempty
+      \usebeamerfont{subtitle}%
+      \usebeamercolor[fg]{subtitle}%
+      \insertsubtitle%
+      \vspace*{0.5em}%
+    }}
+    \fi
+
+    \begin{tikzpicture}
+      \draw[alerted text.fg] (0, 0) -- (\textwidth, 0);
+    \end{tikzpicture}%
+    \vspace*{1em}%
+
+    \ifx\beamer@shortauthor\@empty\else
+    {{% \insertauthor is always nonempty by beamer's definition, so we must
+      % test another macro which is initialized by \author{...}
+      % For details, see http://tex.stackexchange.com/questions/241306/
+      \usebeamerfont{author}%
+      \usebeamercolor[fg]{author}%
+      \insertauthor%
+      \par%
+      \vspace*{0.25em}
+    }}
+    \fi
+
+    \ifx\insertdate\@empty\else
+    {{% \insertdate is nonempty
+      \usebeamerfont{date}%
+      \usebeamercolor[fg]{date}%
+      \insertdate%
+      \par%
+    }}
+    \fi
+
+    \ifx\insertinstitute\@empty\else
+    {{% \insertinstitute is nonempty
+      \vspace*{3mm}
+      \usebeamerfont{institute}%
+      \usebeamercolor[fg]{institute}%
+      \insertinstitute%
+      \par%
+    }}
+    \fi
+
     \vfill
     \vspace*{\@mtheme@voffset}
   \end{minipage}
