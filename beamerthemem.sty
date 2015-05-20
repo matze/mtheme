@@ -206,20 +206,34 @@
 %}}}
 %{{{ --- Sections ---------------------
 
-% Insert frame with section title at every section start
-\AtBeginSection[]
+\setbeamertemplate{section page}
 {
-  \if@noSectionSlide%
-  \else%
-  \begingroup
-  \setbeamercolor{background canvas}{parent=palette primary}
-  \begin{frame}[plain]
-    \vspace{2em}\usebeamerfont{section title}
+  \vspace{2em}
+  \centering
+  \begin{minipage}{22em}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionHEAD\\[-1ex]
     \progressbar{\textwidth}
-  \end{frame}
-  \endgroup
-  \fi%
+  \end{minipage}
+  \par
 }
+
+
+% Insert frame with section title at every section start
+\if@noSectionSlide\else%
+  \AtBeginSection[]
+  {
+    \ifbeamer@inframe
+      \sectionpage
+    \else
+      \begingroup
+      \setbeamercolor{background canvas}{parent=palette secondary}
+      \frame[plain]{\sectionpage}
+      \endgroup
+    \fi
+  }
+\fi
 
 %}}}
 %{{{ --- Captions ---------------------
