@@ -5,7 +5,8 @@ of the theme were described in a [blog post](http://bloerg.net/2014/09/20/a-mode
 Not convinced?  Have a look at the [demo slides](demo.pdf).
 
 
-![Sample](http://i.imgur.com/wP4uGbS.png)
+![Sample](http://i.imgur.com/Bxu52fz.png)
+
 
 
 ### Installation
@@ -64,6 +65,7 @@ title page, frame titles and dedicated section slides.
 Option `usetotalslideindicator` creates slide numbering in lower right corner
 in following format: #current/#total. By default, just current page number is
 printed.
+
 
 #### Commands
 
