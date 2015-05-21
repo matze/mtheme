@@ -152,66 +152,20 @@
 %}}}
 %{{{ --- Progressbar ------------------
 
-\makeatletter
-\def\progressbar@sectionprogressbar{}
-\def\progressbar@titleprogressbar{}
-\newcount\progressbar@tmpcounta % auxiliary counter
-\newcount\progressbar@tmpcountb % auxiliary counter
-\newdimen\progressbar@pbht      % progressbar height
-\newdimen\progressbar@pbwd      % progressbar width
-\newdimen\progressbar@tmpdim    % auxiliary dimension
-
-\progressbar@pbwd=22em
-\progressbar@pbht=0.4pt
-
-% the progress bar
-\def\progressbar@sectionprogressbar{%
-  {\usebeamercolor{palette primary}%
-    \progressbar@tmpcounta=\insertframenumber
-    \progressbar@tmpcountb=\inserttotalframenumber
-    \progressbar@tmpdim=\progressbar@pbwd
-    \divide\progressbar@tmpdim by 100
-    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-    \divide\progressbar@tmpdim by \progressbar@tmpcountb
-    \multiply\progressbar@tmpdim by 100
-
-    % fixes very high linespacing introduced via \textsc{\MakeLowercase{...}}
-    \fontsize{1em}{1em}\selectfont
-
-    \makebox[\textwidth][c]{
-      \begin{tikzpicture}[tight background]
-
-        \node[anchor=south west, fg, inner sep=0pt, text width=\progressbar@pbwd] at (0pt, 0pt) {\insertsectionHEAD};
-
-        \draw[anchor=west, fg!20, fill=fg!20, inner sep=0pt]
-        (0, -1ex) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
-
-        \draw[anchor=west, fg, fill=fg, inner sep=0pt]
-        (0, -1ex) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
-      \end{tikzpicture}%
-    }
-  } % end usebeamercolor{palette primary}
-}
-
-\if@useTitleProgressBar
-\def\progressbar@titleprogressbar{%
-  \progressbar@tmpcounta=\insertframenumber
-  \progressbar@tmpcountb=\inserttotalframenumber
-  \progressbar@tmpdim=\paperwidth
-  \divide\progressbar@tmpdim by 100
-  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-  \divide\progressbar@tmpdim by \progressbar@tmpcountb
-  \multiply\progressbar@tmpdim by 100
-  {%
-    \usebeamercolor{palette quaternary}%
-    \usebeamercolor{alerted text}%
-    \begin{tikzpicture}[tight background]
-      \draw[palette quaternary.fg, fill=palette quaternary.fg] (0, 0) rectangle ($(\paperwidth, 0.6pt) - (0.4pt, 0)$);
-      \draw[alerted text.fg, fill=alerted text.fg] (0, 0) rectangle (\progressbar@tmpdim, 0.6pt);
-    \end{tikzpicture}%
+\RequirePackage{calc}
+\newlength{\progressbar@percent}
+\newcommand{\progressbar}[1]{%
+  \setlength{\progressbar@percent}{%
+    #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
+  \usebeamercolor{palette primary}
+  \begin{tikzpicture}[tight background]
+    \draw[fg!50, fill=fg!50] (0,0) rectangle (#1, 0.4pt);
+    \draw[alerted text.fg, fill=alerted text.fg] (0,0) rectangle (\progressbar@percent, 0.4pt);
+  \end{tikzpicture}%
 }
-\fi
+
+
 %}}}
 %{{{ --- Commands ---------------------
 
@@ -253,20 +207,34 @@
 %}}}
 %{{{ --- Sections ---------------------
 
-% Insert frame with section title at every section start
-\AtBeginSection[]
+\setbeamertemplate{section page}
 {
-  \if@noSectionSlide%
-  \else%
-  \begingroup
-  \setbeamercolor{background canvas}{parent=palette primary}
-  \begin{frame}[plain]
-    \vspace{2em}\usebeamerfont{section title}
-    \progressbar@sectionprogressbar%
-  \end{frame}
-  \endgroup
-  \fi%
+  \vspace{2em}
+  \centering
+  \begin{minipage}{22em}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionHEAD\\[-1ex]
+    \progressbar{\textwidth}
+  \end{minipage}
+  \par
 }
+
+
+% Insert frame with section title at every section start
+\if@noSectionSlide\else%
+  \AtBeginSection[]
+  {
+    \ifbeamer@inframe
+      \sectionpage
+    \else
+      \begingroup
+      \setbeamercolor{background canvas}{parent=palette primary}
+      \frame[plain]{\sectionpage}
+      \endgroup
+    \fi
+  }
+\fi
 
 %}}}
 %{{{ --- Captions ---------------------
@@ -320,9 +288,9 @@
 \fi%
 \end{beamercolorbox}%
 \if@useTitleProgressBar
-  \vspace{-.5em}
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
-    \progressbar@titleprogressbar
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
+    \progressbar{\paperwidth}
   \end{beamercolorbox}
 \fi
 \vspace{\@mtheme@voffset}
