@@ -158,8 +158,9 @@
   \setlength{\progressbar@percent}{%
     #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
-  \begin{tikzpicture}
-    \draw[fg, fill=fg] (0,0) rectangle (#1, 0.4pt);
+  \usebeamercolor{palette primary}
+  \begin{tikzpicture}[tight background]
+    \draw[fg!50, fill=fg!50] (0,0) rectangle (#1, 0.4pt);
     \draw[alerted text.fg, fill=alerted text.fg] (0,0) rectangle (\progressbar@percent, 0.4pt);
   \end{tikzpicture}%
 }
@@ -228,7 +229,7 @@
       \sectionpage
     \else
       \begingroup
-      \setbeamercolor{background canvas}{parent=palette secondary}
+      \setbeamercolor{background canvas}{parent=palette primary}
       \frame[plain]{\sectionpage}
       \endgroup
     \fi
@@ -288,8 +289,7 @@
 \end{beamercolorbox}%
 \if@useTitleProgressBar
   \nointerlineskip
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1pt,dp=0pt]{frametitle}
-    \usebeamercolor{palette quaternary}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
     \progressbar{\paperwidth}
   \end{beamercolorbox}
 \fi
