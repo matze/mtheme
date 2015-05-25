@@ -22,7 +22,9 @@ and the section indicator are hardcoded into the theme. For the demo you need
 Depending on the Linux distribution, the packaged name of Fira Sans might be
 `Fira Sans OT` instead of `Fira Sans`. In that case, you may have to edit
 `beamerfontthememetropolis.sty`. You may also need to install Fira Sans; see
-the `contrib/` directory for more
+the `contrib/` directory for more. Users of Debian or Ubuntu can also install
+[this .deb package](https://launchpad.net/~edd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb)
+containing the theme files as well as the Fira Sans font files.
 
 
 ### Usage
