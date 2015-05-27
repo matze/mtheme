@@ -52,12 +52,18 @@
 \RequirePackage{etoolbox}
 \RequirePackage{tikz}
 \RequirePackage{pgfplots}
+\RequirePackage{ifxetex}
 
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{calc}
 
 \usecolortheme{metropolis}
-\usefonttheme{metropolis}
+
+\ifxetex
+  \usefonttheme{metropolis}
+\else
+  \PackageWarning{beamerthemem}{You need to compile with XeLaTeX for the Fira fonts.}
+\fi
 
 %}}}
 %{{{ --- Titlepage --------------------
