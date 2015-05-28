@@ -99,7 +99,7 @@
       \if@noSmallCapitals%
         \inserttitle%
       \else%
-        \scshape\MakeLowercase{\inserttitle}%
+        \scshape\inserttitle%
       \fi%
       \vspace*{0.5em}
     }}
@@ -181,7 +181,7 @@
 \if@noSmallCapitals%
 \newcommand{\insertsectionHEADaux}[3]{#3}%
 \else%
-\newcommand{\insertsectionHEADaux}[3]{\textsc{\MakeLowercase{#3}}}%
+\newcommand{\insertsectionHEADaux}[3]{\scshape #3}%
 \fi%
 
 \newcommand{\plain}[2][]{%
@@ -283,13 +283,13 @@
   \if@noSmallCapitals%
     \insertframetitle%
   \else%
-    \textsc{\MakeLowercase{\insertframetitle}}%
+    \scshape\insertframetitle%
   \fi%
 \else%
   \if@noSmallCapitals%
     \insertframetitle%
   \else%
-    \textsc{\MakeLowercase{\insertframetitle}}%
+    \scshape\insertframetitle%
   \fi%
 \fi%
 \end{beamercolorbox}%
