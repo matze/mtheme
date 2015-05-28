@@ -99,7 +99,7 @@
       \if@noSmallCapitals%
         \inserttitle%
       \else%
-        \scshape\inserttitle%
+        \scshape\mthemetitleformat{\inserttitle}%
       \fi%
       \vspace*{0.5em}
     }}
@@ -181,15 +181,17 @@
 \if@noSmallCapitals%
 \newcommand{\insertsectionHEADaux}[3]{#3}%
 \else%
-\newcommand{\insertsectionHEADaux}[3]{\scshape #3}%
+\newcommand{\insertsectionHEADaux}[3]{\scshape \mthemetitleformat{#3}}%
 \fi%
+
+\def\mthemetitleformat#1{#1}
 
 \newcommand{\plain}[2][]{%
   \begingroup
   \setbeamercolor{background canvas}{use=palette primary,bg=palette primary.fg}
   \begin{frame}{#1}
     \centering
-    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape #2}\vfill
+    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape \mthemetitleformat{#2}}\vfill
   \end{frame}
   \endgroup
 }
@@ -283,13 +285,13 @@
   \if@noSmallCapitals%
     \insertframetitle%
   \else%
-    \scshape\insertframetitle%
+    \scshape\mthemetitleformat{\insertframetitle}%
   \fi%
 \else%
   \if@noSmallCapitals%
     \insertframetitle%
   \else%
-    \scshape\insertframetitle%
+    \scshape\mthemetitleformat{\insertframetitle}%
   \fi%
 \fi%
 \end{beamercolorbox}%
