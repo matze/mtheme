@@ -278,19 +278,10 @@
 \nointerlineskip
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
 \usebeamerfont{frametitle}%
-\if@protectFrameTitle%
-  \protect%
-  \if@noSmallCapitals%
-    \insertframetitle%
-  \else%
-    \textsc{\MakeLowercase{\insertframetitle}}%
-  \fi%
+\if@noSmallCapitals%
+  \protect\insertframetitle%
 \else%
-  \if@noSmallCapitals%
-    \insertframetitle%
-  \else%
-    \textsc{\MakeLowercase{\insertframetitle}}%
-  \fi%
+  \textsc{\MakeLowercase{\protect\insertframetitle}}%
 \fi%
 \end{beamercolorbox}%
 \if@useTitleProgressBar
