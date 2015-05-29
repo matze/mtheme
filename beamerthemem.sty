@@ -13,13 +13,11 @@
 
 \newif\if@useTitleProgressBar
 \newif\if@protectFrameTitle
-\newif\if@noSmallCapitals
 \newif\if@noSectionSlide
 \newif\if@useTotalSlideIndicator
 
 \@useTitleProgressBarfalse
 \@protectFrameTitlefalse
-\@noSmallCapitalsfalse
 \@noSectionSlidefalse
 \@useTotalSlideIndicatorfalse
 
@@ -37,7 +35,6 @@
   \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
 }
 
-\DeclareOptionBeamer{nosmallcapitals}{\@noSmallCapitalstrue}
 \DeclareOptionBeamer{nosectionslide}{\@noSectionSlidetrue}
 \DeclareOptionBeamer{usetotalslideindicator}{\@useTotalSlideIndicatortrue}
 
@@ -96,11 +93,7 @@
       \linespread{1.0}%
       \usebeamerfont{title}%
       \usebeamercolor[fg]{title}%
-      \if@noSmallCapitals%
-        \inserttitle%
-      \else%
-        \scshape\mthemetitleformat{\inserttitle}%
-      \fi%
+      \mthemetitleformat{\inserttitle}%
       \vspace*{0.5em}
     }}
     \fi
@@ -178,20 +171,16 @@
 \newcommand{\insertsectionHEAD}{%
   \expandafter\insertsectionHEADaux\insertsectionhead}
 
-\if@noSmallCapitals%
-\newcommand{\insertsectionHEADaux}[3]{#3}%
-\else%
-\newcommand{\insertsectionHEADaux}[3]{\scshape \mthemetitleformat{#3}}%
-\fi%
+\newcommand{\insertsectionHEADaux}[3]{\mthemetitleformat{#3}}%
 
-\def\mthemetitleformat#1{#1}
+\def\mthemetitleformat#1{\scshape #1}
 
 \newcommand{\plain}[2][]{%
   \begingroup
   \setbeamercolor{background canvas}{use=palette primary,bg=palette primary.fg}
   \begin{frame}{#1}
     \centering
-    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\scshape \mthemetitleformat{#2}}\vfill
+    \vfill\vspace{1em}\usebeamerfont{section title}\textcolor{white}{\mthemetitleformat{#2}}\vfill
   \end{frame}
   \endgroup
 }
@@ -281,18 +270,9 @@
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
 \usebeamerfont{frametitle}%
 \if@protectFrameTitle%
-  \protect%
-  \if@noSmallCapitals%
-    \insertframetitle%
-  \else%
-    \scshape\mthemetitleformat{\insertframetitle}%
-  \fi%
+    \mthemetitleformat{\protect\insertframetitle}%
 \else%
-  \if@noSmallCapitals%
-    \insertframetitle%
-  \else%
-    \scshape\mthemetitleformat{\insertframetitle}%
-  \fi%
+    \mthemetitleformat{\insertframetitle}%
 \fi%
 \end{beamercolorbox}%
 \if@useTitleProgressBar
