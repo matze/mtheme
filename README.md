@@ -40,6 +40,8 @@ can run the following command
 
 #### Package options
 
+To use any of options below, call them when invoking *mtheme* in the header of your document: `\usetheme[<options>]{m}`
+
 The `usetitleprogressbar` option adds a thin progress bar similar to the section
 progress bar underneath *each* frame title
 
@@ -67,6 +69,8 @@ title page, frame titles and dedicated section slides.
 Option `usetotalslideindicator` creates slide numbering in lower right corner
 in following format: #current/#total. By default, just current page number is
 printed.
+
+Option `noslidenumbers` omits slide numbers entirely.
 
 
 #### Commands
