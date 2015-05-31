@@ -16,12 +16,14 @@
 \newif\if@noSmallCapitals
 \newif\if@noSectionSlide
 \newif\if@useTotalSlideIndicator
+\newif\if@noSlideNumbers
 
 \@useTitleProgressBarfalse
 \@protectFrameTitlefalse
 \@noSmallCapitalsfalse
 \@noSectionSlidefalse
 \@useTotalSlideIndicatorfalse
+\@noSlideNumbersfalse
 
 \newlength{\@mtheme@voffset}
 \setlength{\@mtheme@voffset}{2em}
@@ -40,6 +42,7 @@
 \DeclareOptionBeamer{nosmallcapitals}{\@noSmallCapitalstrue}
 \DeclareOptionBeamer{nosectionslide}{\@noSectionSlidetrue}
 \DeclareOptionBeamer{usetotalslideindicator}{\@useTotalSlideIndicatortrue}
+\DeclareOptionBeamer{noslidenumbers}{\@noSlideNumberstrue}
 
 \ProcessOptionsBeamer
 
@@ -256,10 +259,14 @@
 {%
 \begin{beamercolorbox}[wd=\textwidth,ht=3ex,dp=3ex,leftskip=0.3cm,rightskip=0.3cm]{structure}%
   \hfill\usebeamerfont{page number in head/foot}%
-  \if@useTotalSlideIndicator%
-  \insertframenumber/\inserttotalframenumber%
+\if@noSlideNumbers%
+  %Purposefully left blank to display no slide number.%
   \else%
-  \insertframenumber%
+    \if@useTotalSlideIndicator%
+    \insertframenumber/\inserttotalframenumber%
+    \else%
+    \insertframenumber%
+    \fi%
   \fi%
 \end{beamercolorbox}%
 }
