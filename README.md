@@ -40,6 +40,8 @@ can run the following command
 
 #### Package options
 
+To use any of options below, call them when invoking *mtheme* in the header of your document: `\usetheme[<options>]{m}`
+
 The `usetitleprogressbar` option adds a thin progress bar similar to the section
 progress bar underneath *each* frame title
 
@@ -65,6 +67,7 @@ Option `usetotalslideindicator` creates slide numbering in lower right corner
 in following format: #current/#total. By default, just current page number is
 printed.
 
+<<<<<<< HEAD
 #### Title formatting
 
 The main title, section titles, and frame titles are all formatted according
@@ -81,6 +84,10 @@ preamble. For example:
 Note that `\MakeLowercase` and `\MakeUppercase` can have unexpected behaviour
 in math mode, are disabled when `protectframetitle` is used, and cause crashes
 when an unprotected frametitle appears on a slide with `allowframebreaks`.
+=======
+Option `noslidenumbers` omits slide numbers entirely.
+
+>>>>>>> Added 'noslidenumbers' to "Package Options"
 
 #### Commands
 
