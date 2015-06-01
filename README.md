@@ -67,6 +67,8 @@ Option `usetotalslideindicator` creates slide numbering in lower right corner
 in following format: #current/#total. By default, just current page number is
 printed.
 
+Option `noslidenumbers` omits slide numbers entirely.
+
 <<<<<<< HEAD
 #### Title formatting
 
