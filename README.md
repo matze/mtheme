@@ -69,8 +69,6 @@ printed.
 
 Option `noslidenumbers` omits slide numbers entirely.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 #### Title formatting
 
 The main title, section titles, and frame titles are all formatted according
@@ -87,12 +85,6 @@ preamble. For example:
 Note that `\MakeLowercase` and `\MakeUppercase` can have unexpected behaviour
 in math mode, are disabled when `protectframetitle` is used, and cause crashes
 when an unprotected frametitle appears on a slide with `allowframebreaks`.
-=======
-Option `noslidenumbers` omits slide numbers entirely.
-
->>>>>>> Added 'noslidenumbers' to "Package Options"
-=======
->>>>>>> e84954b11b0fab8c9109d2e5101dc903f0cea7da
 
 #### Commands
 
