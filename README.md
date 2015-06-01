@@ -61,13 +61,26 @@ With option `nosectionslide`, no dedicated slide is produced when a new section
 starts. By default when using the `\section` command, a slide is created with
 just the title on it.
 
-The `nosmallcapitals` option supresses the usage of small capitals on
-title page, frame titles and dedicated section slides.
-
 Option `usetotalslideindicator` creates slide numbering in lower right corner
 in following format: #current/#total. By default, just current page number is
 printed.
 
+#### Title formatting
+
+The main title, section titles, and frame titles are all formatted according
+to the custom command `\mthemetitleformat`. By default, this is equivalent to
+`scshape` and sets the titles in small capitals, but you can change it in your
+preamble. For example:
+
+```latex
+\renewcommand{\mthemetitleformat}{}                       % no small capitals
+\renewcommand{\mthemetitleformat}{\scshape\MakeLowercase} % all small capitals
+\renewcommand{\mthemetitleformat}{\MakeUppercase}         % all capitals
+```
+
+Note that `\MakeLowercase` and `\MakeUppercase` can have unexpected behaviour
+in math mode, are disabled when `protectframetitle` is used, and cause crashes
+when an unprotected frametitle appears on a slide with `allowframebreaks`.
 
 #### Commands
 
