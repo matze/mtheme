@@ -2,11 +2,9 @@
 
 The *mtheme* is a Beamer theme with minimal visual. The core design principles
 of the theme were described in a [blog post](http://bloerg.net/2014/09/20/a-modern-beamer-theme.html).
-Not convinced?  Have a look at the [demo slides](demo.pdf).
-
+Not convinced? Have a look at the [demo slides](demo.pdf).
 
 ![Sample](http://i.imgur.com/Bxu52fz.png)
-
 
 
 ### Installation
@@ -26,12 +24,14 @@ the `contrib/` directory for more. Users of Debian or Ubuntu can also install
 [this .deb package](https://launchpad.net/~edd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb)
 containing the theme files as well as the Fira Sans font files.
 
+To build the demo slides run
 
-### Usage
+    $ make
 
-To build the demo slides just run `make` in the top-level directory. To use this
-theme with [Pandoc](http://johnmacfarlane.net/pandoc/)-based presentations, you
-can run the following command
+in the top-level directory.
+
+To use this theme with [Pandoc](http://johnmacfarlane.net/pandoc/)-based
+presentations, you can run the following command
 
     $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 
@@ -40,35 +40,32 @@ can run the following command
 
 #### Package options
 
-To use any of options below, call them when invoking *mtheme* in the header of
-your document: `\usetheme[<options>]{m}`
+To use any of options below, call them when invoking *mtheme* in the preabmle of
+the slides, i.e.
 
-The `usetitleprogressbar` option adds a thin progress bar similar to the section
-progress bar underneath *each* frame title
+```latex
+  \usetheme[<options>]{m}
+```
+
+* The `usetitleprogressbar` option adds a thin progress bar similar to the
+  section progress bar underneath *each* frame title
 
   ![Progressbar](http://i.imgur.com/4BXHU4K.png)
-
-In order to use `\cite`, `\ref` and similar commands in a frame title you have
-to protect the title. This can be done automatically with the
-`protectframetitle` option.
-
-The `blockbg` option defines extra colors used in defining the blocks.
-The blocks then have a gray background similar to other beamer themes.
-
-By default, this package adds `\vspace{2em}` after the frametitle to
-make content more centered on the frame. If using more content per
-slide, this can be turned off at the package-level by passing the
-`nooffset` option.
-
-With option `nosectionslide`, no dedicated slide is produced when a new section
-starts. By default when using the `\section` command, a slide is created with
-just the title on it.
-
-Option `usetotalslideindicator` creates slide numbering in lower right corner
-in following format: #current/#total. By default, just current page number is
-printed.
-
-Option `noslidenumbers` omits slide numbers entirely.
+* In order to use `\cite`, `\ref` and similar commands in a frame title you have
+  to protect the title. This can be done automatically with the
+  `protectframetitle` option.
+* The `blockbg` option defines extra colors used in defining the blocks.  The
+  blocks then have a gray background similar to other beamer themes.
+* By default, this package adds `\vspace{2em}` after the frametitle to center
+  content vertically on the frame. If using more content per slide, this can be
+  turned off at the package-level by passing the `nooffset` option.
+* With option `nosectionslide`, no dedicated slide is produced when a new
+  section starts. By default when using the `\section` command, a slide is
+  created with just the title on it.
+* Option `usetotalslideindicator` creates slide numbering in lower right corner
+  in following format: #current/#total. By default, just current page number is
+  printed.
+* Option `noslidenumbers` omits slide numbers entirely.
 
 
 #### Title formatting
