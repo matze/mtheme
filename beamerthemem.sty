@@ -9,41 +9,90 @@
 
 \ProvidesPackage{beamerthemem}
 
-%{{{ --- Options ----------------------
+
+
+% Options & customization
+% =======================
+%
+% To use any of options below, call them when invoking `mtheme` in the
+% preamble of your slides:
+%
+%   \usetheme[<options>]{m}
+%
+
+% Option: usetitleprogressbar
+%         adds a thin progress bar underneath each frame title
 
 \newif\if@useTitleProgressBar
-\newif\if@protectFrameTitle
-\newif\if@noSectionSlide
-\newif\if@useTotalSlideIndicator
-\newif\if@noSlideNumbers
-
 \@useTitleProgressBarfalse
-\@protectFrameTitlefalse
-\@noSectionSlidefalse
+\DeclareOptionBeamer{usetitleprogressbar}{
+  \@useTitleProgressBartrue
+}
+
+% Option: usetotalslideindicator
+%         formats slide numbering as #current/#total
+
+\newif\if@useTotalSlideIndicator
 \@useTotalSlideIndicatorfalse
+\DeclareOptionBeamer{usetotalslideindicator}{
+  \@useTotalSlideIndicatortrue
+}
+
+% Option: noslidenumbers
+%         omits slide numbering entirely
+
+\newif\if@noSlideNumbers
 \@noSlideNumbersfalse
+\DeclareOptionBeamer{noslidenumbers}{
+  \@noSlideNumberstrue
+}
+
+% Option: nosectionslide
+%         omits the dedicated slide at the start of each new section
+
+\newif\if@noSectionSlide
+\@noSectionSlidefalse
+\DeclareOptionBeamer{nosectionslide}{
+  \@noSectionSlidetrue
+}
+
+% Option: protectframetitle
+%         applies \protect to \insertframetitle to allow \cite, \ref, etc.
+
+\newif\if@protectFrameTitle
+\@protectFrameTitlefalse
+\DeclareOptionBeamer{protectframetitle}{
+  \@protectFrameTitletrue
+}
+
+% Option: nooffset
+%         turns off extra space used to vertically center content on frames
 
 \newlength{\@mtheme@voffset}
 \setlength{\@mtheme@voffset}{2em}
+\DeclareOptionBeamer{nooffset}{
+  \setlength{\@mtheme@voffset}{0em}
+}
 
-\DeclareOptionBeamer{usetitleprogressbar}{\@useTitleProgressBartrue}
-\DeclareOptionBeamer{protectframetitle}{\@protectFrameTitletrue}
-\DeclareOptionBeamer{blockbg}{%
+% Option: blockbg
+%         applies a gray background to blocks (via color theme `metropolis`)
+
+\DeclareOptionBeamer{blockbg}{
   \PassOptionsToPackage{blockbg}{beamercolorthememetropolis}%
 }
-\DeclareOptionBeamer{nooffset}{\setlength{\@mtheme@voffset}{0em}}
 
-\DeclareOptionBeamer*{%
+% Option: ...
+
+\DeclareOptionBeamer*{
   \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
 }
 
-\DeclareOptionBeamer{nosectionslide}{\@noSectionSlidetrue}
-\DeclareOptionBeamer{usetotalslideindicator}{\@useTotalSlideIndicatortrue}
-\DeclareOptionBeamer{noslidenumbers}{\@noSlideNumberstrue}
-
 \ProcessOptionsBeamer
 
-%}}}
+% Customize: \mthemetitleformat
+%            formats the main title, section titles, and frame titles
+
+\def\mthemetitleformat#1{\scshape #1}
 
 \mode<presentation>
 
@@ -175,8 +224,6 @@
   \expandafter\insertsectionHEADaux\insertsectionhead}
 
 \newcommand{\insertsectionHEADaux}[3]{\mthemetitleformat{#3}}%
-
-\def\mthemetitleformat#1{\scshape #1}
 
 \newcommand{\plain}[2][]{%
   \begingroup
