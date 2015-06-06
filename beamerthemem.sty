@@ -52,14 +52,24 @@
 \RequirePackage{etoolbox}
 \RequirePackage{tikz}
 \RequirePackage{pgfplots}
-\RequirePackage{ifxetex}
+\RequirePackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
 
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{calc}
 
 \usecolortheme{metropolis}
 
-\ifxetex
+\ifxetexorluatex
   \usefonttheme{metropolis}
 \else
   \PackageWarning{beamerthemem}{You need to compile with XeLaTeX for the Fira fonts.}
