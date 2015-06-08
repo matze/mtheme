@@ -1,0 +1,58 @@
+% Beamer mtheme
+%
+% Copyright 2014 Matthias Vogelgesang
+% Licensed under CC-BY-SA 4.0 International.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
+% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+%
+
+%}}}
+%{{{ --- Options ----------------------
+
+\newif\if@beamer@metropolis@blockbg
+\@beamer@metropolis@blockbgfalse
+\DeclareOptionBeamer{blockbg}{\@beamer@metropolis@blockbgtrue}
+
+\DeclareOptionBeamer*{%
+  \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
+}
+
+\ProcessOptionsBeamer
+
+\setbeamercolor{palette primary}{fg=mDarkTeal, bg=black!2}
+\setbeamercolor{palette secondary}{fg=white, bg=mDarkTeal}
+\setbeamercolor{palette tertiary}{fg=white, bg=mMedium}
+\setbeamercolor{palette quaternary}{fg=mDark}
+
+\setbeamercolor{title}{parent=palette primary}
+\setbeamercolor{subtitle}{parent=palette primary}
+\setbeamercolor{author}{parent=palette primary}
+\setbeamercolor{date}{parent=palette primary}
+\setbeamercolor{institute}{parent=palette primary}
+
+\setbeamercolor{section title}{parent=palette primary}
+\setbeamercolor{frametitle}{parent=palette secondary}
+\setbeamercolor{background canvas}{parent=palette primary}
+\setbeamercolor{structure}{fg=mDarkTeal}
+
+\setbeamercolor{normal text}{fg=black!97}
+\setbeamercolor{alerted text}{fg=mLight}
+
+\setbeamercolor{footnote}{fg=mDarkTeal!90}
+\setbeamercolor{footnote mark}{fg=.}
+\setbeamercolor{page number in head/foot}{fg=mDarkTeal}
+
+\if@beamer@metropolis@blockbg
+
+\setbeamercolor{block title}{use=palette primary,parent=palette primary,bg=palette primary.bg!80!fg}
+\setbeamercolor{block title alerted}{use={palette primary,alerted text},parent=palette primary,fg=alerted text.fg,bg=palette primary.bg!80!fg}
+\setbeamercolor{block title example}{use={palette primary,example text},parent=palette primary,fg=example text.fg,bg=palette primary.bg!80!fg}
+
+\setbeamercolor{block body}{use=block title,parent=normal text,bg=block title.bg!50}
+\setbeamercolor{block body alerted}{use={normal text,block body},parent=normal text,bg=block body.bg}
+\setbeamercolor{block body example}{use={normal text,block body},parent=normal text,bg=block body.bg}
+
+\fi
+
+\mode<all>
