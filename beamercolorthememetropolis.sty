@@ -27,17 +27,16 @@
 %{{{ --- Colors ---------------------
 
 % http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
+\definecolor{mPrimaryDark}{HTML}{23373b}
+\definecolor{mSecondaryDark}{HTML}{604c38}
+\definecolor{mMedium}{HTML}{C87A2F}
+\definecolor{mLight}{HTML}{EB811B}
 
-\definecolor{mDarkBrown}{HTML}{604c38}
-\definecolor{mDarkTeal}{HTML}{23373b}
 
-\definecolor{mLightBrown}{HTML}{EB811B}
-\definecolor{mMediumBrown}{HTML}{C87A2F}
-
-\setbeamercolor{palette primary}{fg=mDarkTeal, bg=black!2}
-\setbeamercolor{palette secondary}{fg=white, bg=mDarkTeal}
-\setbeamercolor{palette tertiary}{fg=white, bg=mMediumBrown}
-\setbeamercolor{palette quaternary}{fg=mDarkBrown}
+\setbeamercolor{palette primary}{fg=mPrimaryDark, bg=black!2}
+\setbeamercolor{palette secondary}{fg=white, bg=mPrimaryDark}
+\setbeamercolor{palette tertiary}{fg=white, bg=mMedium}
+\setbeamercolor{palette quaternary}{fg=mSecondaryDark}
 
 \setbeamercolor{title}{parent=palette primary}
 \setbeamercolor{subtitle}{parent=palette primary}
@@ -48,14 +47,14 @@
 \setbeamercolor{section title}{parent=palette primary}
 \setbeamercolor{frametitle}{parent=palette secondary}
 \setbeamercolor{background canvas}{parent=palette primary}
-\setbeamercolor{structure}{fg=mDarkTeal}
+\setbeamercolor{structure}{fg=mPrimaryDark}
 
 \setbeamercolor{normal text}{fg=black!97}
-\setbeamercolor{alerted text}{fg=mLightBrown}
+\setbeamercolor{alerted text}{fg=mLight}
 
-\setbeamercolor{footnote}{fg=mDarkTeal!90}
+\setbeamercolor{footnote}{fg=mPrimaryDark!90}
 \setbeamercolor{footnote mark}{fg=.}
-\setbeamercolor{page number in head/foot}{fg=mDarkTeal}
+\setbeamercolor{page number in head/foot}{fg=mPrimaryDark}
 
 \if@beamer@metropolis@blockbg
 
