@@ -220,9 +220,8 @@
     #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
   \begin{tikzpicture}[tight background]
-    \usebeamercolor{progress bar incomplete}
-    \draw[fg, fill=fg] (0,0) rectangle (#1, 0.4pt);
     \usebeamercolor{progress bar}
+    \draw[bg, fill=bg] (0,0) rectangle (#1, 0.4pt);
     \draw[fg, fill=fg] (0,0) rectangle (\progressbar@percent, 0.4pt);
   \end{tikzpicture}%
 }
