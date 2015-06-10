@@ -44,12 +44,12 @@
 % Base colors
 % ===========
 %
-% The metropolis color theme is defined in terms of four main styles:
+% The metropolis color theme is defined in terms of several main styles:
 %
 % - normal text     (dark fg, light bg)
 % - alerted text    (colored fg, should be visible against dark or light)
 % - example text    (colored fg, should be visible against dark or light)
-% - structure       (dark-ish fg)
+% - progress bar    (colored fg, light-ish bg)
 % - palette primary (light fg, dark bg)
 % - block title     (dark fg, light-ish bg)
 %
@@ -73,8 +73,10 @@
   fg=mLightGreen
 }
 
-\setbeamercolor{structure}{%
-  fg=mDarkTeal!50
+\setbeamercolor{progress bar}{%
+  use=alerted text,
+  fg=alerted text.fg,
+  bg=mDarkTeal!50
 }
 
 \setbeamercolor{palette primary}{%
@@ -106,14 +108,14 @@
 %
 
 \setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
-\setbeamercolor{progress bar}{%
-  use={alerted text, structure},
-  fg=alerted text.fg,
-  bg=structure.fg
-}
 
 \setbeamercolor{background canvas}{use=normal text, parent=normal text}
 \setbeamercolor{titlelike}{use=normal text, parent=normal text}
+\setbeamercolor{structure}{%
+  % This would be parent=normal text, but the inheritance is overriden by the
+  % explicity color definition for structure in `beamercolorthemedefault.sty`
+  fg=normal text.fg
+}
 
 \setbeamercolor{footnote}{fg=normal text.fg!90}
 \setbeamercolor{footnote mark}{fg=.}
