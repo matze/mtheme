@@ -3,19 +3,23 @@
 % Copyright 2014 Matthias Vogelgesang
 % Licensed under CC-BY-SA 4.0 International.
 %
-% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
-% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
-%
 
 \ProvidesPackage{beamercolorthememetropolis}
 
 
-%}}}
-%{{{ --- Options ----------------------
+% Options
+% =======
+
+% Option: blockbg
+%         applies a gray background to blocks
 
 \newif\if@beamer@metropolis@blockbg
 \@beamer@metropolis@blockbgfalse
-\DeclareOptionBeamer{blockbg}{\@beamer@metropolis@blockbgtrue}
+\DeclareOptionBeamer{blockbg}{
+    \@beamer@metropolis@blockbgtrue
+}
+
+% Option: ...
 
 \DeclareOptionBeamer*{%
   \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
@@ -23,50 +27,92 @@
 
 \ProcessOptionsBeamer
 
-%}}}
-%{{{ --- Colors ---------------------
 
-% http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
+
+% Color definitions
+% =================
+%
+% See http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
+%
 
 \definecolor{mDarkBrown}{HTML}{604c38}
 \definecolor{mDarkTeal}{HTML}{23373b}
-
 \definecolor{mLightBrown}{HTML}{EB811B}
-\definecolor{mMediumBrown}{HTML}{C87A2F}
 
-\setbeamercolor{palette primary}{fg=mDarkTeal, bg=black!2}
-\setbeamercolor{palette secondary}{fg=white, bg=mDarkTeal}
-\setbeamercolor{palette tertiary}{fg=white, bg=mMediumBrown}
-\setbeamercolor{palette quaternary}{fg=mDarkBrown}
 
-\setbeamercolor{title}{parent=palette primary}
-\setbeamercolor{subtitle}{parent=palette primary}
-\setbeamercolor{author}{parent=palette primary}
-\setbeamercolor{date}{parent=palette primary}
-\setbeamercolor{institute}{parent=palette primary}
 
-\setbeamercolor{section title}{parent=palette primary}
-\setbeamercolor{frametitle}{parent=palette secondary}
-\setbeamercolor{background canvas}{parent=palette primary}
-\setbeamercolor{structure}{fg=mDarkTeal}
+% Base colors
+% ===========
+%
+% The metropolis color theme is defined in terms of four main styles:
+%
+% - normal text  (dark fg, light bg)
+% - alerted text (colored fg, should be visible against dark or light)
+% - structure    (light fg, dark bg)
+% - block title  (dark fg, light-ish bg)
+%
+% An easy way to customize the theme is to redefine these colors using
+%
+%     \setbeamercolor{ ... }{ fg= ... , bg= ... }
+%
+% in your preamble.
+%
 
-\setbeamercolor{normal text}{fg=black!97}
-\setbeamercolor{alerted text}{fg=mLightBrown}
+\setbeamercolor{normal text}{%
+  fg=mDarkTeal,
+  bg=black!2
+}
 
-\setbeamercolor{footnote}{fg=mDarkTeal!90}
-\setbeamercolor{footnote mark}{fg=.}
-\setbeamercolor{page number in head/foot}{fg=mDarkTeal}
+\setbeamercolor{alerted text}{%
+  fg=mLightBrown
+}
+
+\setbeamercolor{structure}{%
+  fg=white,
+  bg=mDarkTeal
+}
 
 \if@beamer@metropolis@blockbg
-
-\setbeamercolor{block title}{use=palette primary,parent=palette primary,bg=palette primary.bg!80!fg}
-\setbeamercolor{block title alerted}{use={palette primary,alerted text},parent=palette primary,fg=alerted text.fg,bg=palette primary.bg!80!fg}
-\setbeamercolor{block title example}{use={palette primary,example text},parent=palette primary,fg=example text.fg,bg=palette primary.bg!80!fg}
-
-\setbeamercolor{block body}{use=block title,parent=normal text,bg=block title.bg!50}
-\setbeamercolor{block body alerted}{use={normal text,block body},parent=normal text,bg=block body.bg}
-\setbeamercolor{block body example}{use={normal text,block body},parent=normal text,bg=block body.bg}
-
+  \setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=normal text.bg!80!fg
+  }
+\else
+  \setbeamercolor{block title}{use=normal text, parent=normal text}
 \fi
+
+
+
+% Derived colors
+% ==============
+%
+% These colors are all defined in terms of the four above. Beamer colors not
+% defined here are inherited from `beamercolorthemedefault.sty`
+%
+
+\setbeamercolor{frametitle}{use=structure, parent=structure}
+
+\setbeamercolor{background canvas}{use=normal text, parent=normal text}
+\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
+
+\setbeamercolor{block body}{
+  use=block title,
+  bg=block title.bg!50
+}
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+
 
 \mode<all>
