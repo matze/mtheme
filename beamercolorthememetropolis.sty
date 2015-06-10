@@ -44,14 +44,11 @@
 % Base colors
 % ===========
 %
-% The metropolis color theme is defined in terms of several main styles:
+% The metropolis color theme is defined in terms of three fundamental styles:
 %
 % - normal text     (dark fg, light bg)
 % - alerted text    (colored fg, should be visible against dark or light)
 % - example text    (colored fg, should be visible against dark or light)
-% - progress bar    (colored fg, light-ish bg)
-% - palette primary (light fg, dark bg)
-% - block title     (dark fg, light-ish bg)
 %
 % An easy way to customize the theme is to redefine these colors using
 %
@@ -73,14 +70,32 @@
   fg=mLightGreen
 }
 
-\setbeamercolor{progress bar}{%
-  use=alerted text,
-  fg=alerted text.fg,
-  bg=normal text.bg!50!fg
+
+
+% Derived colors
+% ==============
+%
+% These colors are all defined in terms of the above and will update their
+% appearance if `normal text`, `alerted text`, or `example text` is customized.
+%
+% You may also redefine these in your preamble for greater control over the
+% customization. Beamer colors not defined here are inherited from
+% `beamercolorthemedefault.sty`
+%
+
+% Reset titles and structure to normal text
+
+\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+\setbeamercolor{structure}{%
+  % This would be parent=normal text, but the inheritance is overriden by the
+  % explicity color definition for structure in `beamercolorthemedefault.sty`
+  fg=normal text.fg
 }
 
-\setbeamercolor{title separator}{use=progress bar, parent=progress bar}
 
+% Frame titles and `\plain` slides
+
+\setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
 \setbeamercolor{palette primary}{%
   % The “primary” palette should be used for the most important navigational
   % elements, and possibly of other elements.
@@ -89,6 +104,19 @@
   fg=normal text.bg,
   bg=normal text.fg
 }
+
+
+% Progress bar and title separator
+
+\setbeamercolor{title separator}{use=progress bar, parent=progress bar}
+\setbeamercolor{progress bar}{%
+  use=alerted text,
+  fg=alerted text.fg,
+  bg=normal text.bg!50!fg
+}
+
+
+% Blocks
 
 \if@beamer@metropolis@blockbg
   \setbeamercolor{block title}{%
@@ -100,34 +128,6 @@
   \setbeamercolor{block title}{use=normal text, parent=normal text}
 \fi
 
-
-
-% Derived colors
-% ==============
-%
-% These colors are all defined in terms of the four above. Beamer colors not
-% defined here are inherited from `beamercolorthemedefault.sty`
-%
-
-\setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
-
-\setbeamercolor{background canvas}{use=normal text, parent=normal text}
-\setbeamercolor{titlelike}{use=normal text, parent=normal text}
-\setbeamercolor{structure}{%
-  % This would be parent=normal text, but the inheritance is overriden by the
-  % explicity color definition for structure in `beamercolorthemedefault.sty`
-  fg=normal text.fg
-}
-
-\setbeamercolor{footnote}{fg=normal text.fg!90}
-\setbeamercolor{footnote mark}{fg=.}
-
-\setbeamercolor{block body}{
-  use={block title, normal text},
-  bg=block title.bg!50!normal text.bg
-}
-\setbeamercolor{block body alerted}{use=block body, parent=block body}
-\setbeamercolor{block body example}{use=block body, parent=block body}
 \setbeamercolor{block title alerted}{%
     use={block title, alerted text},
     bg=block title.bg,
@@ -138,6 +138,19 @@
     bg=block title.bg,
     fg=example text.fg
 }
+
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+\setbeamercolor{block body}{
+  use={block title, normal text},
+  bg=block title.bg!50!normal text.bg
+}
+
+
+% Footnotes
+
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
 
 
 \mode<all>
