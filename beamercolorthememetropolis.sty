@@ -38,7 +38,7 @@
 \definecolor{mDarkBrown}{HTML}{604c38}
 \definecolor{mDarkTeal}{HTML}{23373b}
 \definecolor{mLightBrown}{HTML}{EB811B}
-
+\definecolor{mLightGreen}{HTML}{14B03D}
 
 
 % Base colors
@@ -46,10 +46,12 @@
 %
 % The metropolis color theme is defined in terms of four main styles:
 %
-% - normal text  (dark fg, light bg)
-% - alerted text (colored fg, should be visible against dark or light)
-% - structure    (light fg, dark bg)
-% - block title  (dark fg, light-ish bg)
+% - normal text     (dark fg, light bg)
+% - alerted text    (colored fg, should be visible against dark or light)
+% - example text    (colored fg, should be visible against dark or light)
+% - structure       (dark-ish fg)
+% - palette primary (light fg, dark bg)
+% - block title     (dark fg, light-ish bg)
 %
 % An easy way to customize the theme is to redefine these colors using
 %
@@ -67,9 +69,21 @@
   fg=mLightBrown
 }
 
+\setbeamercolor{example text}{%
+  fg=mLightGreen
+}
+
 \setbeamercolor{structure}{%
-  fg=white,
-  bg=mDarkTeal
+  fg=mDarkTeal!50
+}
+
+\setbeamercolor{palette primary}{%
+  % The “primary” palette should be used for the most important navigational
+  % elements, and possibly of other elements.
+  % The metropolis color theme uses it for frame titles and `\plain` slides.
+  use=normal text,
+  fg=normal text.bg,
+  bg=normal text.fg
 }
 
 \if@beamer@metropolis@blockbg
@@ -91,7 +105,7 @@
 % defined here are inherited from `beamercolorthemedefault.sty`
 %
 
-\setbeamercolor{frametitle}{use=structure, parent=structure}
+\setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
 
 \setbeamercolor{background canvas}{use=normal text, parent=normal text}
 \setbeamercolor{titlelike}{use=normal text, parent=normal text}
@@ -100,9 +114,11 @@
 \setbeamercolor{footnote mark}{fg=.}
 
 \setbeamercolor{block body}{
-  use=block title,
-  bg=block title.bg!50
+  use={block title, normal text},
+  bg=block title.bg!50!normal text.bg
 }
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
 \setbeamercolor{block title alerted}{%
     use={block title, alerted text},
     bg=block title.bg,

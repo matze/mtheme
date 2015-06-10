@@ -236,12 +236,12 @@
 
 \newcommand{\plain}[2][]{%
   \begingroup
-    \setbeamercolor{background canvas}{use=structure,parent=structure}
+    \setbeamercolor{background canvas}{use=palette primary,parent=palette primary}
     \begin{frame}{#1}
       \centering
       \vfill
       \vspace{1em}
-      \usebeamercolor[fg]{structure}
+      \usebeamercolor[fg]{palette primary}
       \usebeamerfont{section title}
       \mthemetitleformat{#2}
       \vfill
