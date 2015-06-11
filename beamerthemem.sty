@@ -215,6 +215,7 @@
 %{{{ --- Progressbar ------------------
 
 \RequirePackage{calc}
+\def\inserttotalframenumber{100}  % prevent \progressbar@percent from getting too big on first compile
 \newlength{\progressbar@percent}
 \newcommand{\progressbar}[1]{%
   \setlength{\progressbar@percent}{%
