@@ -40,11 +40,11 @@ presentations, you can run the following command
 
 #### Package options
 
-To use any of options below, call them when invoking *mtheme* in the preabmle of
+To use any of options below, call them when invoking *mtheme* in the preamble of
 the slides, i.e.
 
 ```latex
-  \usetheme[<options>]{m}
+\usetheme[<options>]{m}
 ```
 
 * The `usetitleprogressbar` option adds a thin progress bar similar to the
@@ -66,6 +66,25 @@ the slides, i.e.
   in following format: #current/#total. By default, just current page number is
   printed.
 * Option `noslidenumbers` omits slide numbers entirely.
+
+#### Color customization
+
+The included `metropolis` color theme is used by default, but its colours can
+be easily changed to suit your tastes. All of the theme's styles are defined
+in terms of three beamer colors:
+
+- `normal text`     (dark fg, light bg)
+- `alerted text`    (colored fg, should be visible against dark or light)
+- `example text`    (colored fg, should be visible against dark or light)
+
+An easy way to customize the theme is to redefine these colors using
+
+```latex
+\setbeamercolor{ ... }{ fg= ... , bg= ... }
+```
+
+in your preamble. For greater customization, you can redefine any of the other
+colors in `beamercolorthememetropolis`, including `progress bar`.
 
 
 #### Title formatting

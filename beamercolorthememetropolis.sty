@@ -3,19 +3,23 @@
 % Copyright 2014 Matthias Vogelgesang
 % Licensed under CC-BY-SA 4.0 International.
 %
-% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
-% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
-%
 
 \ProvidesPackage{beamercolorthememetropolis}
 
 
-%}}}
-%{{{ --- Options ----------------------
+% Options
+% =======
+
+% Option: blockbg
+%         applies a gray background to blocks
 
 \newif\if@beamer@metropolis@blockbg
 \@beamer@metropolis@blockbgfalse
-\DeclareOptionBeamer{blockbg}{\@beamer@metropolis@blockbgtrue}
+\DeclareOptionBeamer{blockbg}{
+    \@beamer@metropolis@blockbgtrue
+}
+
+% Option: ...
 
 \DeclareOptionBeamer*{%
   \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
@@ -23,50 +27,130 @@
 
 \ProcessOptionsBeamer
 
-%}}}
-%{{{ --- Colors ---------------------
 
-% http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
+
+% Color definitions
+% =================
+%
+% See http://paletton.com/#uid=7050t0kkJkJsntwoyp6gYgoddc4
+%
 
 \definecolor{mDarkBrown}{HTML}{604c38}
 \definecolor{mDarkTeal}{HTML}{23373b}
-
 \definecolor{mLightBrown}{HTML}{EB811B}
-\definecolor{mMediumBrown}{HTML}{C87A2F}
+\definecolor{mLightGreen}{HTML}{14B03D}
 
-\setbeamercolor{palette primary}{fg=mDarkTeal, bg=black!2}
-\setbeamercolor{palette secondary}{fg=white, bg=mDarkTeal}
-\setbeamercolor{palette tertiary}{fg=white, bg=mMediumBrown}
-\setbeamercolor{palette quaternary}{fg=mDarkBrown}
 
-\setbeamercolor{title}{parent=palette primary}
-\setbeamercolor{subtitle}{parent=palette primary}
-\setbeamercolor{author}{parent=palette primary}
-\setbeamercolor{date}{parent=palette primary}
-\setbeamercolor{institute}{parent=palette primary}
+% Base colors
+% ===========
+%
+% The metropolis color theme is defined in terms of three fundamental styles:
+%
+% - normal text     (dark fg, light bg)
+% - alerted text    (colored fg, should be visible against dark or light)
+% - example text    (colored fg, should be visible against dark or light)
+%
+% An easy way to customize the theme is to redefine these colors using
+%
+%     \setbeamercolor{ ... }{ fg= ... , bg= ... }
+%
+% in your preamble.
+%
 
-\setbeamercolor{section title}{parent=palette primary}
-\setbeamercolor{frametitle}{parent=palette secondary}
-\setbeamercolor{background canvas}{parent=palette primary}
-\setbeamercolor{structure}{fg=mDarkTeal}
+\setbeamercolor{normal text}{%
+  fg=mDarkTeal,
+  bg=black!2
+}
 
-\setbeamercolor{normal text}{fg=black!97}
-\setbeamercolor{alerted text}{fg=mLightBrown}
+\setbeamercolor{alerted text}{%
+  fg=mLightBrown
+}
 
-\setbeamercolor{footnote}{fg=mDarkTeal!90}
-\setbeamercolor{footnote mark}{fg=.}
-\setbeamercolor{page number in head/foot}{fg=mDarkTeal}
+\setbeamercolor{example text}{%
+  fg=mLightGreen
+}
+
+
+
+% Derived colors
+% ==============
+%
+% These colors are all defined in terms of the above and will update their
+% appearance if `normal text`, `alerted text`, or `example text` is customized.
+%
+% You may also redefine these in your preamble for greater control over the
+% customization. Beamer colors not defined here are inherited from
+% `beamercolorthemedefault.sty`
+%
+
+% Reset titles and structure to normal text
+
+\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+\setbeamercolor{structure}{%
+  % This would be parent=normal text, but the inheritance is overriden by the
+  % explicity color definition for structure in `beamercolorthemedefault.sty`
+  fg=normal text.fg
+}
+
+
+% Frame titles and `\plain` slides
+
+\setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
+\setbeamercolor{palette primary}{%
+  % The “primary” palette should be used for the most important navigational
+  % elements, and possibly of other elements.
+  % The metropolis color theme uses it for frame titles and `\plain` slides.
+  use=normal text,
+  fg=normal text.bg,
+  bg=normal text.fg
+}
+
+
+% Progress bar and title separator
+
+\setbeamercolor{title separator}{use=progress bar, parent=progress bar}
+\setbeamercolor{progress bar}{%
+  use=alerted text,
+  fg=alerted text.fg,
+  bg=normal text.bg!50!fg
+}
+
+
+% Blocks
 
 \if@beamer@metropolis@blockbg
-
-\setbeamercolor{block title}{use=palette primary,parent=palette primary,bg=palette primary.bg!80!fg}
-\setbeamercolor{block title alerted}{use={palette primary,alerted text},parent=palette primary,fg=alerted text.fg,bg=palette primary.bg!80!fg}
-\setbeamercolor{block title example}{use={palette primary,example text},parent=palette primary,fg=example text.fg,bg=palette primary.bg!80!fg}
-
-\setbeamercolor{block body}{use=block title,parent=normal text,bg=block title.bg!50}
-\setbeamercolor{block body alerted}{use={normal text,block body},parent=normal text,bg=block body.bg}
-\setbeamercolor{block body example}{use={normal text,block body},parent=normal text,bg=block body.bg}
-
+  \setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=normal text.bg!80!fg
+  }
+\else
+  \setbeamercolor{block title}{use=normal text, parent=normal text}
 \fi
+
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+\setbeamercolor{block body}{
+  use={block title, normal text},
+  bg=block title.bg!50!normal text.bg
+}
+
+
+% Footnotes
+
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
+
 
 \mode<all>
