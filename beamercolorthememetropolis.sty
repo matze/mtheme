@@ -19,6 +19,18 @@
     \@beamer@metropolis@blockbgtrue
 }
 
+% Options
+% =======
+
+% Option: invertcolors
+%         makes the background dark and the foreground light
+
+\newif\if@beamer@metropolis@invertcolors
+\@beamer@metropolis@invertcolorsfalse
+\DeclareOptionBeamer{invertcolors}{
+    \@beamer@metropolis@invertcolorstrue
+}
+
 % Option: ...
 
 \DeclareOptionBeamer*{%
@@ -57,10 +69,17 @@
 % in your preamble.
 %
 
-\setbeamercolor{normal text}{%
-  fg=mDarkTeal,
-  bg=black!2
-}
+\if@beamer@metropolis@invertcolors
+  \setbeamercolor{normal text}{%
+    fg=black!2,
+    bg=mDarkTeal
+  }
+\else
+  \setbeamercolor{normal text}{%
+    fg=mDarkTeal,
+    bg=black!2
+  }
+\fi
 
 \setbeamercolor{alerted text}{%
   fg=mLightBrown
