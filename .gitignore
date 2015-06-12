@@ -33,3 +33,5 @@ demo.pdf
 *.vrb
 *.xdy
 *.tdo
+
+package/.temptex

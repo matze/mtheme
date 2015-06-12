@@ -24,6 +24,9 @@
              ItalicFont={Fira Sans Light Italic},%
              BoldFont={Fira Sans}]{Fira Sans Light}
 \setmonofont{Fira Mono}
+\defaultfontfeatures{Ligatures=TeX}
+
+\usepackage{pythontex}
 
 \usepackage{enumitem}
 \setlist[itemize]{noitemsep}
@@ -117,6 +120,35 @@ To get started with the theme is very simple. The following code shows a minimal
 \section{License}
 
 The theme itself is licensed under a \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International License}. This means that if you change the theme and re-distribute it, you must retain the copyright notice header and license it under the same CC-BY-SA license. This does not affect the presentation that you create with the theme.
+
+\section{Contributors}
+\begin{pycode}
+import httplib
+import json
+
+URL = 'api.github.com'
+REQ = '/repos/matze/mtheme/contributors'
+USER_AGENT = ("curl/7.13.2 " +
+              "(i386-pc-linux-gnu) " +
+              "libcurl/7.13.2 " +
+              "OpenSSL/0.9.7e" +
+              "zlib/1.2.2" +
+              "libidn/0.5.13")
+HEADERS = {"User-Agent": USER_AGENT}
+
+conn = httplib.HTTPSConnection(URL)
+conn.request('GET', REQ, None, HEADERS)
+resp = conn.getresponse()
+
+print('\\begin{itemize}')
+if resp.status == 200:
+    data = json.loads(resp.read())
+    for name, url in ((c['login'], c['html_url']) for c in data):
+        print("    \\item \\href{%s}{%s}" % (url, name))
+else:
+    print("    \\item Couldn't get contributors")
+print('\\end{itemize}')
+\end{pycode}
 
 \section{Implementation}
 \DocInput{beamerthemem.dtx}
