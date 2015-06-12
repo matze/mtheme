@@ -1,0 +1,211 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2015 by Matthias Vogelgesang <matthias.vogelgesang@gmail.com>
+% ---------------------------------------------------------------------------
+% Licensed under CC-BY-SA 4.0 International.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss,
+% which you can find at https://github.com/benjamin-weiss/hsrmbeamertheme.
+% ---------------------------------------------------------------------------
+%
+% The Current Maintainer of this work is Michael Vogelgesang.
+%
+% This work consists of the files beamercolorthememetropolis.dtx and
+% beamercolorthememetropolis.ins and the derived filebase
+% beamercolorthememetropolis.sty.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{beamercolorthememetropolis.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{beamercolorthememetropolis}
+%<*package>
+    [2015/06/12 1.0.0 A Modern Beamer Color Theme]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{beamercolorthememetropolis}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{beamercolorthememetropolis.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{1.0.0}{2015/06/12}{Initial Stable Release.}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+
+%
+% \StopEventually{}
+%
+% \subsection{Color Theme}
+%
+% \iffalse
+%<*package>
+% \fi
+%
+% Options
+%
+%    \begin{macrocode}
+
+\newif\if@beamer@metropolis@blockbg
+\@beamer@metropolis@blockbgfalse
+\DeclareOptionBeamer{blockbg}{
+    \@beamer@metropolis@blockbgtrue
+}
+%    \end{macrocode}
+%
+% Unknown option error handling
+%
+%    \begin{macrocode}
+
+\DeclareOptionBeamer*{%
+  \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
+}
+\ProcessOptionsBeamer
+%    \end{macrocode}
+%
+% Colors
+%
+%    \begin{macrocode}
+
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{23373b}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+%    \end{macrocode}
+%
+% Base Colors
+%
+%    \begin{macrocode}
+
+\setbeamercolor{normal text}{%
+  fg=mDarkTeal,
+  bg=black!2
+}
+\setbeamercolor{alerted text}{%
+  fg=mLightBrown
+}
+\setbeamercolor{example text}{%
+  fg=mLightGreen
+}
+%    \end{macrocode}
+%
+% Derived Colors
+%
+%    \begin{macrocode}
+
+\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+\setbeamercolor{structure}{%
+  fg=normal text.fg
+}
+%    \end{macrocode}
+%
+% Frame titles and plain slides
+%
+%    \begin{macrocode}
+
+\setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
+%    \end{macrocode}
+%
+% The “primary” palette should be used for the most important navigational
+% elements, and possibly of other elements.
+% The metropolis color theme uses it for frame titles and slides.
+%
+%    \begin{macrocode}
+
+\setbeamercolor{palette primary}{%
+  use=normal text,
+  fg=normal text.bg,
+  bg=normal text.fg
+}
+%    \end{macrocode}
+%
+% Progress bar and title separator
+%
+%    \begin{macrocode}
+
+\setbeamercolor{title separator}{use=progress bar, parent=progress bar}
+\setbeamercolor{progress bar}{%
+  use=alerted text,
+  fg=alerted text.fg,
+  bg=normal text.bg!50!fg
+}
+%    \end{macrocode}
+%
+% Blocks
+%
+%    \begin{macrocode}
+
+\if@beamer@metropolis@blockbg
+  \setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=normal text.bg!80!fg
+  }
+\else
+  \setbeamercolor{block title}{use=normal text, parent=normal text}
+\fi
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+\setbeamercolor{block body}{
+  use={block title, normal text},
+  bg=block title.bg!50!normal text.bg
+}
+%    \end{macrocode}
+%
+% Footnotes
+%
+%    \begin{macrocode}
+
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
+\mode<all>
+%    \end{macrocode}
+
+%
+% \iffalse
+%</package>
+% \fi
+%
+% \Finale
+\endinput

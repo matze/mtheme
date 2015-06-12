@@ -1,0 +1,657 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2015 by Matthias Vogelgesang <matthias.vogelgesang@gmail.com>
+% ---------------------------------------------------------------------------
+% Licensed under CC-BY-SA 4.0 International.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss,
+% which you can find at https://github.com/benjamin-weiss/hsrmbeamertheme.
+% ---------------------------------------------------------------------------
+%
+% The Current Maintainer of this work is Michael Vogelgesang.
+%
+% This work consists of the files beamerthemem.dtx and beamerthemem.ins
+% and the derived filebase beamerthemem.sty.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{beamerthemem.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{beamerthemem}
+%<*package>
+    [2015/06/12 1.0.0 A Modern Beamer Theme]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{beamerthemem}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{beamerthemem.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{1.0.0}{2015/06/12}{Initial Stable Release.}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+
+%
+% \StopEventually{}
+%
+% \subsection{Main Theme}
+%
+% \iffalse
+%<*package>
+% \fi
+%
+%
+% Options
+%
+%    \begin{macrocode}
+
+\newif\if@useTitleProgressBar
+\@useTitleProgressBarfalse
+\DeclareOptionBeamer{usetitleprogressbar}{
+  \@useTitleProgressBartrue
+}
+%    \end{macrocode}
+%
+% usetotalslideindicator
+%
+%    \begin{macrocode}
+
+\newif\if@useTotalSlideIndicator
+\@useTotalSlideIndicatorfalse
+\DeclareOptionBeamer{usetotalslideindicator}{
+  \@useTotalSlideIndicatortrue
+}
+%    \end{macrocode}
+%
+% noslidenumbers
+%
+%    \begin{macrocode}
+
+\newif\if@noSlideNumbers
+\@noSlideNumbersfalse
+\DeclareOptionBeamer{noslidenumbers}{
+  \@noSlideNumberstrue
+}
+%    \end{macrocode}
+%
+% nosectionslide
+%
+%    \begin{macrocode}
+
+\newif\if@noSectionSlide
+\@noSectionSlidefalse
+\DeclareOptionBeamer{nosectionslide}{
+  \@noSectionSlidetrue
+}
+%    \end{macrocode}
+%
+% protectframetitle
+%
+%    \begin{macrocode}
+
+\newif\if@protectFrameTitle
+\@protectFrameTitlefalse
+\DeclareOptionBeamer{protectframetitle}{
+  \@protectFrameTitletrue
+}
+%    \end{macrocode}
+%
+% nooffset
+%
+%    \begin{macrocode}
+
+\newlength{\@mtheme@voffset}
+\setlength{\@mtheme@voffset}{2em}
+\DeclareOptionBeamer{nooffset}{
+  \setlength{\@mtheme@voffset}{0em}
+}
+%    \end{macrocode}
+%
+% blockbg
+%
+%    \begin{macrocode}
+
+\DeclareOptionBeamer{blockbg}{
+  \PassOptionsToPackage{blockbg}{beamercolorthememetropolis}%
+}
+%    \end{macrocode}
+%
+% Unknown option error handling
+%
+%    \begin{macrocode}
+
+\DeclareOptionBeamer*{
+  \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
+}
+\ProcessOptionsBeamer
+%    \end{macrocode}
+%
+% mthemetitleformat
+%
+% \begin{macro}{\mthemetitleformat}
+%    \begin{macrocode}
+
+\def\mthemetitleformat#1{\scshape #1}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+
+\mode<presentation>
+%    \end{macrocode}
+%
+% Packages
+%
+%    \begin{macrocode}
+
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\RequirePackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{calc}
+\usecolortheme{metropolis}
+\ifxetexorluatex
+  \usefonttheme{metropolis}
+\else
+  \PackageWarning{beamerthemem}{You need to compile with XeLaTeX or LuaLaTeX for the Fira fonts.}
+\fi
+%    \end{macrocode}
+%
+% Make Titlepage
+%
+% \begin{macro}{\maketitle}
+%    \begin{macrocode}
+
+\def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% Define Titlepage
+%
+% \begin{macro}{\titlepage}
+%    \begin{macrocode}
+
+\def\titlepage{\usebeamertemplate{title page}}
+%    \end{macrocode}
+% \end{macro}
+%
+% Set beamer title page template
+%
+%    \begin{macrocode}
+
+\setbeamertemplate{title page}
+{
+  \begin{minipage}[b][\paperheight]{\textwidth}
+    \vspace*{\@mtheme@voffset}
+
+    \ifx\inserttitlegraphic\@empty\else
+    {% \inserttitlegraphic is nonempty
+      \vbox to 0pt
+      {% display title graphic without changing the position of other elements
+        \vspace*{2em}
+        \usebeamercolor[fg]{titlegraphic}%
+        \inserttitlegraphic%
+      }%
+      \nointerlineskip%
+    }
+    \fi
+
+    \vfill%
+
+    \ifx\inserttitle\@empty\else
+    {{% \inserttitle is nonempty
+      \raggedright%
+      \linespread{1.0}%
+      \usebeamerfont{title}%
+      \usebeamercolor[fg]{title}%
+      \mthemetitleformat{\inserttitle}%
+      \vspace*{0.5em}
+    }}
+    \fi
+
+    \ifx\insertsubtitle\@empty\else
+    {{% \insertsubtitle is nonempty
+      \usebeamerfont{subtitle}%
+      \usebeamercolor[fg]{subtitle}%
+      \insertsubtitle%
+      \vspace*{0.5em}%
+    }}
+    \fi
+
+    \begin{tikzpicture}
+      \usebeamercolor{title separator}
+      \draw[fg] (0, 0) -- (\textwidth, 0);
+    \end{tikzpicture}%
+    \vspace*{1em}%
+
+    \ifx\beamer@shortauthor\@empty\else
+    {{% \insertauthor is always nonempty by beamer's definition, so we must
+      % test another macro which is initialized by \author{...}
+      % For details, see http://tex.stackexchange.com/questions/241306/
+      \usebeamerfont{author}%
+      \usebeamercolor[fg]{author}%
+      \insertauthor%
+      \par%
+      \vspace*{0.25em}
+    }}
+    \fi
+
+    \ifx\insertdate\@empty\else
+    {{% \insertdate is nonempty
+      \usebeamerfont{date}%
+      \usebeamercolor[fg]{date}%
+      \insertdate%
+      \par%
+    }}
+    \fi
+
+    \ifx\insertinstitute\@empty\else
+    {{% \insertinstitute is nonempty
+      \vspace*{3mm}
+      \usebeamerfont{institute}%
+      \usebeamercolor[fg]{institute}%
+      \insertinstitute%
+      \par%
+    }}
+    \fi
+
+    \vfill
+    \vspace*{\@mtheme@voffset}
+  \end{minipage}
+}
+%    \end{macrocode}
+%
+% Progressbar
+%
+%    \begin{macrocode}
+
+\RequirePackage{calc}
+%    \end{macrocode}
+%
+% \begin{macro}{\inserttotalframenumber}
+%    \begin{macrocode}
+
+\def\inserttotalframenumber{100}  % prevent \progressbar@percent from getting too big on first compile
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+
+\newlength{\progressbar@percent}
+%    \end{macrocode}
+%
+% \begin{macro}{\progressbar}
+%    \begin{macrocode}
+
+\newcommand{\progressbar}[1]{%
+  \setlength{\progressbar@percent}{%
+    #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+  }%
+  \begin{tikzpicture}[tight background]
+    \usebeamercolor{progress bar}
+    \draw[bg, fill=bg] (0,0) rectangle (#1, 0.4pt);
+    \draw[fg, fill=fg] (0,0) rectangle (\progressbar@percent, 0.4pt);
+  \end{tikzpicture}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Commands
+%
+% \begin{macro}{\insertsectionHEAD}
+%    \begin{macrocode}
+
+\newcommand{\insertsectionHEAD}{%
+  \expandafter\insertsectionHEADaux\insertsectionhead}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\insertsectionHEADaux}
+%    \begin{macrocode}
+
+\newcommand{\insertsectionHEADaux}[3]{\mthemetitleformat{#3}}%
+%    \end{macrocode}
+% \end{macro}
+%
+% Create a plain frame with dark background
+%
+% \begin{macro}{\plain}
+%    \begin{macrocode}
+
+\newcommand{\plain}[2][]{%
+  \begingroup
+    \setbeamercolor{background canvas}{use=palette primary,parent=palette primary}
+    \begin{frame}{#1}
+      \centering
+      \vfill
+      \vspace{1em}
+      \usebeamercolor[fg]{palette primary}
+      \usebeamerfont{section title}
+      \mthemetitleformat{#2}
+      \vfill
+    \end{frame}
+  \endgroup
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Itemize tweaks
+%
+%    \begin{macrocode}
+
+\setlength{\leftmargini}{1em}
+\setlength{\leftmarginii}{1em}
+\setlength{\leftmarginiii}{1em}
+%    \end{macrocode}
+%
+% \begin{macro}{\itemBullet}
+%    \begin{macrocode}
+
+\newcommand{\itemBullet}{∙}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+
+\setbeamertemplate{itemize item}{\itemBullet}
+\setbeamertemplate{itemize subitem}{\itemBullet}
+\setbeamertemplate{itemize subsubitem}{\itemBullet}
+\setlength{\parskip}{0.5em}
+%    \end{macrocode}
+%
+% Sections
+%
+%    \begin{macrocode}
+
+\setbeamertemplate{section page}
+{
+  \vspace{2em}
+  \centering
+  \begin{minipage}{22em}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionHEAD\\[-1ex]
+    \progressbar{\textwidth}
+  \end{minipage}
+  \par
+}
+%    \end{macrocode}
+%
+% Insert frame with section title at every section start
+%
+%    \begin{macrocode}
+
+\if@noSectionSlide\else%
+  \AtBeginSection[]
+  {
+    \ifbeamer@inframe
+      \sectionpage
+    \else
+      \frame[plain]{\sectionpage}
+    \fi
+  }
+\fi
+%    \end{macrocode}
+%
+% Captions
+%
+%    \begin{macrocode}
+
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{caption}[numbered]
+%    \end{macrocode}
+%
+% Footline/footnote
+%
+%    \begin{macrocode}
+
+\usenavigationsymbolstemplate{}
+\setbeamertemplate{footline}
+{%
+\begin{beamercolorbox}[wd=\textwidth,ht=3ex,dp=3ex,leftskip=0.3cm,rightskip=0.3cm]{footline}%
+  \hfill\usebeamerfont{page number in head/foot}%
+\if@noSlideNumbers%
+  %Purposefully left blank to display no slide number.%
+  \else%
+    \if@useTotalSlideIndicator%
+    \insertframenumber/\inserttotalframenumber%
+    \else%
+    \insertframenumber%
+    \fi%
+  \fi%
+\end{beamercolorbox}%
+}
+\setbeamertemplate{footnote}
+{%
+  \parindent 0em\noindent%
+  \raggedright
+  \usebeamercolor{footnote}\hbox to 0.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
+}
+%    \end{macrocode}
+%
+% Frametitle
+%
+%    \begin{macrocode}
+
+\setbeamertemplate{frametitle}{%
+\nointerlineskip
+\begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
+\usebeamerfont{frametitle}%
+\if@protectFrameTitle%
+    \mthemetitleformat{\protect\insertframetitle}%
+\else%
+    \mthemetitleformat{\insertframetitle}%
+\fi%
+\end{beamercolorbox}%
+\if@useTitleProgressBar
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
+    \progressbar{\paperwidth}
+  \end{beamercolorbox}
+\fi
+\vspace{\@mtheme@voffset}
+}
+%    \end{macrocode}
+%
+% pgfplots
+%
+% Colors
+%
+% TolColors from http://www.r-bloggers.com/the-paul-tol-21-color-salute/
+%    \begin{macrocode}
+
+\definecolor{TolColor1}{HTML}{332288}   % dark purple
+\definecolor{TolColor2}{HTML}{6699CC}   % dark blue
+\definecolor{TolColor3}{HTML}{88CCEE}   % light blue
+\definecolor{TolColor4}{HTML}{44AA99}   % light green
+\definecolor{TolColor5}{HTML}{117733}   % dark green
+\definecolor{TolColor6}{HTML}{999933}   % dark brown
+\definecolor{TolColor7}{HTML}{DDCC77}   % light brown
+\definecolor{TolColor8}{HTML}{661100}   % dark red
+\definecolor{TolColor9}{HTML}{CC6677}   % light red
+\definecolor{TolColor10}{HTML}{AA4466}  % light pink
+\definecolor{TolColor11}{HTML}{882255}  % dark pink
+\definecolor{TolColor12}{HTML}{AA4499}  % light purple
+%    \end{macrocode}
+%
+% Color cycles
+%
+%    \begin{macrocode}
+
+\pgfplotscreateplotcyclelist{mbarplot cycle}{%
+  {draw=TolColor2, fill=TolColor2!70},
+  {draw=TolColor7, fill=TolColor7!70},
+  {draw=TolColor4, fill=TolColor4!70},
+  {draw=TolColor11, fill=TolColor11!70},
+  {draw=TolColor1, fill=TolColor1!70},
+  {draw=TolColor8, fill=TolColor8!70},
+  {draw=TolColor6, fill=TolColor6!70},
+  {draw=TolColor9, fill=TolColor9!70},
+  {draw=TolColor10, fill=TolColor10!70},
+  {draw=TolColor12, fill=TolColor12!70},
+  {draw=TolColor3, fill=TolColor3!70},
+  {draw=TolColor5, fill=TolColor5!70},
+}
+\pgfplotscreateplotcyclelist{mlineplot cycle}{%
+  {TolColor2, mark=*, mark size=1.5pt},
+  {TolColor7, mark=square*, mark size=1.3pt},
+  {TolColor4, mark=triangle*, mark size=1.5pt},
+  {TolColor6, mark=diamond*, mark size=1.5pt},
+}
+%    \end{macrocode}
+%
+% Styles
+%
+%    \begin{macrocode}
+
+\pgfplotsset{
+  compat=1.9,
+  mbaseplot/.style={
+    legend style={
+      draw=none,
+      fill=none,
+      cells={anchor=west},
+    },
+    x tick label style={
+      font=\footnotesize
+    },
+    y tick label style={
+      font=\footnotesize
+    },
+    legend style={
+      font=\footnotesize
+    },
+    major grid style={
+      dotted,
+    },
+    axis x line*=bottom,
+  },
+  mlineplot/.style={
+    mbaseplot,
+    xmajorgrids=true,
+    ymajorgrids=true,
+    major grid style={dotted},
+    axis x line=bottom,
+    axis y line=left,
+    legend style={
+      cells={anchor=west},
+      draw=none
+    },
+    cycle list name=mlineplot cycle,
+  },
+  mbarplot base/.style={
+    mbaseplot,
+    bar width=6pt,
+    axis y line*=none,
+  },
+  mbarplot/.style={
+    mbarplot base,
+    ybar,
+    xmajorgrids=false,
+    ymajorgrids=true,
+    area legend,
+    legend image code/.code={%
+      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
+    },
+    cycle list name=mbarplot cycle,
+  },
+  horizontal mbarplot/.style={
+    mbarplot base,
+    xmajorgrids=true,
+    ymajorgrids=false,
+    xbar stacked,
+    area legend,
+    legend image code/.code={%
+      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
+    },
+    cycle list name=mbarplot cycle,
+  },
+  disable thousands separator/.style={
+    /pgf/number format/.cd,
+      1000 sep={}
+  },
+}
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+
+\mode<all>
+%    \end{macrocode}
+%
+% misc
+%
+%    \begin{macrocode}
+
+\let\otp\titlepage
+%    \end{macrocode}
+%
+% \begin{macro}{\titlepage}
+%    \begin{macrocode}
+
+\renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mreducelistspacing}
+%    \begin{macrocode}
+
+\newcommand{\mreducelistspacing}{\vspace{-\topsep}}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+
+\linespread{1.15}
+%    \end{macrocode}
+
+%
+% \iffalse
+%</package>
+% \fi
+%
+% \Finale
+\endinput

@@ -1,0 +1,56 @@
+%% Copyright (C) 2015 by Matthias Vogelgesang <matthias.vogelgesang@gmail.com>
+%% ---------------------------------------------------------------------------
+%% Licensed under CC-BY-SA 4.0 International.
+%%
+%% The Current Maintainer of this work is Matthias Vogelgesang.
+%%
+%% This work consists of the files beamerthemem.dtx and beamerthemem.ins
+%% and the derived filebase beamerthemem.sty.
+%%
+
+\input docstrip.tex
+\keepsilent
+
+\usedir{tex/latex/mtheme}
+
+\preamble
+
+This is a generated file
+---------------------------------------------------------------------------
+Copyright 2014 Matthias Vogelgesang
+Licensed under CC-BY-SA 4.0 International.
+
+The initial template comes from the HSRM beamer theme by Benjamin Weiss,
+which you can find at https://github.com/benjamin-weiss/hsrmbeamertheme.
+---------------------------------------------------------------------------
+
+\endpreamble
+
+\generate{\file{beamerthemem.sty}{%
+          \from{beamerthemem.dtx}{package}}
+          }
+\generate{\file{beamerfontthememetropolis.sty}{%
+          \from{beamerfontthememetropolis.dtx}{package}}
+          }
+\generate{\file{beamercolorthememetropolis.sty}{%
+          \from{beamercolorthememetropolis.dtx}{package}}
+          }
+
+\obeyspaces
+\Msg{**************************************************************}
+\Msg{*                                                            *}
+\Msg{* To finish the installation you have to move the following  *}
+\Msg{* files into a directory searched by TeX:                    *}
+\Msg{*                                                            *}
+\Msg{*     beamerthemem.sty                                       *}
+\Msg{*     beamerfontthememetropolis.sty                          *}
+\Msg{*     beamercolorthememetropolis.sty                         *}
+\Msg{*                                                            *}
+\Msg{* To produce the documentation run the file mtheme.dtx       *}
+\Msg{* through LaTeX.                                             *}
+\Msg{*                                                            *}
+\Msg{* Happy TeXing!                                              *}
+\Msg{*                                                            *}
+\Msg{**************************************************************}
+
+\endbatchfile
