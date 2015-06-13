@@ -1,0 +1,55 @@
+% Beamer mtheme
+%
+% Copyright 2014 Matthias Vogelgesang
+% Licensed under CC-BY-SA 4.0 International.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
+% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+%
+% 'dailyplanet' font theme uses same font family of "Fira Sans/Mono" that Metropolis 
+% default does, but works with heavier weight fonts for easier readability (small
+% screens in mind). Majority of font is in "Fira Sans Book".
+
+\ProvidesPackage{beamerfontthemedailyplanet}
+
+\RequirePackage{fontspec}
+
+
+\defaultfontfeatures{Mapping=tex-text}
+\setsansfont[BoldItalicFont={Fira Sans SemiBold Italic}, ItalicFont={Fira Sans Book Italic}, BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+\setmonofont{Fira Mono}
+\newfontfamily\Light{Fira Sans Light}
+\newfontfamily\Book{Fira Sans Book}
+\newfontfamily\Regular{Fira Sans}
+\newfontfamily\SemiBold{Fira Sans SemiBold}
+
+
+
+\AtBeginEnvironment{tabular}{\setsansfont[BoldFont=Fira Sans SemiBold, Numbers={Monospaced}]{Fira Sans Book}}
+
+
+\setbeamerfont{title}{family=\Regular, size=\Large}
+\setbeamerfont{author}{family=\Book, size=\normalsize}
+\setbeamerfont{date}{family=\Light, size=\normalsize}
+
+\setbeamerfont{section title}{family=\Regular, size=\Large}
+
+\setbeamerfont{block title}{family=\Regular, size=\normalsize}
+\setbeamerfont{block title alerted}{family=\Regular,size=\normalsize}
+
+\setbeamerfont{subtitle}{family=\Light, size=\fontsize{12}{14}}
+\setbeamerfont{frametitle}{family=\Regular, size=\large}
+
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption name}{family=\SemiBold}
+
+\setbeamerfont{description item}{family=\Book}
+
+\setbeamerfont{page number in head/foot}{size=\scriptsize}
+
+\setbeamerfont{bibliography entry author}{family=\Book, size=\normalsize}
+\setbeamerfont{bibliography entry title}{family=\SemiBold, size=\normalsize}
+\setbeamerfont{bibliography entry location}{family=\Light, size=\normalsize}
+\setbeamerfont{bibliography entry note}{family=\Light, size=\small}
+
+\linespread{1.15}
