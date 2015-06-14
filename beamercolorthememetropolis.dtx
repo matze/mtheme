@@ -76,7 +76,6 @@
 % Options
 %
 %    \begin{macrocode}
-
 \newif\if@beamer@metropolis@blockbg
 \@beamer@metropolis@blockbgfalse
 \DeclareOptionBeamer{blockbg}{
@@ -87,7 +86,6 @@
 % Unknown option error handling
 %
 %    \begin{macrocode}
-
 \DeclareOptionBeamer*{%
   \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
 }
@@ -97,7 +95,6 @@
 % Colors
 %
 %    \begin{macrocode}
-
 \definecolor{mDarkBrown}{HTML}{604c38}
 \definecolor{mDarkTeal}{HTML}{23373b}
 \definecolor{mLightBrown}{HTML}{EB811B}
@@ -107,7 +104,6 @@
 % Base Colors
 %
 %    \begin{macrocode}
-
 \setbeamercolor{normal text}{%
   fg=mDarkTeal,
   bg=black!2
@@ -123,7 +119,6 @@
 % Derived Colors
 %
 %    \begin{macrocode}
-
 \setbeamercolor{titlelike}{use=normal text, parent=normal text}
 \setbeamercolor{structure}{%
   fg=normal text.fg
@@ -133,7 +128,6 @@
 % Frame titles and plain slides
 %
 %    \begin{macrocode}
-
 \setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
 %    \end{macrocode}
 %
@@ -142,7 +136,6 @@
 % The metropolis color theme uses it for frame titles and slides.
 %
 %    \begin{macrocode}
-
 \setbeamercolor{palette primary}{%
   use=normal text,
   fg=normal text.bg,
@@ -153,7 +146,6 @@
 % Progress bar and title separator
 %
 %    \begin{macrocode}
-
 \setbeamercolor{title separator}{use=progress bar, parent=progress bar}
 \setbeamercolor{progress bar}{%
   use=alerted text,
@@ -165,7 +157,6 @@
 % Blocks
 %
 %    \begin{macrocode}
-
 \if@beamer@metropolis@blockbg
   \setbeamercolor{block title}{%
     use=normal text,
@@ -196,7 +187,6 @@
 % Footnotes
 %
 %    \begin{macrocode}
-
 \setbeamercolor{footnote}{fg=normal text.fg!90}
 \setbeamercolor{footnote mark}{fg=.}
 \mode<all>

@@ -76,7 +76,6 @@
 % Options
 %
 %    \begin{macrocode}
-
 \newif\if@useTitleProgressBar
 \@useTitleProgressBarfalse
 \DeclareOptionBeamer{usetitleprogressbar}{
@@ -87,7 +86,6 @@
 % usetotalslideindicator
 %
 %    \begin{macrocode}
-
 \newif\if@useTotalSlideIndicator
 \@useTotalSlideIndicatorfalse
 \DeclareOptionBeamer{usetotalslideindicator}{
@@ -98,7 +96,6 @@
 % noslidenumbers
 %
 %    \begin{macrocode}
-
 \newif\if@noSlideNumbers
 \@noSlideNumbersfalse
 \DeclareOptionBeamer{noslidenumbers}{
@@ -109,7 +106,6 @@
 % nosectionslide
 %
 %    \begin{macrocode}
-
 \newif\if@noSectionSlide
 \@noSectionSlidefalse
 \DeclareOptionBeamer{nosectionslide}{
@@ -120,7 +116,6 @@
 % protectframetitle
 %
 %    \begin{macrocode}
-
 \newif\if@protectFrameTitle
 \@protectFrameTitlefalse
 \DeclareOptionBeamer{protectframetitle}{
@@ -131,7 +126,6 @@
 % nooffset
 %
 %    \begin{macrocode}
-
 \newlength{\@mtheme@voffset}
 \setlength{\@mtheme@voffset}{2em}
 \DeclareOptionBeamer{nooffset}{
@@ -142,7 +136,6 @@
 % blockbg
 %
 %    \begin{macrocode}
-
 \DeclareOptionBeamer{blockbg}{
   \PassOptionsToPackage{blockbg}{beamercolorthememetropolis}%
 }
@@ -151,7 +144,6 @@
 % Unknown option error handling
 %
 %    \begin{macrocode}
-
 \DeclareOptionBeamer*{
   \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
 }
@@ -162,20 +154,17 @@
 %
 % \begin{macro}{\mthemetitleformat}
 %    \begin{macrocode}
-
 \def\mthemetitleformat#1{\scshape #1}
 %    \end{macrocode}
 % \end{macro}
 %
 %    \begin{macrocode}
-
 \mode<presentation>
 %    \end{macrocode}
 %
 % Packages
 %
 %    \begin{macrocode}
-
 \RequirePackage{etoolbox}
 \RequirePackage{tikz}
 \RequirePackage{pgfplots}
@@ -204,7 +193,6 @@
 %
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
-
 \def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
 %    \end{macrocode}
 % \end{macro}
@@ -213,7 +201,6 @@
 %
 % \begin{macro}{\titlepage}
 %    \begin{macrocode}
-
 \def\titlepage{\usebeamertemplate{title page}}
 %    \end{macrocode}
 % \end{macro}
@@ -221,7 +208,6 @@
 % Set beamer title page template
 %
 %    \begin{macrocode}
-
 \setbeamertemplate{title page}
 {
   \begin{minipage}[b][\paperheight]{\textwidth}
@@ -307,25 +293,21 @@
 % Progressbar
 %
 %    \begin{macrocode}
-
 \RequirePackage{calc}
 %    \end{macrocode}
 %
 % \begin{macro}{\inserttotalframenumber}
 %    \begin{macrocode}
-
 \def\inserttotalframenumber{100}  % prevent \progressbar@percent from getting too big on first compile
 %    \end{macrocode}
 % \end{macro}
 %
 %    \begin{macrocode}
-
 \newlength{\progressbar@percent}
 %    \end{macrocode}
 %
 % \begin{macro}{\progressbar}
 %    \begin{macrocode}
-
 \newcommand{\progressbar}[1]{%
   \setlength{\progressbar@percent}{%
     #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
@@ -343,7 +325,6 @@
 %
 % \begin{macro}{\insertsectionHEAD}
 %    \begin{macrocode}
-
 \newcommand{\insertsectionHEAD}{%
   \expandafter\insertsectionHEADaux\insertsectionhead}
 %    \end{macrocode}
@@ -351,7 +332,6 @@
 %
 % \begin{macro}{\insertsectionHEADaux}
 %    \begin{macrocode}
-
 \newcommand{\insertsectionHEADaux}[3]{\mthemetitleformat{#3}}%
 %    \end{macrocode}
 % \end{macro}
@@ -360,7 +340,6 @@
 %
 % \begin{macro}{\plain}
 %    \begin{macrocode}
-
 \newcommand{\plain}[2][]{%
   \begingroup
     \setbeamercolor{background canvas}{use=palette primary,parent=palette primary}
@@ -381,7 +360,6 @@
 % Itemize tweaks
 %
 %    \begin{macrocode}
-
 \setlength{\leftmargini}{1em}
 \setlength{\leftmarginii}{1em}
 \setlength{\leftmarginiii}{1em}
@@ -389,13 +367,11 @@
 %
 % \begin{macro}{\itemBullet}
 %    \begin{macrocode}
-
 \newcommand{\itemBullet}{∙}
 %    \end{macrocode}
 % \end{macro}
 %
 %    \begin{macrocode}
-
 \setbeamertemplate{itemize item}{\itemBullet}
 \setbeamertemplate{itemize subitem}{\itemBullet}
 \setbeamertemplate{itemize subsubitem}{\itemBullet}
@@ -405,7 +381,6 @@
 % Sections
 %
 %    \begin{macrocode}
-
 \setbeamertemplate{section page}
 {
   \vspace{2em}
@@ -423,7 +398,6 @@
 % Insert frame with section title at every section start
 %
 %    \begin{macrocode}
-
 \if@noSectionSlide\else%
   \AtBeginSection[]
   {
@@ -439,7 +413,6 @@
 % Captions
 %
 %    \begin{macrocode}
-
 \setbeamertemplate{caption label separator}{: }
 \setbeamertemplate{caption}[numbered]
 %    \end{macrocode}
@@ -447,7 +420,6 @@
 % Footline/footnote
 %
 %    \begin{macrocode}
-
 \usenavigationsymbolstemplate{}
 \setbeamertemplate{footline}
 {%
@@ -475,7 +447,6 @@
 % Frametitle
 %
 %    \begin{macrocode}
-
 \setbeamertemplate{frametitle}{%
 \nointerlineskip
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
@@ -502,7 +473,6 @@
 %
 % TolColors from http://www.r-bloggers.com/the-paul-tol-21-color-salute/
 %    \begin{macrocode}
-
 \definecolor{TolColor1}{HTML}{332288}   % dark purple
 \definecolor{TolColor2}{HTML}{6699CC}   % dark blue
 \definecolor{TolColor3}{HTML}{88CCEE}   % light blue
@@ -520,7 +490,6 @@
 % Color cycles
 %
 %    \begin{macrocode}
-
 \pgfplotscreateplotcyclelist{mbarplot cycle}{%
   {draw=TolColor2, fill=TolColor2!70},
   {draw=TolColor7, fill=TolColor7!70},
@@ -546,7 +515,6 @@
 % Styles
 %
 %    \begin{macrocode}
-
 \pgfplotsset{
   compat=1.9,
   mbaseplot/.style={
@@ -618,33 +586,28 @@
 %
 %
 %    \begin{macrocode}
-
 \mode<all>
 %    \end{macrocode}
 %
 % misc
 %
 %    \begin{macrocode}
-
 \let\otp\titlepage
 %    \end{macrocode}
 %
 % \begin{macro}{\titlepage}
 %    \begin{macrocode}
-
 \renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\mreducelistspacing}
 %    \begin{macrocode}
-
 \newcommand{\mreducelistspacing}{\vspace{-\topsep}}
 %    \end{macrocode}
 % \end{macro}
 %
 %    \begin{macrocode}
-
 \linespread{1.15}
 %    \end{macrocode}
 
