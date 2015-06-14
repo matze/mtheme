@@ -123,31 +123,60 @@ The theme itself is licensed under a \href{http://creativecommons.org/licenses/b
 
 \section{Contributors}
 \begin{pycode}
-import httplib
+import sys
+import requests
 import json
 
-URL = 'api.github.com'
-REQ = '/repos/matze/mtheme/contributors'
-USER_AGENT = ("curl/7.13.2 " +
-              "(i386-pc-linux-gnu) " +
-              "libcurl/7.13.2 " +
-              "OpenSSL/0.9.7e" +
-              "zlib/1.2.2" +
-              "libidn/0.5.13")
-HEADERS = {"User-Agent": USER_AGENT}
+LOGIN = None
+try:
+    with open('../login.json', 'r') as f:
+        login_data = json.load(f)
+        if (login_data['user'] and login_data['password']):
+            LOGIN = (login_data['user'],
+                     login_data['password'])
+except:
+    print("Couldn't load login data.")
+    sys.exit()
 
-conn = httplib.HTTPSConnection(URL)
-conn.request('GET', REQ, None, HEADERS)
-resp = conn.getresponse()
 
-print('\\begin{itemize}')
-if resp.status == 200:
-    data = json.loads(resp.read())
-    for name, url in ((c['login'], c['html_url']) for c in data):
-        print("    \\item \\href{%s}{%s}" % (url, name))
+def apiRequestLeft():
+    resp = requests.get('https://api.github.com/rate_limit',
+                        auth=LOGIN)
+    if(resp.ok):
+        data = json.loads(resp.content)
+        return data['rate']['remaining']
+    else:
+        return 0
+
+if not (apiRequestLeft):
+    print("No API requests left to load contributors list. Do you have " +
+          "saved your login information in 'login.json'?")
+    sys.exit()
+
+resp = requests.get('https://api.github.com/repos/matze/mtheme/contributors',
+                    auth=LOGIN)
+
+print("\\begin{itemize}")
+if(resp.ok):
+    data = json.loads(resp.content)
+    extracted_data = ((c['login'], c['html_url'], c['url']) for c in data)
+    for user_name, html_url, url in extracted_data:
+        resp = requests.get(url, auth=LOGIN)
+        if(resp.ok):
+            user_data = json.loads(resp.content)
+            try:
+                name = user_data['name']
+            except:
+                name = ""
+        else:
+            if not (apiRequestLeft):
+                name = "Couldn't load name. API request limit exceeded."
+            else:
+                "Couldn't load name."
+        print("    \\item \\href{%s}{%s} %s" % (html_url, user_name, name))
 else:
-    print("    \\item Couldn't get contributors")
-print('\\end{itemize}')
+    print("    \\item Couldn't load contributors.")
+print("\\end{itemize}")
 \end{pycode}
 
 \section{Implementation}
