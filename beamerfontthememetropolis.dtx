@@ -1,49 +1,131 @@
-% Beamer mtheme
+% \iffalse meta-comment
 %
-% Copyright 2014 Matthias Vogelgesang
+% Copyright (C) 2015 by Matthias Vogelgesang <matthias.vogelgesang@gmail.com>
+% ---------------------------------------------------------------------------
 % Licensed under CC-BY-SA 4.0 International.
 %
-% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
-% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss,
+% which you can find at https://github.com/benjamin-weiss/hsrmbeamertheme.
+% ---------------------------------------------------------------------------
+%
+% The Current Maintainer of this work is Michael Vogelgesang.
+%
+% This work consists of the files beamerfontthememetropolis.dtx and
+% beamerfontthememetropolis.ins and the derived filebase
+% beamerfontthememetropolis.sty.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{beamerfontthememetropolis.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{beamerfontthememetropolis}
+%<*package>
+    [2015/06/12 1.0.0 A Modern Beamer Font Theme]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{beamerfontthememetropolis}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{beamerfontthememetropolis.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{1.0.0}{2015/06/12}{Initial Stable Release.}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
 %
 
-\ProvidesPackage{beamerfontthememetropolis}
+%
+% \StopEventually{}
+%
+% \subsection{Font Theme}
+%
+% \iffalse
+%<*package>
+% \fi
+%
+% Font Definitions
+%
+%    \begin{macrocode}
 
 \RequirePackage[no-math]{fontspec}
-
-
 \defaultfontfeatures{Mapping=tex-text}
-\setsansfont[BoldItalicFont={Fira Sans Italic}, ItalicFont={Fira Sans Light Italic}, BoldFont={Fira Sans}]{Fira Sans Light}
+\setsansfont[BoldItalicFont={Fira Sans Italic},%
+             ItalicFont={Fira Sans Light Italic},%
+             BoldFont={Fira Sans}]{Fira Sans Light}
 \setmonofont{Fira Mono}
 \newfontfamily\ExtraLight{Fira Sans ExtraLight}
 \newfontfamily\Light{Fira Sans Light}
 \newfontfamily\Book{Fira Sans}
 \newfontfamily\Medium{Fira Sans Medium}
-
-\AtBeginEnvironment{tabular}{\setsansfont[BoldFont={Fira Sans}, Numbers={Monospaced}]{Fira Sans Light}}
+\AtBeginEnvironment{tabular}{%
+    \setsansfont[BoldFont={Fira Sans},%
+                 Numbers={Monospaced}]{Fira Sans Light}%
+    }
+%    \end{macrocode}
+%
+% Font Assignment
+%
+%    \begin{macrocode}
 
 \setbeamerfont{title}{family=\Book, size=\Large}
 \setbeamerfont{author}{family=\ExtraLight, size=\small}
 \setbeamerfont{date}{family=\ExtraLight, size=\small}
-
 \setbeamerfont{section title}{family=\Book, size=\Large}
-
 \setbeamerfont{block title}{family=\Book, size=\normalsize}
 \setbeamerfont{block title alerted}{family=\Book,size=\normalsize}
-
 \setbeamerfont{subtitle}{family=\Light, size=\fontsize{12}{14}}
 \setbeamerfont{frametitle}{family=\Book, size=\large}
-
 \setbeamerfont{caption}{size=\small}
 \setbeamerfont{caption name}{family=\Book}
-
 \setbeamerfont{description item}{family=\Book}
-
 \setbeamerfont{page number in head/foot}{size=\scriptsize}
+%    \end{macrocode}
+%
+% Bibliograpy
+%
+%    \begin{macrocode}
 
 \setbeamerfont{bibliography entry author}{family=\Light, size=\normalsize}
 \setbeamerfont{bibliography entry title}{family=\Book, size=\normalsize}
 \setbeamerfont{bibliography entry location}{family=\Light, size=\normalsize}
 \setbeamerfont{bibliography entry note}{family=\Light, size=\small}
-
 \linespread{1.15}
+%    \end{macrocode}
+
+%
+% \iffalse
+%</package>
+% \fi
+%
+% \Finale
+\endinput
