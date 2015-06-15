@@ -1,5 +1,6 @@
 INS = mtheme.ins
-PYTHON_SRC = contributors.py
+CONTRIB_SRC = contributors.py
+CONTRIB_TEX = contributors.tex
 DTX = $(wildcard *.dtx)
 STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx))
 TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
@@ -19,7 +20,7 @@ DOCKER_CONTAINER = latex-container
 .PHONY: clean install manual sty docker-run docker-rm
 
 
-all: sty demo manual
+all: sty demo contributors manual
 
 sty: $(DTX) $(INS)
 	@latex $(INS)
@@ -28,10 +29,10 @@ demo: $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
 	@cp $(TEMP_DIR)/$(DEMO_PDF) .
 
-contributors: $(PYTHON_SRC)
-	@python $(PYTHON_SRC)
+$(CONTRIB_TEX):$(CONTRIB_SRC)
+	@python $(CONTRIB_SRC)
 
-manual: $(MANUAL_SRC)
+manual: $(MANUAL_SRC) $(CONTRIB_TEX)
 	@$(TEXC) $(MANUAL_SRC)
 	@cp $(TEMP_DIR)/$(MANUAL_PDF) .
 
