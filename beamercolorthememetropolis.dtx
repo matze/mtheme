@@ -83,6 +83,16 @@
 }
 %    \end{macrocode}
 %
+% darkcolors
+%
+%    \begin{macrocode}
+\newif\if@beamer@metropolis@darkcolors
+\@beamer@metropolis@darkcolorsfalse
+\DeclareOptionBeamer{darkcolors}{
+    \@beamer@metropolis@darkcolorstrue
+}
+%    \end{macrocode}
+%
 % Unknown option error handling
 %
 %    \begin{macrocode}
@@ -104,10 +114,17 @@
 % Base Colors
 %
 %    \begin{macrocode}
-\setbeamercolor{normal text}{%
-  fg=mDarkTeal,
-  bg=black!2
-}
+\if@beamer@metropolis@darkcolors
+  \setbeamercolor{normal text}{%
+    fg=black!2,
+    bg=mDarkTeal
+  }
+\else
+  \setbeamercolor{normal text}{%
+    fg=mDarkTeal,
+    bg=black!2
+  }
+\fi
 \setbeamercolor{alerted text}{%
   fg=mLightBrown
 }
