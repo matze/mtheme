@@ -378,6 +378,91 @@
 \setlength{\parskip}{0.5em}
 %    \end{macrocode}
 %
+% Block environment
+%
+%    \begin{macrocode}
+
+\newlength{\leftrightskip}
+\if@beamer@metropolis@blockbg
+  \setlength{\leftrightskip}{1ex}
+\else
+  \setlength{\leftrightskip}{0ex}
+\fi
+\setbeamertemplate{block begin}{%
+  \vspace*{1ex}
+  \begin{beamercolorbox}[%
+    ht=2.4ex,
+    dp=1ex,
+    leftskip=\leftrightskip,
+    rightskip=\leftrightskip]{block title}
+      \usebeamerfont*{block title}\insertblocktitle%
+  \end{beamercolorbox}%
+  \vspace*{-1pt}
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[%
+    dp=1ex,
+    leftskip=\leftrightskip,
+    rightskip=\leftrightskip,
+    vmode]{block body}%
+}
+\setbeamertemplate{block end}{%
+  \end{beamercolorbox}
+  \vspace*{0.2ex}
+}
+%    \end{macrocode}
+%
+% Alerted block environment
+%
+%    \begin{macrocode}
+\setbeamertemplate{block alerted begin}{%
+  \vspace*{1ex}
+  \begin{beamercolorbox}[%
+    ht=2.4ex,
+    dp=1ex,
+    leftskip=\leftrightskip,
+    rightskip=\leftrightskip]{block title alerted}
+      \usebeamerfont*{block title alerted}\insertblocktitle%
+  \end{beamercolorbox}%
+  \vspace*{-1pt}
+  \usebeamerfont{block body alerted}%
+  \begin{beamercolorbox}[%
+    dp=1ex,
+    leftskip=\leftrightskip,
+    rightskip=\leftrightskip,
+    vmode]{block body}%
+}
+\setbeamertemplate{block alerted end}{%
+  \end{beamercolorbox}
+  \vspace*{0.2ex}
+}
+%    \end{macrocode}
+%
+% Example block environment
+%
+%    \begin{macrocode}
+\setbeamertemplate{block example begin}{%
+  \vspace*{1ex}
+  \begin{beamercolorbox}[%
+    ht=2.4ex,
+    dp=1ex,
+    leftskip=\leftrightskip,
+    rightskip=\leftrightskip]{block title example}
+      \usebeamerfont*{block title example}\insertblocktitle%
+  \end{beamercolorbox}%
+  \vspace*{-1pt}
+  \usebeamerfont{block body example}%
+  \begin{beamercolorbox}[%
+    dp=1ex,
+    leftskip=\leftrightskip,
+    rightskip=\leftrightskip,
+    vmode]{block body}%
+}
+\setbeamertemplate{block example end}{%
+  \end{beamercolorbox}
+  \vspace*{0.2ex}
+}
+%    \end{macrocode}
+%
 % Sections
 %
 %    \begin{macrocode}
