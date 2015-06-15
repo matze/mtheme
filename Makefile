@@ -25,6 +25,12 @@ $(PDF): beamerthemem.sty $(AUX) $(SRC)
 sty: $(DTX) $(INS)
 	@latex $(INS)
 
+manual:
+	@mkdir -p .temptex
+	@xelatex -shell-escape -output-directory .temptex mtheme.dtx
+	@xelatex -shell-escape -output-directory .temptex mtheme.dtx
+	@cp .temptex/mtheme.pdf .
+
 clean:
 	@rm -f $(PDF)
 	@git clean -xfd
