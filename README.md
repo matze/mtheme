@@ -66,6 +66,7 @@ the slides, i.e.
   in following format: #current/#total. By default, just current page number is
   printed.
 * Option `noslidenumbers` omits slide numbers entirely.
+* Option `darkcolors` makes the background dark and the foreground light.
 
 #### Color customization
 
