@@ -26,8 +26,6 @@
 \setmonofont{Fira Mono}
 \defaultfontfeatures{Ligatures=TeX}
 
-\usepackage{pythontex}
-
 \usepackage{enumitem}
 \setlist[itemize]{noitemsep}
 \setlist[enumerate]{noitemsep}
@@ -122,62 +120,7 @@ To get started with the theme is very simple. The following code shows a minimal
 The theme itself is licensed under a \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International License}. This means that if you change the theme and re-distribute it, you must retain the copyright notice header and license it under the same CC-BY-SA license. This does not affect the presentation that you create with the theme.
 
 \section{Contributors}
-\begin{pycode}
-import sys
-import requests
-import json
-
-LOGIN = None
-try:
-    with open('../login.json', 'r') as f:
-        login_data = json.load(f)
-        if (login_data['user'] and login_data['password']):
-            LOGIN = (login_data['user'],
-                     login_data['password'])
-except:
-    print("Couldn't load login data.")
-    sys.exit()
-
-
-def apiRequestLeft():
-    resp = requests.get('https://api.github.com/rate_limit',
-                        auth=LOGIN)
-    if(resp.ok):
-        data = json.loads(resp.content)
-        return data['rate']['remaining']
-    else:
-        return 0
-
-if not (apiRequestLeft):
-    print("No API requests left to load contributors list. Do you have " +
-          "saved your login information in 'login.json'?")
-    sys.exit()
-
-resp = requests.get('https://api.github.com/repos/matze/mtheme/contributors',
-                    auth=LOGIN)
-
-print("\\begin{itemize}")
-if(resp.ok):
-    data = json.loads(resp.content)
-    extracted_data = ((c['login'], c['html_url'], c['url']) for c in data)
-    for user_name, html_url, url in extracted_data:
-        resp = requests.get(url, auth=LOGIN)
-        if(resp.ok):
-            user_data = json.loads(resp.content)
-            try:
-                name = user_data['name']
-            except:
-                name = ""
-        else:
-            if not (apiRequestLeft):
-                name = "Couldn't load name. API request limit exceeded."
-            else:
-                "Couldn't load name."
-        print("    \\item \\href{%s}{%s} %s" % (html_url, user_name, name))
-else:
-    print("    \\item Couldn't load contributors.")
-print("\\end{itemize}")
-\end{pycode}
+\input{contributors}
 
 \section{Implementation}
 \DocInput{beamerthemem.dtx}
