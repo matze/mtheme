@@ -1,4 +1,5 @@
 INS = mtheme.ins
+PYTHON_SRC = contributors.py
 DTX = $(wildcard *.dtx)
 STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx))
 TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
@@ -27,6 +28,8 @@ demo: $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
 	@cp $(TEMP_DIR)/$(DEMO_PDF) .
 
+contributors: $(PYTHON_SRC)
+	@python $(PYTHON_SRC)
 
 manual: $(MANUAL_SRC)
 	@$(TEXC) $(MANUAL_SRC)
