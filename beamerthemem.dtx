@@ -1,103 +1,170 @@
-% Beamer mtheme
+% \iffalse meta-comment
 %
-% Copyright 2014 Matthias Vogelgesang
+% Copyright (C) 2015 by Matthias Vogelgesang <matthias.vogelgesang@gmail.com>
+% ---------------------------------------------------------------------------
 % Licensed under CC-BY-SA 4.0 International.
 %
-% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
-% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss,
+% which you can find at https://github.com/benjamin-weiss/hsrmbeamertheme.
+% ---------------------------------------------------------------------------
+%
+% The Current Maintainer of this work is Matthias Vogelgesang.
+%
+% This work consists of the files beamerthemem.dtx and beamerthemem.ins
+% and the derived filebase beamerthemem.sty.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{beamerthemem.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{beamerthemem}
+%<*package>
+    [2015/06/12 1.0.0 A Modern Beamer Theme]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{beamerthemem}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{beamerthemem.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{1.0.0}{2015/06/12}{Initial Stable Release.}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
 %
 
-\ProvidesPackage{beamerthemem}
-
-
-
-% Options & customization
-% =======================
 %
-% To use any of options below, call them when invoking `mtheme` in the
-% preamble of your slides:
+% \StopEventually{}
 %
-%   \usetheme[<options>]{m}
+% \subsection{Main Theme}
 %
-
-% Option: usetitleprogressbar
-%         adds a thin progress bar underneath each frame title
-
+% \iffalse
+%<*package>
+% \fi
+%
+%
+% Options
+%
+%    \begin{macrocode}
 \newif\if@useTitleProgressBar
 \@useTitleProgressBarfalse
 \DeclareOptionBeamer{usetitleprogressbar}{
   \@useTitleProgressBartrue
 }
-
-% Option: usetotalslideindicator
-%         formats slide numbering as #current/#total
-
+%    \end{macrocode}
+%
+% usetotalslideindicator
+%
+%    \begin{macrocode}
 \newif\if@useTotalSlideIndicator
 \@useTotalSlideIndicatorfalse
 \DeclareOptionBeamer{usetotalslideindicator}{
   \@useTotalSlideIndicatortrue
 }
-
-% Option: noslidenumbers
-%         omits slide numbering entirely
-
+%    \end{macrocode}
+%
+% noslidenumbers
+%
+%    \begin{macrocode}
 \newif\if@noSlideNumbers
 \@noSlideNumbersfalse
 \DeclareOptionBeamer{noslidenumbers}{
   \@noSlideNumberstrue
 }
-
-% Option: nosectionslide
-%         omits the dedicated slide at the start of each new section
-
+%    \end{macrocode}
+%
+% nosectionslide
+%
+%    \begin{macrocode}
 \newif\if@noSectionSlide
 \@noSectionSlidefalse
 \DeclareOptionBeamer{nosectionslide}{
   \@noSectionSlidetrue
 }
-
-% Option: protectframetitle
-%         applies \protect to \insertframetitle to allow \cite, \ref, etc.
-
+%    \end{macrocode}
+%
+% protectframetitle
+%
+%    \begin{macrocode}
 \newif\if@protectFrameTitle
 \@protectFrameTitlefalse
 \DeclareOptionBeamer{protectframetitle}{
   \@protectFrameTitletrue
 }
-
-% Option: nooffset
-%         turns off extra space used to vertically center content on frames
-
+%    \end{macrocode}
+%
+% nooffset
+%
+%    \begin{macrocode}
 \newlength{\@mtheme@voffset}
 \setlength{\@mtheme@voffset}{2em}
 \DeclareOptionBeamer{nooffset}{
   \setlength{\@mtheme@voffset}{0em}
 }
-
-% Option: blockbg
-%         applies a gray background to blocks (via color theme `metropolis`)
-
+%    \end{macrocode}
+%
+% blockbg
+%
+%    \begin{macrocode}
 \DeclareOptionBeamer{blockbg}{
   \PassOptionsToPackage{blockbg}{beamercolorthememetropolis}%
 }
-
-% Option: ...
-
+%    \end{macrocode}
+%
+% Unknown option error handling
+%
+%    \begin{macrocode}
 \DeclareOptionBeamer*{
   \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
 }
-
 \ProcessOptionsBeamer
-
-% Customize: \mthemetitleformat
-%            formats the main title, section titles, and frame titles
-
+%    \end{macrocode}
+%
+% mthemetitleformat
+%
+% \begin{macro}{\mthemetitleformat}
+%    \begin{macrocode}
 \def\mthemetitleformat#1{\scshape #1}
-
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \mode<presentation>
-
-%{{{ --- Packages ---------------------
-
+%    \end{macrocode}
+%
+% Packages
+%
+%    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{tikz}
 \RequirePackage{pgfplots}
@@ -112,24 +179,35 @@
     \xetexorluatexfalse
   \fi
 \fi
-
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{calc}
-
 \usecolortheme{metropolis}
-
 \ifxetexorluatex
   \usefonttheme{metropolis}
 \else
   \PackageWarning{beamerthemem}{You need to compile with XeLaTeX or LuaLaTeX for the Fira fonts.}
 \fi
-
-%}}}
-%{{{ --- Titlepage --------------------
-
+%    \end{macrocode}
+%
+% Make Titlepage
+%
+% \begin{macro}{\maketitle}
+%    \begin{macrocode}
 \def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% Define Titlepage
+%
+% \begin{macro}{\titlepage}
+%    \begin{macrocode}
 \def\titlepage{\usebeamertemplate{title page}}
-
+%    \end{macrocode}
+% \end{macro}
+%
+% Set beamer title page template
+%
+%    \begin{macrocode}
 \setbeamertemplate{title page}
 {
   \begin{minipage}[b][\paperheight]{\textwidth}
@@ -210,13 +288,26 @@
     \vspace*{\@mtheme@voffset}
   \end{minipage}
 }
-
-%}}}
-%{{{ --- Progressbar ------------------
-
+%    \end{macrocode}
+%
+% Progressbar
+%
+%    \begin{macrocode}
 \RequirePackage{calc}
+%    \end{macrocode}
+%
+% \begin{macro}{\inserttotalframenumber}
+%    \begin{macrocode}
 \def\inserttotalframenumber{100}  % prevent \progressbar@percent from getting too big on first compile
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \newlength{\progressbar@percent}
+%    \end{macrocode}
+%
+% \begin{macro}{\progressbar}
+%    \begin{macrocode}
 \newcommand{\progressbar}[1]{%
   \setlength{\progressbar@percent}{%
     #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
@@ -227,16 +318,28 @@
     \draw[fg, fill=fg] (0,0) rectangle (\progressbar@percent, 0.4pt);
   \end{tikzpicture}%
 }
-
-
-%}}}
-%{{{ --- Commands ---------------------
-
+%    \end{macrocode}
+% \end{macro}
+%
+% Commands
+%
+% \begin{macro}{\insertsectionHEAD}
+%    \begin{macrocode}
 \newcommand{\insertsectionHEAD}{%
   \expandafter\insertsectionHEADaux\insertsectionhead}
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\insertsectionHEADaux}
+%    \begin{macrocode}
 \newcommand{\insertsectionHEADaux}[3]{\mthemetitleformat{#3}}%
-
+%    \end{macrocode}
+% \end{macro}
+%
+% Create a plain frame with dark background
+%
+% \begin{macro}{\plain}
+%    \begin{macrocode}
 \newcommand{\plain}[2][]{%
   \begingroup
     \setbeamercolor{background canvas}{use=palette primary,parent=palette primary}
@@ -251,26 +354,33 @@
     \end{frame}
   \endgroup
 }
-
-%}}}
-%{{{ --- Itemize ----------------------
-
+%    \end{macrocode}
+% \end{macro}
+%
+% Itemize tweaks
+%
+%    \begin{macrocode}
 \setlength{\leftmargini}{1em}
-
-% Actually one level should be enough but ...
 \setlength{\leftmarginii}{1em}
 \setlength{\leftmarginiii}{1em}
-
+%    \end{macrocode}
+%
+% \begin{macro}{\itemBullet}
+%    \begin{macrocode}
 \newcommand{\itemBullet}{∙}
-
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \setbeamertemplate{itemize item}{\itemBullet}
 \setbeamertemplate{itemize subitem}{\itemBullet}
 \setbeamertemplate{itemize subsubitem}{\itemBullet}
 \setlength{\parskip}{0.5em}
-
-%}}}
-%{{{ --- Sections ---------------------
-
+%    \end{macrocode}
+%
+% Sections
+%
+%    \begin{macrocode}
 \setbeamertemplate{section page}
 {
   \vspace{2em}
@@ -283,9 +393,11 @@
   \end{minipage}
   \par
 }
-
-
+%    \end{macrocode}
+%
 % Insert frame with section title at every section start
+%
+%    \begin{macrocode}
 \if@noSectionSlide\else%
   \AtBeginSection[]
   {
@@ -296,16 +408,18 @@
     \fi
   }
 \fi
-
-%}}}
-%{{{ --- Captions ---------------------
-
+%    \end{macrocode}
+%
+% Captions
+%
+%    \begin{macrocode}
 \setbeamertemplate{caption label separator}{: }
 \setbeamertemplate{caption}[numbered]
-
-%}}}
-%{{{ --- Footline/footnote ------------
-
+%    \end{macrocode}
+%
+% Footline/footnote
+%
+%    \begin{macrocode}
 \usenavigationsymbolstemplate{}
 \setbeamertemplate{footline}
 {%
@@ -322,17 +436,17 @@
   \fi%
 \end{beamercolorbox}%
 }
-
 \setbeamertemplate{footnote}
 {%
   \parindent 0em\noindent%
   \raggedright
   \usebeamercolor{footnote}\hbox to 0.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
 }
-
-%}}}
-%{{{ --- Frametitle -------------------
-
+%    \end{macrocode}
+%
+% Frametitle
+%
+%    \begin{macrocode}
 \setbeamertemplate{frametitle}{%
 \nointerlineskip
 \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
@@ -351,13 +465,14 @@
 \fi
 \vspace{\@mtheme@voffset}
 }
-
-%}}}
-%{{{ --- pgfplots ---------------------
-
-%{{{ Colors
-
+%    \end{macrocode}
+%
+% pgfplots
+%
+% Colors
+%
 % TolColors from http://www.r-bloggers.com/the-paul-tol-21-color-salute/
+%    \begin{macrocode}
 \definecolor{TolColor1}{HTML}{332288}   % dark purple
 \definecolor{TolColor2}{HTML}{6699CC}   % dark blue
 \definecolor{TolColor3}{HTML}{88CCEE}   % light blue
@@ -370,10 +485,11 @@
 \definecolor{TolColor10}{HTML}{AA4466}  % light pink
 \definecolor{TolColor11}{HTML}{882255}  % dark pink
 \definecolor{TolColor12}{HTML}{AA4499}  % light purple
-
-%}}}
-%{{{ Color cycles
-
+%    \end{macrocode}
+%
+% Color cycles
+%
+%    \begin{macrocode}
 \pgfplotscreateplotcyclelist{mbarplot cycle}{%
   {draw=TolColor2, fill=TolColor2!70},
   {draw=TolColor7, fill=TolColor7!70},
@@ -388,17 +504,17 @@
   {draw=TolColor3, fill=TolColor3!70},
   {draw=TolColor5, fill=TolColor5!70},
 }
-
 \pgfplotscreateplotcyclelist{mlineplot cycle}{%
   {TolColor2, mark=*, mark size=1.5pt},
   {TolColor7, mark=square*, mark size=1.3pt},
   {TolColor4, mark=triangle*, mark size=1.5pt},
   {TolColor6, mark=diamond*, mark size=1.5pt},
 }
-
-%}}}
-%{{{ Styles
-
+%    \end{macrocode}
+%
+% Styles
+%
+%    \begin{macrocode}
 \pgfplotsset{
   compat=1.9,
   mbaseplot/.style={
@@ -466,16 +582,39 @@
       1000 sep={}
   },
 }
-
-%}}}
-
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
 \mode<all>
-
-%{{{ misc
+%    \end{macrocode}
+%
+% misc
+%
+%    \begin{macrocode}
 \let\otp\titlepage
+%    \end{macrocode}
+%
+% \begin{macro}{\titlepage}
+%    \begin{macrocode}
 \renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mreducelistspacing}
+%    \begin{macrocode}
 \newcommand{\mreducelistspacing}{\vspace{-\topsep}}
-
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \linespread{1.15}
+%    \end{macrocode}
 
-%}}}
+%
+% \iffalse
+%</package>
+% \fi
+%
+% \Finale
+\endinput

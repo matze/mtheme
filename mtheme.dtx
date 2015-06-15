@@ -1,0 +1,187 @@
+%%
+%% This is file `mtheme.sty',
+%%
+%% Copyright (C) 2015 by Matthias Vogelgesang <matthias.vogelgesang@gmail.com>
+%% ---------------------------------------------------------------------------
+%% Licensed under CC-BY-SA 4.0 International.
+%%
+%% The initial template comes from the HSRM beamer theme by Benjamin Weiss,
+%% which you can find at https://github.com/benjamin-weiss/hsrmbeamertheme.
+%% ---------------------------------------------------------------------------
+%%
+
+\documentclass{ltxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+%\OnlyDescription
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{fontspec}
+\setmainfont[BoldItalicFont={Fira Sans Italic},%
+             ItalicFont={Fira Sans Light Italic},%
+             BoldFont={Fira Sans}]{Fira Sans Light}
+\setmonofont{Fira Mono}
+\defaultfontfeatures{Ligatures=TeX}
+
+\usepackage{pythontex}
+
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep}
+\setlist[enumerate]{noitemsep}
+
+\usepackage{xcolor}
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{23373b}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+\definecolor{mBackground}{HTML}{FFFFFF}
+
+\usepackage{listings}
+\lstset{%
+  language=[LaTeX]{TeX},
+  basicstyle=\ttfamily,
+  keywordstyle=\color{mLightBrown}\bfseries,
+  commentstyle=\color{mLightGreen},
+  stringstyle=\color{mLightGreen},
+  backgroundcolor=\color{mBackground},
+  numbers=none,
+  numberstyle=\tiny\ttfamily,
+  stepnumber=2,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=none,
+  framerule=1pt,
+  tabsize=2,
+  rulesep=5em,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  framexleftmargin=0em,
+  framexrightmargin=0em,
+  xleftmargin=0em,
+  xrightmargin=0em,
+  aboveskip=1em,
+  belowskip=1em,
+  morekeywords={usetheme,institute,maketitle,mthemetitleformat,plain,setbeamercolor},
+}
+\lstMakeShortInline|
+
+\usepackage[colorlinks=true,
+            linkcolor=mLightBrown,
+            menucolor=mLightBrown,
+            pagecolor=mLightBrown,
+            urlcolor=mLightBrown]{hyperref}
+
+\GetFileInfo{beamerthemem.dtx}
+\title{Modern Beamer Presentations\\with the\\\textsc{mtheme} package}
+\author{Matthias Vogelgesang \\ \url{matthias.vogelgesang@gmail.com}}
+\date{\fileversion~from \filedate}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Beamer is an awesome way to make presentations with LaTeX. But the stock themes do not necessarily look particularly nice and the custom themes often scream “Beamer” at first sight. The goal of \textsc{mtheme} is to provide a modern Beamer theme with minimal visual noise. It provides section slides with a neat progress bar and
+It is intended to be used with \href{https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/}{Fira Sans}, a gorgeous typeface commissioned by Mozilla and designed by \href{http://www.carrois.com/fira-3-1/}{Carrois}. Hence to get the best results you should have installed the Fira typeface and use XeTeX to typeset your slides. Nevertheless this is no hard dependency. The theme also works fine with pdfTeX and the Computer Modern typeface.
+
+The codebase is maintained on \href{https://github.com/matze/mtheme}{GitHub}. So if you have issues, find mistakes in the manual or want to contribute – to make the theme even better – get in contact there.
+
+\section{Getting Started}
+To get started with the theme is very simple. The following code shows a minimal example of a Beamer presentation using the \textsc{mtheme}.
+
+\begin{lstlisting}
+\documentclass[10pt]{beamer}
+\usetheme{m}                          % load mtheme
+\title{A modern beamer theme}         % define title
+\date{\today}                         % define date
+\author{Matthias Vogelgesang}         % define author
+\institute{Institute}                 % define institute
+\begin{document}
+\maketitle                            % create titlepage
+\section{First Section}               % create section
+\begin{frame}{First Frame}            % first frame
+  Lorem ipsum dolor sit amet, ...
+\end{frame}
+\begin{frame}{Second Frame}           % second frame
+  Lorem ipsum dolor sit amet, ...
+\end{frame}
+\end{document}
+\end{lstlisting}
+
+\section{Known Issues}
+
+\section{Changelog}
+
+\section{License}
+
+The theme itself is licensed under a \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International License}. This means that if you change the theme and re-distribute it, you must retain the copyright notice header and license it under the same CC-BY-SA license. This does not affect the presentation that you create with the theme.
+
+\section{Contributors}
+\begin{pycode}
+import sys
+import requests
+import json
+
+LOGIN = None
+try:
+    with open('../login.json', 'r') as f:
+        login_data = json.load(f)
+        if (login_data['user'] and login_data['password']):
+            LOGIN = (login_data['user'],
+                     login_data['password'])
+except:
+    print("Couldn't load login data.")
+    sys.exit()
+
+
+def apiRequestLeft():
+    resp = requests.get('https://api.github.com/rate_limit',
+                        auth=LOGIN)
+    if(resp.ok):
+        data = json.loads(resp.content)
+        return data['rate']['remaining']
+    else:
+        return 0
+
+if not (apiRequestLeft):
+    print("No API requests left to load contributors list. Do you have " +
+          "saved your login information in 'login.json'?")
+    sys.exit()
+
+resp = requests.get('https://api.github.com/repos/matze/mtheme/contributors',
+                    auth=LOGIN)
+
+print("\\begin{itemize}")
+if(resp.ok):
+    data = json.loads(resp.content)
+    extracted_data = ((c['login'], c['html_url'], c['url']) for c in data)
+    for user_name, html_url, url in extracted_data:
+        resp = requests.get(url, auth=LOGIN)
+        if(resp.ok):
+            user_data = json.loads(resp.content)
+            try:
+                name = user_data['name']
+            except:
+                name = ""
+        else:
+            if not (apiRequestLeft):
+                name = "Couldn't load name. API request limit exceeded."
+            else:
+                "Couldn't load name."
+        print("    \\item \\href{%s}{%s} %s" % (html_url, user_name, name))
+else:
+    print("    \\item Couldn't load contributors.")
+print("\\end{itemize}")
+\end{pycode}
+
+\section{Implementation}
+\DocInput{beamerthemem.dtx}
+\DocInput{beamerfontthememetropolis.dtx}
+\DocInput{beamercolorthememetropolis.dtx}
+
+\end{document}

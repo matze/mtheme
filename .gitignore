@@ -1,4 +1,5 @@
 demo.pdf
+mtheme.pdf
 
 *.fls
 *.acn
@@ -33,3 +34,6 @@ demo.pdf
 *.vrb
 *.xdy
 *.tdo
+*.sty
+
+.temptex
