@@ -3,12 +3,13 @@ DTX = $(wildcard *.dtx)
 STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx))
 TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
+TEMP_DIR = .temptex
 
 DEMO_SRC = demo.tex
 DEMO_PDF = demo.pdf
 MANUAL_SRC = mtheme.dtx
 MANUAL_PDF = mtheme.pdf
-TEXC := xelatex -shell-escape
+TEXC := latexmk -xelatex -output-directory=$(TEMP_DIR)
 
 DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
@@ -17,19 +18,19 @@ DOCKER_CONTAINER = latex-container
 .PHONY: clean install manual sty docker-run docker-rm
 
 
-all: demo manual
+all: sty demo manual
 
 sty: $(DTX) $(INS)
 	@latex $(INS)
 
 demo: $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
+	@cp $(TEMP_DIR)/$(DEMO_PDF) .
+
 
 manual: $(MANUAL_SRC)
-	@mkdir -p .temptex
-	@$(TEXC) -output-directory .temptex $<
-	@$(TEXC) -output-directory .temptex $<
-	@cp .temptex/mtheme.pdf .
+	@$(TEXC) $(MANUAL_SRC)
+	@cp $(TEMP_DIR)/$(MANUAL_PDF) .
 
 clean:
 	@git clean -xfd
