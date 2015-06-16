@@ -5,6 +5,7 @@ DTX = $(wildcard *.dtx)
 STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx))
 TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
+MANUAL_DIR = $(TEXMFHOME)/doc/latex/mtheme
 TEMP_DIR = .temptex
 
 DEMO_SRC = demo.tex
@@ -17,31 +18,42 @@ DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
 
 
-.PHONY: clean install manual sty docker-run docker-rm
+.PHONY: sty manual demo ctan clean install uninstall docker-run docker-build docker-rm
 
+all: sty manual demo
 
-all: sty demo contributors manual
-
-sty: $(DTX) $(INS)
+$(STY): $(DTX) $(INS)
 	@latex $(INS)
 
-demo: $(STY) $(DEMO_SRC)
+$(DEMO_PDF): $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
 	@cp $(TEMP_DIR)/$(DEMO_PDF) .
 
-$(CONTRIB_TEX):$(CONTRIB_SRC)
-	@python $(CONTRIB_SRC)
-
-manual: $(MANUAL_SRC) $(CONTRIB_TEX)
+$(MANUAL_PDF): $(MANUAL_SRC) $(CONTRIB_TEX)
 	@$(TEXC) $(MANUAL_SRC)
 	@cp $(TEMP_DIR)/$(MANUAL_PDF) .
+
+sty: $(STY)
+
+manual: $(MANUAL_PDF)
+
+demo: $(DEMO_PDF)
+
+ctan:
+	@echo Not yet implemented.
 
 clean:
 	@git clean -xfd
 
-install: $(STY)
+install: $(STY) $(MANUAL_PDF)
 	@mkdir -p $(INSTALL_DIR)
 	@cp $(STY) $(INSTALL_DIR)
+	@mkdir -p $(MANUAL_DIR)
+	@cp $(MANUAL_PDF) $(MANUAL_DIR)
+
+uninstall:
+	@rm -rf $(INSTALL_DIR)
+	@rm -rf $(MANUAL_DIR)
 
 docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) /data/build.sh
