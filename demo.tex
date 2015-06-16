@@ -1,6 +1,7 @@
 \documentclass[10pt]{beamer}
 
 \usetheme{m}
+\renewcommand{\mthemetitleformat}{\scshape\MakeLowercase}
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
@@ -17,6 +18,14 @@
 \begin{document}
 
 \maketitle
+
+\begin{frame}
+  \frametitle{Table of Contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
 
 \begin{frame}[fragile]
   \frametitle{mtheme}
@@ -126,12 +135,25 @@ or show \textbf{bold} results.\end{verbatim}
   \end{table}
 \end{frame}
 \begin{frame}{Blocks}
-
+  There are 3 different block enivironmnents already defined. The normal block uses the normal color, ...
   \begin{block}{This is a block title}
     This is soothing.
   \end{block}
-
 \end{frame}
+\begin{frame}{Blocks}
+  ... the alert block the alert color ....
+  \begin{alertblock}{This is an alert block title}
+    This is soothing.
+  \end{alertblock}
+\end{frame}
+\begin{frame}{Blocks}
+  ... and the example block the example color.
+  \begin{exampleblock}{This is an example block title}
+    This is soothing.
+  \end{exampleblock}
+  The blocks can have a background (option \texttt{blockbg}) or not.
+\end{frame}
+
 \begin{frame}{Math}
   \begin{equation*}
     e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
@@ -180,6 +202,23 @@ or show \textbf{bold} results.\end{verbatim}
   \end{quote}
 \end{frame}
 
+\begin{frame}{References}
+	\begin{thebibliography}{10}
+
+	\beamertemplatebookbibitems
+	\bibitem{Oppenheim2009}
+	Alan~V.~Oppenheim
+	\newblock Discrete-Time Signal Processing
+	\newblock Prentice Hall Press, 2009
+	\newblock Notes nobody is interested in
+
+	\beamertemplatearticlebibitems
+	\bibitem{EBU2011}
+	European~Broadcasting~Union
+	\newblock Specification of the Broadcast Wave Format (BWF)
+	\newblock 2011
+  \end{thebibliography}
+\end{frame}
 
 \section{Conclusion}
 
