@@ -29,7 +29,7 @@ $(DEMO_PDF): $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
 	@cp $(TEMP_DIR)/$(DEMO_PDF) .
 
-$(MANUAL_PDF): $(MANUAL_SRC) $(CONTRIB_TEX)
+$(MANUAL_PDF): $(MANUAL_SRC)
 	@$(TEXC) $(MANUAL_SRC)
 	@cp $(TEMP_DIR)/$(MANUAL_PDF) .
 
@@ -52,8 +52,10 @@ install: $(STY) $(MANUAL_PDF)
 	@cp $(MANUAL_PDF) $(MANUAL_DIR)
 
 uninstall:
-	@rm -rf $(INSTALL_DIR)
-	@rm -rf $(MANUAL_DIR)
+	@rm -f $(addprefix $(INSTALL_DIR)/, $(STY))
+	@rm -f $(MANUAL_DIR)/$(MANUAL_PDF)
+	@rmdir $(INSTALL_DIR)
+	@rmdir $(MANUAL_DIR)
 
 docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) /data/build.sh
