@@ -265,11 +265,23 @@ The |\plain{title=[]}{<body>}| command sets a slide in plain dark colors which
 can be useful to focus attention on a single sentence or image.
 
 
-\subsection{pgfplot styles}
+\subsection{Paul Tol's colors: a \texttt{pgfplots} theme}
 
-The beamer theme also contains pre-defined pgfplot styles. Use the |mlineplot|
-key to plot line data and |mbarplot| or horizontal |mbarplot| to plot bar
-charts.
+A good presentation uses colors that are
+
+\begin{itemize}
+  \item distinct from each other as much as possible, and
+  \item distinct from black and white,
+  \item under many different lighting and display environments, and
+  \item to color-blind viewers,
+  \item all while matching well together.
+\end{itemize}
+
+In a \href{https://personal.sron.nl/~pault/colourschemes.pdf}{technical note}
+for SRON, Paul Tol proposed a palette of colors satisfying these constraints.
+The sub-package |pgfplotsthemetol| defines palettes for |pgfplots| charts
+based on Tol's work. Use the |mlineplot| key to plot line data and |mbarplot|
+or horizontal |mbarplot| to plot bar charts.
 
 
 \section{Known Issues}
