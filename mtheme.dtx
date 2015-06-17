@@ -81,23 +81,35 @@
 \maketitle
 
 \section{Introduction}
-Beamer is an awesome way to make presentations with LaTeX. But the stock themes do not necessarily look particularly nice and the custom themes often scream “Beamer” at first sight. The goal of \textsc{mtheme} is to provide a modern Beamer theme with minimal visual noise. It provides section slides with a neat progress bar and
-It is intended to be used with \href{https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/}{Fira Sans}, a gorgeous typeface commissioned by Mozilla and designed by \href{http://www.carrois.com/fira-3-1/}{Carrois}. Hence to get the best results you should have installed the Fira typeface and use XeTeX to typeset your slides. Nevertheless this is no hard dependency. The theme also works fine with pdfTeX and the Computer Modern typeface.
+Beamer is an awesome way to make presentations with LaTeX. But the stock themes
+do not necessarily look particularly nice and the custom themes often scream
+“Beamer” at first sight. The goal of \textsc{mtheme} is to provide a modern
+Beamer theme with minimal visual noise. It provides section slides with a neat
+progress bar and It is intended to be used with
+\href{https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/}{Fira
+Sans}, a gorgeous typeface commissioned by Mozilla and designed by
+\href{http://www.carrois.com/fira-3-1/}{Carrois}. Hence to get the best results
+you should have installed the Fira typeface and use XeTeX to typeset your
+slides. Nevertheless this is no hard dependency. The theme also works fine with
+pdfTeX and the Computer Modern typeface.
 
-The codebase is maintained on \href{https://github.com/matze/mtheme}{GitHub}. So if you have issues, find mistakes in the manual or want to contribute – to make the theme even better – get in touch there.
+The codebase is maintained on \href{https://github.com/matze/mtheme}{GitHub}. So
+if you have issues, find mistakes in the manual or want to contribute – to make
+the theme even better – get in touch there.
+
 
 \section{Getting Started}
+
 \subsection{Installation}
-% The easiest way to install the \textsc{mtheme} is via your \TeX distribution’s package manager. If not or you want to access the latest version you can also download the theme on GitHub.
-% \begin{lstlisting}
-% git clone https://github.com/matze/mtheme.git
-% \end{lstlisting}
-The \textsc{mtheme} uses Make as build system. Hence the installation is very straight forward. Simply type
+
+The \textsc{mtheme} uses Make as build system. Hence the installation is very
+straight forward. Simply type
 \begin{lstlisting}
 $ make
 $ make install
 \end{lstlisting}
-in the top directory and all the files will be created and installed on your computer. The complete list of make rules is as follows:
+in the top directory and all the files will be created and installed on your
+computer. The complete list of make rules is as follows:
 
 \begin{description}
   \item[all] \hfill \\
@@ -116,6 +128,7 @@ in the top directory and all the files will be created and installed on your com
   Create a package for CTAN distribution.
 \end{description}
 
+
 \subsection{Dependencies}
 
 \begin{itemize}
@@ -124,19 +137,28 @@ in the top directory and all the files will be created and installed on your com
   \item TikZ
 \end{itemize}
 
-Depending on the Linux distribution, the packaged name of |Fira Sans| might be |Fira Sans OT| instead of |Fira Sans|. In that case, you may have to edit |beamerfontthememetropolis.dtx|. You may also need to install Fira Sans; see the |contrib/| directory for more. Users of Debian or Ubuntu can also install this \href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb package} containing the theme files as well as the Fira Sans font files.
+Depending on the Linux distribution, the packaged name of |Fira Sans| might be
+|Fira Sans OT| instead of |Fira Sans|. In that case, you may have to edit
+|beamerfontthememetropolis.dtx|. You may also need to install Fira Sans; see the
+|contrib/| directory for more. Users of Debian or Ubuntu can also install this
+\href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb
+package} containing the theme files as well as the Fira Sans font files.
+
 
 \subsection{Pandoc}
 
-To use this theme with \href{http://johnmacfarlane.net/pandoc/}{Pandoc}-based presentations, you can run the following command
+To use this theme with \href{http://johnmacfarlane.net/pandoc/}{Pandoc}-based
+presentations, you can run the following command
 
 \begin{lstlisting}
 $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 \end{lstlisting}
 
+
 \subsection{A Minimal Example}
 
-To get started with the theme is very simple. The following code shows a minimal example of a Beamer presentation using the \textsc{mtheme}.
+To get started with the theme is very simple. The following code shows a minimal
+example of a Beamer presentation using the \textsc{mtheme}.
 
 \begin{lstlisting}
 \documentclass[10pt]{beamer}
@@ -159,7 +181,8 @@ To get started with the theme is very simple. The following code shows a minimal
 
 \section{Customization}
 \subsection{Package options}
-The theme provides a number of options. To use any of the options below, call them when invoking \textsc{mtheme} in the preamble of the slides, i.e.
+The theme provides a number of options. To use any of the options below, call
+them when invoking \textsc{mtheme} in the preamble of the slides, i.e.
 \begin{lstlisting}[numbers=none]
 \usetheme[<options>]{m}
 \end{lstlisting}
@@ -195,9 +218,12 @@ Omits slide numbers entirely.\\
 \noindent\DescribeMacro{darkcolors}
 Makes the background dark and the foreground light.\\
 
+
 \subsection{Color Customization}
 
-The included metropolis color theme is used by default, but its colors can be easily changed to suit your tastes. All of the theme's styles are defined in terms of three beamer colors:
+The included metropolis color theme is used by default, but its colors can be
+easily changed to suit your tastes. All of the theme's styles are defined in
+terms of three beamer colors:
 \begin{itemize}
     \item |normal text| (dark fg, light bg)
     \item |alerted text| (colored fg, should be visible against dark or light)
@@ -208,10 +234,16 @@ An easy way to customize the theme is to redefine these colors using
 \begin{lstlisting}[numbers=none]
 \setbeamercolor{ ... }{ fg= ... , bg= ... }
 \end{lstlisting}
-in your preamble. For greater customization, you can redefine any of the other colors in |beamercolorthememetropolis|, including progress bar.
+in your preamble. For greater customization, you can redefine any of the other
+colors in |beamercolorthememetropolis|, including progress bar.
+
 
 \subsection{Title Formatting}
-The main title, section titles, and frame titles are all formatted according to the custom command |\mthemetitleformat|. By default, this is equivalent to |\scshape| and sets the titles in small capitals, but you can change it in your preamble. For example:
+
+The main title, section titles, and frame titles are all formatted according to
+the custom command |\mthemetitleformat|. By default, this is equivalent to
+|\scshape| and sets the titles in small capitals, but you can change it in your
+preamble. For example:
 
 \begin{lstlisting}
 % no small capitals
@@ -222,26 +254,45 @@ The main title, section titles, and frame titles are all formatted according to 
 \renewcommand{\mthemetitleformat}{\MakeUppercase}
 \end{lstlisting}
 
-Note that |\MakeLowercase| and |\MakeUppercase| can have unexpected behaviour in math mode, are disabled when |protectframetitle| is used, and cause crashes when an unprotected frametitle appears on a slide with |allowframebreaks|.
+Note that |\MakeLowercase| and |\MakeUppercase| can have unexpected behaviour in
+math mode, are disabled when |protectframetitle| is used, and cause crashes when
+an unprotected frametitle appears on a slide with |allowframebreaks|.
+
 
 \subsection{Commands}
 
-The |\plain{title=[]}{<body>}| command sets a slide in plain dark colors which can be useful to focus attention on a single sentence or image.
+The |\plain{title=[]}{<body>}| command sets a slide in plain dark colors which
+can be useful to focus attention on a single sentence or image.
+
 
 \subsection{pgfplot styles}
 
-The beamer theme also contains pre-defined pgfplot styles. Use the |mlineplot| key to plot line data and |mbarplot| or horizontal |mbarplot| to plot bar charts.
+The beamer theme also contains pre-defined pgfplot styles. Use the |mlineplot|
+key to plot line data and |mbarplot| or horizontal |mbarplot| to plot bar
+charts.
+
 
 \section{Known Issues}
 
+
 \section{License}
 
-The theme itself is licensed under a \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International License}. This means that if you change the theme and re-distribute it, you must retain the copyright notice header and license it under the same CC-BY-SA license. This does not affect the presentation that you create with the theme.
+The theme itself is licensed under a
+\href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
+Attribution-ShareAlike 4.0 International License}. This means that if you change
+the theme and re-distribute it, you must retain the copyright notice header and
+license it under the same CC-BY-SA license. This does not affect the
+presentation that you create with the theme.
+
 
 \section{Contributors}
-For a full list of contributors please visit the \href{https://github.com/matze/mtheme/graphs/contributors}{GitHub Repository}.
+
+For a full list of contributors please visit the
+\href{https://github.com/matze/mtheme/graphs/contributors}{GitHub Repository}.
+
 
 \section{Implementation}
+
 \DocInput{beamerthemem.dtx}
 \DocInput{beamerfontthememetropolis.dtx}
 \DocInput{beamercolorthememetropolis.dtx}
