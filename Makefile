@@ -14,6 +14,8 @@ MANUAL_SRC = mtheme.dtx
 MANUAL_PDF = mtheme.pdf
 TEXC := latexmk -xelatex -output-directory=$(TEMP_DIR)
 
+CTAN_CONTENT = $(INS) $(DTX) $(MANUAL_PDF)
+
 DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
 
@@ -39,8 +41,11 @@ manual: $(MANUAL_PDF)
 
 demo: $(DEMO_PDF)
 
-ctan:
-	@echo Not yet implemented.
+ctan: $(CTAN_CONTENT)
+	@mkdir -p mtheme
+	@cp $(CTAN_CONTENT) mtheme/
+	@zip -q mtheme-$(shell grep -A1 ProvidesPackage < beamerthemem.dtx | grep -P -o '\d\.\d\.\d').zip mtheme/*
+	@rm -rf mtheme
 
 clean:
 	@git clean -xfd
