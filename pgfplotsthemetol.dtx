@@ -138,23 +138,28 @@
     mbaseplot,
     bar width=6pt,
     axis y line*=none,
-    area legend,
-    legend image code/.code={%
-      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
-    },
-    cycle list name=mbarplot cycle,
   },
   mbarplot/.style={
     mbarplot base,
     ybar,
     xmajorgrids=false,
     ymajorgrids=true,
+    area legend,
+    legend image code/.code={%
+      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
+    },
+    cycle list name=mbarplot cycle,
   },
   horizontal mbarplot/.style={
     mbarplot base,
     xmajorgrids=true,
     ymajorgrids=false,
     xbar stacked,
+    area legend,
+    legend image code/.code={%
+      \draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);
+    },
+    cycle list name=mbarplot cycle,
   },
 %    \end{macrocode}
 % \end{macro}
