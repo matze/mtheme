@@ -27,7 +27,7 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
-% \subsection{Inner theme}
+% \section{Implementation: \textsc{metropolis} inner theme}
 %
 % A |beamer| inner theme dictates the style of the frame elements traditionally
 % set in the ``body'' of each slide. These include:
@@ -37,7 +37,140 @@
 %   \item block environments including theorems and proofs;
 %   \item figures and tables; and
 %   \item footnotes and plain text.
-% \end{title}
+% \end{itemize}
+%
+%
+%
+% \subsection{Title page}
+%
+% \begin{macro}{title page}
+%   Template for the title page.
+%
+%    \begin{macrocode}
+\setbeamertemplate{title page}{
+  \begin{minipage}[b][\paperheight]{\textwidth}
+    \vspace*{\@mtheme@voffset}
+%    \end{macrocode}
+%
+%   If the user has set a |titlegraphic|, we set it in a zero-height box so
+%   it doesn't change the position of other elements.
+%
+%    \begin{macrocode}
+    \ifx\inserttitlegraphic\@empty\else{%
+      \vbox to 0pt {
+        \vspace*{2em}
+        \usebeamercolor[fg]{titlegraphic}%
+        \inserttitlegraphic%
+      }%
+      \nointerlineskip%
+    }
+    \fi
+    \vfill%
+%    \end{macrocode}
+%
+%   We set the title and subtitle, but only if they are defined by the user.
+%   If |\subtitle| is empty, for example, it won't leave a blank space on the
+%   title slide.
+%
+%    \begin{macrocode}
+    \ifx\inserttitle\@empty\else{{%
+      \raggedright%
+      \linespread{1.0}%
+      \usebeamerfont{title}%
+      \usebeamercolor[fg]{title}%
+      \mthemetitleformat{\inserttitle}%
+      \vspace*{0.5em}
+    }}
+    \fi
+    \ifx\insertsubtitle\@empty\else{{%
+      \usebeamerfont{subtitle}%
+      \usebeamercolor[fg]{subtitle}%
+      \insertsubtitle%
+      \vspace*{0.5em}%
+    }}
+    \fi
+%    \end{macrocode}
+%
+%   A horizontal rule (drawn in TikZ) separates the title and subtitle from
+%   the author, date, and institution.
+%
+%    \begin{macrocode}
+    \begin{tikzpicture}
+      \usebeamercolor{title separator}
+      \draw[fg] (0, 0) -- (\textwidth, 0);
+    \end{tikzpicture}%
+    \vspace*{1em}%
+%    \end{macrocode}
+%
+%   Like the title and subtitle, we display the author only when it is defined.
+%   But beamer's definition of |\insertauthor| is always nonempty, so we have
+%   to test another macro initialized by |\author{...}| to see if the user has
+%   defined an author. This solution was suggested by Enrico Gregorio in an
+%   answer to \href{https://tex.stackexchange.com/questions/241306/}{this
+%   Stack Exchange question}.
+%
+%    \begin{macrocode}
+    \ifx\beamer@shortauthor\@empty\else{{%
+      \usebeamerfont{author}%
+      \usebeamercolor[fg]{author}%
+      \insertauthor%
+      \par%
+      \vspace*{0.25em}
+    }}
+    \fi
+%    \end{macrocode}
+%
+%   The date and institute are set after the author, again provided they are
+%   nonempty. Note that the default date in \LaTeX{} is |\today|, not |\empty|.
+%
+%    \begin{macrocode}
+    \ifx\insertdate\@empty\else{{%
+      \usebeamerfont{date}%
+      \usebeamercolor[fg]{date}%
+      \insertdate%
+      \par%
+    }}
+    \fi
+    \ifx\insertinstitute\@empty\else{{%
+      \vspace*{3mm}
+      \usebeamerfont{institute}%
+      \usebeamercolor[fg]{institute}%
+      \insertinstitute%
+      \par%
+    }}
+    \fi
+    \vfill
+    \vspace*{\@mtheme@voffset}
+  \end{minipage}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Normal people should use |\maketitle| or |\titlepage| instead of using the
+% |title page| beamer template directly. Beamer already defines these macros,
+% but we patch them here to make the title page |[plain]| by default, remove
+% |\@thanks|, and ensure the title frame number doesn't count.
+%
+% \begin{macro}{\maketitle}
+% \begin{macro}{\titlepage}
+%   Inserts the title frame, or causes the current frame to use the
+%   |title page| template.
+%    \begin{macrocode}
+\def\maketitle{%
+  \ifbeamer@inframe
+    \titlepage
+  \else
+    \frame[plain]{\titlepage}
+  \fi
+}
+\def\titlepage{%
+  \usebeamertemplate{title page}
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
 
 
 % \iffalse
