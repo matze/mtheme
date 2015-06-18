@@ -79,6 +79,7 @@
       \usebeamerfont{title}%
       \usebeamercolor[fg]{title}%
       \mthemetitleformat{\inserttitle}%
+      \par%
       \vspace*{0.5em}
     }}
     \fi
@@ -86,7 +87,8 @@
       \usebeamerfont{subtitle}%
       \usebeamercolor[fg]{subtitle}%
       \insertsubtitle%
-      \vspace*{0.5em}%
+      \par%
+      \vspace*{0.5em}
     }}
     \fi
 %    \end{macrocode}
@@ -99,6 +101,7 @@
       \usebeamercolor{title separator}
       \draw[fg] (0, 0) -- (\textwidth, 0);
     \end{tikzpicture}%
+    \par%
     \vspace*{1em}%
 %    \end{macrocode}
 %
