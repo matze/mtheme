@@ -328,6 +328,40 @@
   \vspace*{0.2ex}
 }
 %    \end{macrocode}
+%
+%
+%
+% \subsection{Itemize/enumerate environments}
+%    \begin{macrocode}
+\setlength{\leftmargini}{1em}
+\setlength{\leftmarginii}{1em}
+\setlength{\leftmarginiii}{1em}
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\textbullet}
+\setbeamertemplate{itemize subsubitem}{\textbullet}
+%    \end{macrocode}
+%
+% \subsection{Figures and tables}
+%    \begin{macrocode}
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{caption}[numbered]
+%    \end{macrocode}
+%
+% \subsection{Footnotes}
+%    \begin{macrocode}
+\setbeamertemplate{footnote}{%
+  \parindent 0em\noindent%
+  \raggedright
+  \usebeamercolor{footnote}\hbox to 0.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
+}
+%    \end{macrocode}
+%
+% \subsection{General text}
+%    \begin{macrocode}
+\mode<all>
+\setlength{\parskip}{0.5em}
+\linespread{1.15}
+%    \end{macrocode}
 % \iffalse
 %</package>
 % \fi
