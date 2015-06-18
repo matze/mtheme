@@ -171,8 +171,80 @@
 % \end{macro}
 %
 %
-
-
+%
+% \subsection{Section page}
+%
+% \begin{macro}{section page}
+%   Template for the section title slide at the beginning of each section.
+%    \begin{macrocode}
+\setbeamertemplate{section page}{
+  \vspace{2em}
+  \centering
+  \begin{minipage}{22em}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionHEAD\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+  \end{minipage}
+  \par
+}
+\if@noSectionSlide\else%
+  \AtBeginSection{
+    \ifbeamer@inframe
+      \sectionpage
+    \else
+      \frame[plain,c]{\sectionpage}
+    \fi
+  }
+\fi
+%    \end{macrocode}
+%
+%   To give users the option to \MakeUppercase or \MakeLowercase the section
+%   title, we need to expand |\insertsectionhead| before applying the relevant
+%   formatting command. This solution was suggested by Enrico Gregorio in an
+%   answer to \href{http://tex.stackexchange.com/questions/112526/}{this
+%   StackExchange question}.
+%
+%    \begin{macrocode}
+\newcommand{\insertsectionHEAD}{\expandafter\formatsectionhead\insertsectionhead}
+\newcommand{\formatsectionhead}[3]{#1{#2}{\mthemetitleformat{#3}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{progress bar in section page}
+%   Template for the progress bar displayed by default on the section page.
+%    \begin{macrocode}
+\RequirePackage{calc}
+\newlength{\metropolis@progressonsectionpage}
+\setbeamertemplate{progress bar in section page}{
+  \setlength{\metropolis@progressonsectionpage}{%
+    \textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+  }%
+  \begin{tikzpicture}[tight background]
+    \usebeamercolor{progress bar}
+    \draw[bg, fill=bg] (0,0) rectangle (\textwidth, 0.4pt);
+    \draw[fg, fill=fg] (0,0) rectangle (\metropolis@progressonsectionpage, 0.4pt);
+  \end{tikzpicture}%
+}
+%    \end{macrocode}
+%
+%   The above code assumes that |\insertframenumber| is less than or equal to
+%   |\inserttotalframenumber|. However, this is not true on the first compile;
+%   in the absence of an |.aux| file, |\inserttotalframenumber| defaults to 1.
+%   This behaviour could cause fatal errors for long presentations, as
+%   |\metropolis@progressonsectionpage| would exceed \TeX's maximum length
+%   (16383.99999pt, roughly 5.75 metres or 18.9 feet).
+%   To avoid this, we increase the default value for |\inserttotalframenumber|;
+%   presentations with over 4000 slides will still break on first compile, but
+%   users in that situation likely have deeper problems to solve.
+%
+%    \begin{macrocode}
+\def\inserttotalframenumber{100}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
 % \iffalse
 %</package>
 % \fi

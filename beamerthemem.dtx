@@ -162,54 +162,6 @@
 }
 
 %    \end{macrocode}
-
-%    \end{macrocode}
-%
-% Progressbar
-%
-%    \begin{macrocode}
-\RequirePackage{calc}
-%    \end{macrocode}
-%
-% \begin{macro}{\inserttotalframenumber}
-%    \begin{macrocode}
-\def\inserttotalframenumber{100}  % prevent \progressbar@percent from getting too big on first compile
-%    \end{macrocode}
-% \end{macro}
-%
-%    \begin{macrocode}
-\newlength{\progressbar@percent}
-%    \end{macrocode}
-%
-% \begin{macro}{\progressbar}
-%    \begin{macrocode}
-\newcommand{\progressbar}[1]{%
-  \setlength{\progressbar@percent}{%
-    #1 * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
-  }%
-  \begin{tikzpicture}[tight background]
-    \usebeamercolor{progress bar}
-    \draw[bg, fill=bg] (0,0) rectangle (#1, 0.4pt);
-    \draw[fg, fill=fg] (0,0) rectangle (\progressbar@percent, 0.4pt);
-  \end{tikzpicture}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% Commands
-%
-% \begin{macro}{\insertsectionHEAD}
-%    \begin{macrocode}
-\newcommand{\insertsectionHEAD}{%
-  \expandafter\insertsectionHEADaux\insertsectionhead}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\insertsectionHEADaux}
-%    \begin{macrocode}
-\newcommand{\insertsectionHEADaux}[3]{\mthemetitleformat{#3}}%
-%    \end{macrocode}
-% \end{macro}
 %
 % Create a plain frame with dark background
 %
@@ -336,38 +288,6 @@
   \end{beamercolorbox}
   \vspace*{0.2ex}
 }
-%    \end{macrocode}
-%
-% Sections
-%
-%    \begin{macrocode}
-\setbeamertemplate{section page}
-{
-  \vspace{2em}
-  \centering
-  \begin{minipage}{22em}
-    \usebeamercolor[fg]{section title}
-    \usebeamerfont{section title}
-    \insertsectionHEAD\\[-1ex]
-    \progressbar{\textwidth}
-  \end{minipage}
-  \par
-}
-%    \end{macrocode}
-%
-% Insert frame with section title at every section start
-%
-%    \begin{macrocode}
-\if@noSectionSlide\else%
-  \AtBeginSection[]
-  {
-    \ifbeamer@inframe
-      \sectionpage
-    \else
-      \frame[plain,c]{\sectionpage}
-    \fi
-  }
-\fi
 %    \end{macrocode}
 %
 % Captions
