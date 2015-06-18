@@ -31,6 +31,7 @@
 %
 % A |beamer| inner theme dictates the style of the frame elements traditionally
 % set in the ``body'' of each slide. These include:
+%
 % \begin{itemize}
 %   \item title, part, and section pages;
 %   \item itemize, enumerate, and description environments;
@@ -44,6 +45,7 @@
 % \subsection{Title page}
 %
 % \begin{macro}{title page}
+%
 %   Template for the title page.
 %
 %    \begin{macrocode}
@@ -156,8 +158,10 @@
 %
 % \begin{macro}{\maketitle}
 % \begin{macro}{\titlepage}
+%
 %   Inserts the title frame, or causes the current frame to use the
 %   |title page| template.
+%
 %    \begin{macrocode}
 \def\maketitle{%
   \ifbeamer@inframe
@@ -178,7 +182,9 @@
 % \subsection{Section page}
 %
 % \begin{macro}{section page}
+%
 %   Template for the section title slide at the beginning of each section.
+%
 %    \begin{macrocode}
 \setbeamertemplate{section page}{
   \vspace{2em}
@@ -215,7 +221,11 @@
 % \end{macro}
 %
 % \begin{macro}{progress bar in section page}
+%
 %   Template for the progress bar displayed by default on the section page.
+%   This code is duplicated in large part in the outer theme's template
+%   |progress bar in head/foot|.
+%
 %    \begin{macrocode}
 \RequirePackage{calc}
 \newlength{\metropolis@progressonsectionpage}
@@ -223,8 +233,7 @@
   \setlength{\metropolis@progressonsectionpage}{%
     \textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
-  \begin{tikzpicture}[tight background]
-    \usebeamercolor{progress bar}
+  \begin{tikzpicture}
     \draw[bg, fill=bg] (0,0) rectangle (\textwidth, 0.4pt);
     \draw[fg, fill=fg] (0,0) rectangle (\metropolis@progressonsectionpage, 0.4pt);
   \end{tikzpicture}%
@@ -365,6 +374,9 @@
 \setlength{\parskip}{0.5em}
 \linespread{1.15}
 %    \end{macrocode}
+%
+%
+%
 % \iffalse
 %</package>
 % \fi

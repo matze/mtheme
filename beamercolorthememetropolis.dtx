@@ -118,11 +118,22 @@
 % Progress bar and title separator
 %
 %    \begin{macrocode}
-\setbeamercolor{title separator}{use=progress bar, parent=progress bar}
+\setbeamercolor{title separator}{
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in head/foot}{%
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in section page}{
+  use=progress bar,
+  parent=progress bar
+}
 \setbeamercolor{progress bar}{%
   use=alerted text,
   fg=alerted text.fg,
-  bg=normal text.bg!50!fg
+  bg=normal text.bg!50!normal text.fg
 }
 %    \end{macrocode}
 %
