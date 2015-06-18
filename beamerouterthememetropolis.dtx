@@ -27,7 +27,50 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
-
+% \section{Implementation: \textsc{metropolis} outer theme}
+%
+% A |beamer| outer theme dictates the style of the frame elements traditionally
+% set outside the body of each slide: the head, footline, and frame title.
+%
+%
+%
+% \subsection{Head and footline}
+%
+% All good |beamer| presentations should already remove the navigation symbols,
+% but \textsc{metropolis} removes them automatically (just in case).
+%
+%    \begin{macrocode}
+\setbeamertemplate{navigation symbols}{}
+%    \end{macrocode}
+%
+% The only element in the footline by default is the frame number. It can
+% optionally be omitted or displayed as a fraction of the total frames.
+%
+%    \begin{macrocode}
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[%
+      wd=\textwidth,
+      ht=3ex,
+      dp=3ex,
+      leftskip=0.3cm,
+      rightskip=0.3cm
+    ]{footline}%
+    \hfill\usebeamerfont{page number in head/foot}%
+  \if@noSlideNumbers%
+    %Purposefully left blank to display no slide number.%
+    \else%
+      \if@useTotalSlideIndicator%
+      \insertframenumber/\inserttotalframenumber%
+      \else%
+      \insertframenumber%
+      \fi%
+    \fi%
+  \end{beamercolorbox}%
+}
+%    \end{macrocode}
+%
+%
+%
 % \iffalse
 %</package>
 % \fi

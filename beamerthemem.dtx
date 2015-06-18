@@ -188,27 +188,6 @@
 %
 %
 %
-% Footline/footnote
-%
-%    \begin{macrocode}
-\usenavigationsymbolstemplate{}
-\setbeamertemplate{footline}
-{%
-\begin{beamercolorbox}[wd=\textwidth,ht=3ex,dp=3ex,leftskip=0.3cm,rightskip=0.3cm]{footline}%
-  \hfill\usebeamerfont{page number in head/foot}%
-\if@noSlideNumbers%
-  %Purposefully left blank to display no slide number.%
-  \else%
-    \if@useTotalSlideIndicator%
-    \insertframenumber/\inserttotalframenumber%
-    \else%
-    \insertframenumber%
-    \fi%
-  \fi%
-\end{beamercolorbox}%
-}
-%    \end{macrocode}
-%
 % Frametitle
 %
 %    \begin{macrocode}
