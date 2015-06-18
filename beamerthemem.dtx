@@ -188,28 +188,7 @@
 %
 %
 %
-% Frametitle
-%
-%    \begin{macrocode}
-\setbeamertemplate{frametitle}{%
-\nointerlineskip
-\begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=2.5ex,dp=1.5ex]{frametitle}
-\usebeamerfont{frametitle}%
-\if@protectFrameTitle%
-    \mthemetitleformat{\protect\insertframetitle}%
-\else%
-    \mthemetitleformat{\insertframetitle}%
-\fi%
-\end{beamercolorbox}%
-\if@useTitleProgressBar
-  \nointerlineskip
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{frametitle}
-    \progressbar{\paperwidth}
-  \end{beamercolorbox}
-\fi
-\vspace{\@mtheme@voffset}
-}
-%    \end{macrocode}
+
 %
 %
 %
