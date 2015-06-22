@@ -27,6 +27,7 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
+%
 % \section{Implementation: \textsc{metropolis} inner theme}
 %
 % A |beamer| inner theme dictates the style of the frame elements traditionally
@@ -40,14 +41,60 @@
 %   \item footnotes and plain text.
 % \end{itemize}
 %
+% Load required packages.
+%    \begin{macrocode}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\RequirePackage{tikz}
+%    \end{macrocode}
+%
+%
+%
+% \subsection{Options}
+%
+% \begin{macro}{block}
+% This option controls the block style.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/block/.cd,
+    .is choice,
+    transparent/.code=\setlength{\@metropolis@blockskip}{0ex},
+    fill/.code=\setlength{\@metropolis@blockskip}{1ex},
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{sectionpage}
+% The |sectionpage| option defines the behaviour of the sectionpage.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/sectionpage/.cd,
+    .is choice,
+    none/.code=\@metropolis@sectionpage@none,
+    progressbar/.code=\@metropolis@sectionpage@progressbar,
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@metropolis@inner@setdefaults}
+% Set default values for inner theme options.
+%    \begin{macrocode}
+\newcommand{\@metropolis@inner@setdefaults}{
+  \pgfkeys{/metropolis/inner/.cd,
+    sectionpage=progressbar,
+    block=transparent,
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
 % \subsection{Title page}
 %
 % \begin{macro}{title page}
-%
 %   Template for the title page.
-%
 %    \begin{macrocode}
-\RequirePackage{tikz}
 \setbeamertemplate{title page}{
   \begin{minipage}[b][\paperheight]{\textwidth}
 %    \end{macrocode}
@@ -78,7 +125,7 @@
       \linespread{1.0}%
       \usebeamerfont{title}%
       \usebeamercolor[fg]{title}%
-      \mthemetitleformat{\inserttitle}%
+      \@metropolis@titleformat{\inserttitle}%
       \par%
       \vspace*{0.5em}
     }}
@@ -184,7 +231,12 @@
 %   Template for the section title slide at the beginning of each section.
 %
 %    \begin{macrocode}
-\setbeamertemplate{section page}{
+\newcommand{\@metropolis@sectionpage@none}{
+  \AtBeginSection{
+    % intenionally empty
+  }
+}
+\defbeamertemplate{section page}{progressbar}{
   \vspace{2em}
   \centering
   \begin{minipage}{22em}
@@ -195,7 +247,8 @@
   \end{minipage}
   \par
 }
-\if@noSectionSlide\else%
+\newcommand{\@metropolis@sectionpage@progressbar}{
+  \setbeamertemplate{section page}[progressbar]
   \AtBeginSection{
     \ifbeamer@inframe
       \sectionpage
@@ -203,7 +256,7 @@
       \frame[plain,c]{\sectionpage}
     \fi
   }
-\fi
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -214,7 +267,6 @@
 %   |progress bar in head/foot|.
 %
 %    \begin{macrocode}
-\RequirePackage{calc}
 \newlength{\metropolis@progressonsectionpage}
 \setbeamertemplate{progress bar in section page}{
   \setlength{\metropolis@progressonsectionpage}{%
@@ -247,27 +299,22 @@
 % \subsection{Block environments}
 %
 %    \begin{macrocode}
-\newlength{\leftrightskip}
-\if@beamer@metropolis@blockbg
-  \setlength{\leftrightskip}{1ex}
-\else
-  \setlength{\leftrightskip}{0ex}
-\fi
+\newlength{\@metropolis@blockskip}
 \setbeamertemplate{block begin}{%
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip]{block title}
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip]{block title}
       \usebeamerfont*{block title}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip,
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block end}{%
@@ -284,16 +331,16 @@
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip]{block title alerted}
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip]{block title alerted}
       \usebeamerfont*{block title alerted}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body alerted}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip,
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block alerted end}{%
@@ -310,16 +357,16 @@
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip]{block title example}
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip]{block title example}
       \usebeamerfont*{block title example}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body example}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip,
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block example end}{%
@@ -340,11 +387,15 @@
 \setbeamertemplate{itemize subsubitem}{\textbullet}
 %    \end{macrocode}
 %
+%
+%
 % \subsection{Figures and tables}
 %    \begin{macrocode}
 \setbeamertemplate{caption label separator}{: }
 \setbeamertemplate{caption}[numbered]
 %    \end{macrocode}
+%
+%
 %
 % \subsection{Footnotes}
 %    \begin{macrocode}
@@ -355,14 +406,21 @@
 }
 %    \end{macrocode}
 %
-% \subsection{General text}
+%
+%
+% \subsection{General text settings}
 %    \begin{macrocode}
 \mode<all>
 \setlength{\parskip}{0.5em}
 \linespread{1.15}
 %    \end{macrocode}
 %
+% Process package options
 %
+%    \begin{macrocode}
+\@metropolis@inner@setdefaults
+\ProcessPgfPackageOptions{/metropolis/inner}
+%    \end{macrocode}
 %
 % \iffalse
 %</package>

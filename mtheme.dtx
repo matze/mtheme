@@ -62,7 +62,7 @@
   xrightmargin=0em,
   aboveskip=1em,
   belowskip=1em,
-  morekeywords={usetheme,institute,maketitle,mthemetitleformat,plain,setbeamercolor},
+  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,plain,setbeamercolor},
 }
 \lstMakeShortInline|
 
@@ -238,17 +238,17 @@ colors in |beamercolorthememetropolis|, including progress bar.
 \subsection{Title Case Formatting}
 
 The main title, section titles, frame titles and plain frame titles are all
-formatted according to the custom command |\mthemetitleformat|. By default,
+formatted according to the custom command |\@metropolis@titleformat|. By default,
 this is equivalent to |\MakeLowercase{#1}|, hence seting the titles in small
 capitals. You can change this behaviour in your preamble. For example:
 
 \begin{lstlisting}
 % camel case
-\renewcommand{\mthemetitleformat}{}
+\renewcommand{\@metropolis@titleformat}{}
 % lowercase
-\renewcommand{\mthemetitleformat}\MakeLowercase}
+\renewcommand{\@metropolis@titleformat}\MakeLowercase}
 % uppercase
-\renewcommand{\mthemetitleformat}{\MakeUppercase}
+\renewcommand{\@metropolis@titleformat}{\MakeUppercase}
 \end{lstlisting}
 
 Be aware that these formatting macros will be replaced with theme options in

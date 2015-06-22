@@ -27,89 +27,75 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
+%
 % \section{Implementation: \textsc{metropolis} main theme}
 %
 % The primary job of this package is to load the component sub-packages of the
 % \textsc{metropolis} theme and route the theme options accordingly. It also
 % provides some custom commands and environments for the user.
 %
+% Load the required packages.
+%    \begin{macrocode}
+\RequirePackage{etoolbox}
+\RequirePackage{pgfopts}
+\RequirePackage{ifxetex}
+\RequirePackage{ifluatex}
+%    \end{macrocode}
 %
-% Options
+% \subsection{Options}
+%
+% \begin{macro}{\setmetropolis}
+% First of all we define a macro for the user to set options.
+%    \begin{macrocode}
+\newcommand{\setmetropolis}[1]{\pgfkeys{/metropolis/.cd,#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% Then we need to pass the unknown options to the sub-packages.
 %
 %    \begin{macrocode}
-\newif\if@useTitleProgressBar
-\@useTitleProgressBarfalse
-\DeclareOptionBeamer{usetitleprogressbar}{
-  \@useTitleProgressBartrue
+\pgfkeys{/metropolis/.cd,
+  .search also={
+    /metropolis/inner,
+    /metropolis/outer,
+    /metropolis/color,
+    },
+%    \end{macrocode}
+%
+% We have to forwarded keys that affect multiple sub-packages manually.
+%
+%    \begin{macrocode}
+  block/.code=\pgfkeysalso{
+    inner/block=#1,
+    color/block=#1,
+  }
 }
 %    \end{macrocode}
 %
-% usetotalslideindicator
+% For backwards compatibility with earlier betas of the theme, we implement
+% deprecated option names as aliases to the corresponding |key=value| options.
 %
 %    \begin{macrocode}
-\newif\if@useTotalSlideIndicator
-\@useTotalSlideIndicatorfalse
-\DeclareOptionBeamer{usetotalslideindicator}{
-  \@useTotalSlideIndicatortrue
+\pgfkeys{/metropolis/.cd,
+  usetitleprogressbar/.code=\pgfkeysalso{outer/progressbar=head},
+  noslidenumbers/.code=\pgfkeysalso{outer/numbering=none},
+  usetotalslideindicator/.code=\pgfkeysalso{outer/numbering=fraction},
+  nosectionslide/.code=\pgfkeysalso{inner/sectionpage=none},
+  darkcolors/.code=\pgfkeysalso{color/background=dark},
+  blockbg/.code=\pgfkeysalso{color/block=fill, inner/block=fill},
 }
 %    \end{macrocode}
 %
-% noslidenumbers
+% Set default values for options.
 %
 %    \begin{macrocode}
-\newif\if@noSlideNumbers
-\@noSlideNumbersfalse
-\DeclareOptionBeamer{noslidenumbers}{
-  \@noSlideNumberstrue
+\newcommand{\@metropolis@setdefaults}{
+  \pgfkeys{/metropolis/.cd,
+  }
 }
 %    \end{macrocode}
 %
-% nosectionslide
 %
-%    \begin{macrocode}
-\newif\if@noSectionSlide
-\@noSectionSlidefalse
-\DeclareOptionBeamer{nosectionslide}{
-  \@noSectionSlidetrue
-}
-%    \end{macrocode}
-%
-% nooffset
-%
-%    \begin{macrocode}
-\newlength{\@mtheme@voffset}
-\setlength{\@mtheme@voffset}{2em}
-\DeclareOptionBeamer{nooffset}{
-  \setlength{\@mtheme@voffset}{0em}
-}
-%    \end{macrocode}
-%
-% blockbg
-%
-%    \begin{macrocode}
-\newif\if@beamer@metropolis@blockbg
-\@beamer@metropolis@blockbgfalse
-\DeclareOptionBeamer{blockbg}{
-    \@beamer@metropolis@blockbgtrue
-}
-%    \end{macrocode}
-%
-% darkcolors
-%
-%    \begin{macrocode}
-\DeclareOptionBeamer{darkcolors}{
-  \PassOptionsToPackage{darkcolors}{beamercolorthememetropolis}%
-}
-%    \end{macrocode}
-%
-% Unknown option error handling
-%
-%    \begin{macrocode}
-\DeclareOptionBeamer*{
-  \PackageWarning{beamerthemem}{Unknown option `\CurrentOption'}%
-}
-\ProcessOptionsBeamer
-%    \end{macrocode}
 %
 % \subsection{Component sub-packages}
 %
@@ -125,8 +111,6 @@
 % document is being processed by Xe\LaTeX{} or Lua\LaTeX{}.
 %
 %    \begin{macrocode}
-\RequirePackage{etoolbox}
-\RequirePackage{ifxetex,ifluatex}
 \ifboolexpr{bool {xetex} or bool {luatex}}{
   \usefonttheme{metropolis}
 }{
@@ -146,21 +130,23 @@
 }
 %    \end{macrocode}
 %
+%
+%
 % \subsection{Custom commands}
 %
 % We define custom commands in this package as their proper usage may depend
 % on multiple sub-packages.
 %
-% \begin{macro}{\mthemetitleformat}
-% \begin{macro}{\mthemesectiontitleformat}
-% \begin{macro}{\mthemeframetitleformat}
-% \begin{macro}{\mthemeplaintitleformat}
+% \begin{macro}{\@metropolis@titleformat}
+% \begin{macro}{\@metropolis@sectiontitleformat}
+% \begin{macro}{\@metropolis@frametitleformat}
+% \begin{macro}{\@metropolis@plaintitleformat}
 %   Creates hooks to change the case format of the four different titles.
 %    \begin{macrocode}
-\def\mthemetitleformat#1{\MakeLowercase{#1}}
-\def\mthemesectiontitleformat#1{\mthemetitleformat{#1}}
-\def\mthemeframetitleformat#1{\mthemetitleformat{#1}}
-\def\mthemeplaintitleformat#1{\mthemetitleformat{#1}}
+\def\@metropolis@titleformat#1{\MakeLowercase{#1}}
+\def\@metropolis@sectiontitleformat#1{\@metropolis@titleformat{#1}}
+\def\@metropolis@frametitleformat#1{\@metropolis@titleformat{#1}}
+\def\@metropolis@plaintitleformat#1{\@metropolis@titleformat{#1}}
 %    \end{macrocode}
 %
 %   To give users the option to |\MakeUppercase| or |\MakeLowercase| the
@@ -173,11 +159,11 @@
 %    \begin{macrocode}
 \patchcmd{\sectionentry}
   {\def\insertsectionhead{#2}}
-  {\def\insertsectionhead{\mthemesectiontitleformat{#2}}}
+  {\def\insertsectionhead{\@metropolis@sectiontitleformat{#2}}}
   {}{}
 \patchcmd{\beamer@section}
   {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
-  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{\mthemesectiontitleformat{#1}}}}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{\@metropolis@sectiontitleformat{#1}}}}
   {}{}
 
 \patchcmd{\beamer@@frametitle}
@@ -187,7 +173,7 @@
     \gdef\beamer@shortframetitle{#1}%
     }}
   {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{\mthemeframetitleformat{#2}\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
     \gdef\beamer@frametitle{#2}%
     \gdef\beamer@shortframetitle{#1}%
     }}
@@ -211,7 +197,7 @@
       \vspace{1em}
       \usebeamercolor[fg]{palette primary}
       \usebeamerfont{section title}
-      \mthemeplaintitleformat{#2}
+      \@metropolis@plaintitleformat{#2}
       \vfill
     \end{frame}
   \endgroup
@@ -224,6 +210,13 @@
 \newcommand{\mreducelistspacing}{\vspace{-\topsep}}
 %    \end{macrocode}
 % \end{macro}
+%
+% Process package options
+%
+%    \begin{macrocode}
+\@metropolis@setdefaults
+\ProcessPgfOptions{/metropolis}
+%    \end{macrocode}
 %
 % \iffalse
 %</package>

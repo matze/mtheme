@@ -27,18 +27,71 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
+%
 % \section{Implementation: \textsc{metropolis} outer theme}
 %
 % A |beamer| outer theme dictates the style of the frame elements traditionally
 % set outside the body of each slide: the head, footline, and frame title.
 %
-%
-%
-% This customization will be removed in a future version.
-%
+% Load required packages.
 %    \begin{macrocode}
-\def\mthemetitleformat{\scshape\MakeLowercase}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
 %    \end{macrocode}
+%
+%
+%
+% \subsection{Options}
+%
+% \begin{macro}{numbering}
+% This option controls the page numbering.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/outer/numbering/.cd,
+    .is choice,
+    none/.code=\setbeamertemplate{frame numbering}[none],
+    counter/.code=\setbeamertemplate{frame numbering}[counter],
+    fraction/.code=\setbeamertemplate{frame numbering}[fraction],
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{progressbar}
+% This option controls the progressbar.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/outer/progressbar/.cd,
+    .is choice,
+    none/.code=\setbeamertemplate{progress bar in head/foot}[none],
+    head/.code=\setbeamertemplate{progress bar in head/foot}[head],
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{frametitleoffset}
+% This option controls the frame title offset.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/outer/.cd,
+    frametitleoffset/.code=\setlength{\@metropolis@voffset}{#1},
+    noframetitleoffset/.code=\setlength{\@metropolis@voffset}{0em},
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@metropolis@outer@setdefaults}
+% Set default values for outer theme options.
+%    \begin{macrocode}
+\newcommand{\@metropolis@outer@setdefaults}{
+  \pgfkeys{/metropolis/outer/.cd,
+    numbering=counter,
+    progressbar=none,
+    frametitleoffset=2em,
+  }
+}
+%    \end{macrocode}%
+% \end{macro}
+%
 %
 %
 % \subsection{Head and footline}
@@ -50,8 +103,28 @@
 \setbeamertemplate{navigation symbols}{}
 %    \end{macrocode}
 %
-% The only element in the footline by default is the frame number. It can
-% optionally be omitted or displayed as a fraction of the total frames.
+% Template for the frame number. Can be omitted, shown or displayed as a
+% fraction of the total frames.
+%
+%    \begin{macrocode}
+\defbeamertemplate{frame numbering}{none}{
+  % intentionally empty
+}
+\defbeamertemplate{frame numbering}{counter}{
+  \insertframenumber
+}
+\defbeamertemplate{frame numbering}{fraction}{
+  \insertframenumber/\inserttotalframenumber
+}
+%    \end{macrocode}
+%
+% Define additional space between frame title and content. By default 2em.
+%
+%    \begin{macrocode}
+\newlength{\@metropolis@voffset}
+%    \end{macrocode}
+%
+% The only element in the footline by default is the frame number.
 %
 %    \begin{macrocode}
 \setbeamertemplate{footline}{%
@@ -62,16 +135,8 @@
       leftskip=0.3cm,
       rightskip=0.3cm
     ]{footline}%
-    \hfill\usebeamerfont{page number in head/foot}%
-  \if@noSlideNumbers%
-    %Purposefully left blank to display no slide number.%
-    \else%
-      \if@useTotalSlideIndicator%
-      \insertframenumber/\inserttotalframenumber%
-      \else%
-      \insertframenumber%
-      \fi%
-    \fi%
+  \hfill\usebeamerfont{page number in head/foot}%
+  \usebeamertemplate*{frame numbering}
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
@@ -97,11 +162,8 @@
     ]{frametitle}
   \insertframetitle%
   \end{beamercolorbox}%
-  \if@useTitleProgressBar
-    \nointerlineskip
-    \usebeamertemplate*{progress bar in head/foot}
-  \fi
-  \vspace{\@mtheme@voffset}
+  \usebeamertemplate*{progress bar in head/foot}
+  \vspace{\@metropolis@voffset}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -113,13 +175,17 @@
 %   |progress bar in section page|.
 %
 %    \begin{macrocode}
-\RequirePackage{calc}
 \newlength{\metropolis@progressinheadfoot}
-\setbeamertemplate{progress bar in head/foot}{
+\defbeamertemplate{progress bar in head/foot}{none}{}
+\defbeamertemplate{progress bar in head/foot}{head}{
+  \nointerlineskip
   \setlength{\metropolis@progressinheadfoot}{%
     \paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4pt,dp=0pt]{progress bar in head/foot}
+  \begin{beamercolorbox}[
+      wd=\paperwidth,
+      ht=0.4pt,
+      dp=0pt]{progress bar in head/foot}
     \begin{tikzpicture}
       \draw[bg, fill=bg] (0,0) rectangle (\paperwidth, 0.4pt);
       \draw[fg, fill=fg] (0,0) rectangle (\metropolis@progressinheadfoot, 0.4pt);
@@ -129,7 +195,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% Process package options
 %
+%    \begin{macrocode}
+\@metropolis@outer@setdefaults
+\ProcessPgfPackageOptions{/metropolis/outer}
+%    \end{macrocode}
 %
 % \iffalse
 %</package>

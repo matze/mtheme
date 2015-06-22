@@ -27,28 +27,54 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
+%
 % \section{Implementation: \textsc{metropolis} color theme}
-% Options
 %
-%
-% darkcolors
-%
+% Load required packages.
 %    \begin{macrocode}
-\newif\if@beamer@metropolis@darkcolors
-\@beamer@metropolis@darkcolorsfalse
-\DeclareOptionBeamer{darkcolors}{
-    \@beamer@metropolis@darkcolorstrue
-}
+\RequirePackage{pgfopts}
 %    \end{macrocode}
 %
-% Unknown option error handling
 %
+%
+% \subsection{Options}
+%
+% \begin{macro}{block}
+% This option controls whether the blocks are filled or transparent.
 %    \begin{macrocode}
-\DeclareOptionBeamer*{%
-  \PackageWarning{beamercolorthememetropolis}{Unknown option `\CurrentOption'}%
+\pgfkeys{
+  /metropolis/color/block/.cd,
+    .is choice,
+    transparent/.code=\@metropolis@block@transparent,
+    fill/.code=\@metropolis@block@fill,
 }
-\ProcessOptionsBeamer
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{colors}
+% Defines whether the background shall be dark and the foreground be light or
+% vice versa
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/color/background/.cd,
+    .is choice,
+    dark/.code=\@metropolis@colors@dark,
+    light/.code=\@metropolis@colors@light,
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@metropolis@color@setdefaults}
+% Set default values for color theme options.
+%    \begin{macrocode}
+\newcommand{\@metropolis@color@setdefaults}{
+  \pgfkeys{/metropolis/color/.cd,
+    background=light,
+    block=transparent,
+  }
+}
+%    \end{macrocode}
+% \end{macro}
 %
 %
 %
@@ -69,27 +95,24 @@
 % of |normal text|, |alerted text|, and |example text|.
 %
 %    \begin{macrocode}
-\if@beamer@metropolis@darkcolors
+\newcommand{\@metropolis@colors@dark}{
   \setbeamercolor{normal text}{%
     fg=black!2,
     bg=mDarkTeal
   }
-\else
+}
+\newcommand{\@metropolis@colors@light}{
   \setbeamercolor{normal text}{%
     fg=mDarkTeal,
     bg=black!2
   }
-\fi
+}
 \setbeamercolor{alerted text}{%
   fg=mLightBrown
 }
 \setbeamercolor{example text}{%
   fg=mLightGreen
 }
-%    \end{macrocode}
-%
-%
-%    \begin{macrocode}
 %    \end{macrocode}
 %
 %
@@ -130,9 +153,9 @@
 %
 % The \textsc{metropolis} inner or outer themes optionally display progress
 % bars in various locations. Their color is set by |progress bar| but the two
-% different kinds can be customized separately. The horizontal rule on the title
-% page is also set based on the progress bar color and can be customized with
-% |title separator|.
+% different kinds can be customized separately. The horizontal rule on the
+% title page is also set based on the progress bar color and can be customized
+% with |title separator|.
 %
 %    \begin{macrocode}
 \setbeamercolor{progress bar}{%
@@ -157,15 +180,16 @@
 % Blocks
 %
 %    \begin{macrocode}
-\if@beamer@metropolis@blockbg
+\newcommand{\@metropolis@block@transparent}{
+  \setbeamercolor{block title}{use=normal text, parent=normal text}
+}
+\newcommand{\@metropolis@block@fill}{
   \setbeamercolor{block title}{%
     use=normal text,
     fg=normal text.fg,
     bg=normal text.bg!80!fg
   }
-\else
-  \setbeamercolor{block title}{use=normal text, parent=normal text}
-\fi
+}
 \setbeamercolor{block title alerted}{%
     use={block title, alerted text},
     bg=block title.bg,
@@ -189,10 +213,18 @@
 %    \begin{macrocode}
 \setbeamercolor{footnote}{fg=normal text.fg!90}
 \setbeamercolor{footnote mark}{fg=.}
-\mode<all>
 %    \end{macrocode}
 %
+% Process package options
 %
+%    \begin{macrocode}
+\@metropolis@color@setdefaults
+\ProcessPgfPackageOptions{/metropolis/color}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\mode<all>
+%    \end{macrocode}
 %
 % \iffalse
 %</package>
