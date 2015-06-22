@@ -27,7 +27,11 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
+% \section{Implementation: \textsc{metropolis} main theme}
 %
+% The primary job of this package is to load the component sub-packages of the
+% \textsc{metropolis} theme and route the theme options accordingly. It also
+% provides some custom commands and environments for the user.
 %
 %
 % Options
@@ -93,8 +97,10 @@
 % blockbg
 %
 %    \begin{macrocode}
+\newif\if@beamer@metropolis@blockbg
+\@beamer@metropolis@blockbgfalse
 \DeclareOptionBeamer{blockbg}{
-  \PassOptionsToPackage{blockbg}{beamercolorthememetropolis}%
+    \@beamer@metropolis@blockbgtrue
 }
 %    \end{macrocode}
 %
@@ -122,51 +128,51 @@
 \def\mthemetitleformat#1{\scshape #1}
 %    \end{macrocode}
 % \end{macro}
+% \subsection{Component sub-packages}
 %
+% Having processed the options, we can now load the component sub-packages of
+% the theme.
 %    \begin{macrocode}
-\mode<presentation>
+\useinnertheme{metropolis}
+\useoutertheme{metropolis}
+\usecolortheme{metropolis}
 %    \end{macrocode}
 %
-% Packages
+% The |fira| font theme, which depends on |fontspec|, is only loaded if the
+% document is being processed by Xe\LaTeX{} or Lua\LaTeX{}.
 %
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
-\RequirePackage{tikz}
-\RequirePackage{pgfplots}
 \RequirePackage{ifxetex,ifluatex}
-\newif\ifxetexorluatex
-\ifxetex
-  \xetexorluatextrue
-\else
-  \ifluatex
-    \xetexorluatextrue
-  \else
-    \xetexorluatexfalse
-  \fi
-\fi
-\usetikzlibrary{backgrounds}
-\usetikzlibrary{calc}
-\usecolortheme{metropolis}
-\ifxetexorluatex
+\ifboolexpr{bool {xetex} or bool {luatex}}{
   \usefonttheme{metropolis}
-\else
-  \PackageWarning{beamerthemem}{You need to compile with XeLaTeX or LuaLaTeX for the Fira fonts.}
-\fi
-
-\useinnertheme{metropolis}%
-\useoutertheme{metropolis}
-
+}{
+  \PackageWarning{beamerthemem}{%
+    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts.
+  }
+}
+%    \end{macrocode}
+%
+% The |tol| theme for |pgfplots| is only loaded if |pgfplots| is used.
+%
+%    \begin{macrocode}
 \AtEndPreamble{%
   \@ifpackageloaded{pgfplots}{%
     \RequirePackage{pgfplotsthemetol}
   }{}
 }
-
 %    \end{macrocode}
 %
-% Create a plain frame with dark background
+%
+%
+% \subsection{Custom commands}
+%
+% We define custom commands in this package as their proper usage may depend
+% depend on multiple sub-packages.
 %
 % \begin{macro}{\plain}
+%   Creates a plain frame with dark background, suitable for displaying images
+%   or a few words.
 %    \begin{macrocode}
 \newcommand{\plain}[2][]{%
   \begingroup
@@ -184,16 +190,6 @@
 }
 %    \end{macrocode}
 % \end{macro}
-%
-%
-%
-%
-
-%
-%
-%
-% misc
-%
 %
 % \begin{macro}{\mreducelistspacing}
 %    \begin{macrocode}

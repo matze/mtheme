@@ -42,6 +42,14 @@
 %
 %
 %
+% This customization will be changed in a future update.
+%
+%    \begin{macrocode}
+\def\mthemetitleformat{\scshape\MakeLowercase}
+%    \end{macrocode}
+%
+%
+%
 % \subsection{Title page}
 %
 % \begin{macro}{title page}
@@ -49,9 +57,9 @@
 %   Template for the title page.
 %
 %    \begin{macrocode}
+\RequirePackage{tikz}
 \setbeamertemplate{title page}{
   \begin{minipage}[b][\paperheight]{\textwidth}
-    \vspace*{\@mtheme@voffset}
 %    \end{macrocode}
 %
 %   If the user has set a |titlegraphic|, we set it in a zero-height box so
@@ -145,11 +153,11 @@
     }}
     \fi
     \vfill
-    \vspace*{\@mtheme@voffset}
+    \vspace*{1mm}
   \end{minipage}
 }
 %    \end{macrocode}
-% \end{macro}
+% \end{macro}%
 %
 % Normal people should use |\maketitle| or |\titlepage| instead of using the
 % |title page| beamer template directly. Beamer already defines these macros,
@@ -215,8 +223,8 @@
 %   StackExchange question}.
 %
 %    \begin{macrocode}
-\newcommand{\insertsectionHEAD}{\expandafter\formatsectionhead\insertsectionhead}
-\newcommand{\formatsectionhead}[3]{#1{#2}{\mthemetitleformat{#3}}}
+\providecommand{\insertsectionHEAD}{\expandafter\formatsectionhead\insertsectionhead}
+\providecommand{\formatsectionhead}[3]{#1{#2}{\mthemetitleformat{#3}}}
 %    \end{macrocode}
 % \end{macro}
 %

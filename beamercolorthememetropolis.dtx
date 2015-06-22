@@ -30,13 +30,6 @@
 % \section{Implementation: \textsc{metropolis} color theme}
 % Options
 %
-%    \begin{macrocode}
-\newif\if@beamer@metropolis@blockbg
-\@beamer@metropolis@blockbgfalse
-\DeclareOptionBeamer{blockbg}{
-    \@beamer@metropolis@blockbgtrue
-}
-%    \end{macrocode}
 %
 % darkcolors
 %
@@ -57,7 +50,9 @@
 \ProcessOptionsBeamer
 %    \end{macrocode}
 %
-% Colors
+%
+%
+% \subsection{Base colors}
 %
 %    \begin{macrocode}
 \definecolor{mDarkBrown}{HTML}{604c38}
@@ -66,7 +61,12 @@
 \definecolor{mLightGreen}{HTML}{14B03D}
 %    \end{macrocode}
 %
-% Base Colors
+%
+%
+% \subsection{Base styles}
+%
+% All colors in the \textsc{metropolis} theme are derived from the definitions
+% of |normal text|, |alerted text|, and |example text|.
 %
 %    \begin{macrocode}
 \if@beamer@metropolis@darkcolors
@@ -88,24 +88,33 @@
 }
 %    \end{macrocode}
 %
-% Derived Colors
 %
 %    \begin{macrocode}
-\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+%    \end{macrocode}
+%
+%
+%
+% \subsection{Derived colors}
+%
+% The titles and structural elements (e.g. |itemize| bullets) are set in the
+% same color as |normal text|. This would ideally done by setting |normal text|
+% as a parent style, which we do to set |titlelike|, but this doesn't work for
+% |structure| as its foreground is set explicitly in
+% |beamercolorthemedefault.sty|.
+%
+%    \begin{macrocode}
+\setbeamercolor{titlelike}{%
+  use=normal text,
+  parent=normal text
+}
 \setbeamercolor{structure}{%
   fg=normal text.fg
 }
 %    \end{macrocode}
 %
-% Frame titles and plain slides
-%
-%    \begin{macrocode}
-\setbeamercolor{frametitle}{use=palette primary, parent=palette primary}
-%    \end{macrocode}
-%
 % The “primary” palette should be used for the most important navigational
-% elements, and possibly of other elements.
-% The metropolis color theme uses it for frame titles and slides.
+% elements, and possibly of other elements. The \textsc{metropolis} theme uses
+% it for frame titles and slides.
 %
 %    \begin{macrocode}
 \setbeamercolor{palette primary}{%
@@ -113,11 +122,24 @@
   fg=normal text.bg,
   bg=normal text.fg
 }
+\setbeamercolor{frametitle}{%
+  use=palette primary,
+  parent=palette primary
+}
 %    \end{macrocode}
 %
-% Progress bar and title separator
+% The \textsc{metropolis} inner or outer themes optionally display progress
+% bars in various locations. Their color is set by |progress bar| but the two
+% different kinds can be customized separately. The horizontal rule on the title
+% page is also set based on the progress bar color and can be customized with
+% |title separator|.
 %
 %    \begin{macrocode}
+\setbeamercolor{progress bar}{%
+  use=alerted text,
+  fg=alerted text.fg,
+  bg=normal text.bg!50!normal text.fg
+}
 \setbeamercolor{title separator}{
   use=progress bar,
   parent=progress bar
@@ -129,11 +151,6 @@
 \setbeamercolor{progress bar in section page}{
   use=progress bar,
   parent=progress bar
-}
-\setbeamercolor{progress bar}{%
-  use=alerted text,
-  fg=alerted text.fg,
-  bg=normal text.bg!50!normal text.fg
 }
 %    \end{macrocode}
 %
@@ -174,7 +191,8 @@
 \setbeamercolor{footnote mark}{fg=.}
 \mode<all>
 %    \end{macrocode}
-
+%
+%
 %
 % \iffalse
 %</package>
