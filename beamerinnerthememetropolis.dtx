@@ -40,16 +40,6 @@
 %   \item footnotes and plain text.
 % \end{itemize}
 %
-%
-%
-% This customization will be changed in a future update.
-%
-%    \begin{macrocode}
-\def\mthemetitleformat{\scshape\MakeLowercase}
-%    \end{macrocode}
-%
-%
-%
 % \subsection{Title page}
 %
 % \begin{macro}{title page}
@@ -200,7 +190,7 @@
   \begin{minipage}{22em}
     \usebeamercolor[fg]{section title}
     \usebeamerfont{section title}
-    \insertsectionHEAD\\[-1ex]
+    \insertsectionhead\\[-1ex]
     \usebeamertemplate*{progress bar in section page}
   \end{minipage}
   \par
@@ -214,17 +204,6 @@
     \fi
   }
 \fi
-%    \end{macrocode}
-%
-%   To give users the option to \MakeUppercase or \MakeLowercase the section
-%   title, we need to expand |\insertsectionhead| before applying the relevant
-%   formatting command. This solution was suggested by Enrico Gregorio in an
-%   answer to \href{http://tex.stackexchange.com/questions/112526/}{this
-%   StackExchange question}.
-%
-%    \begin{macrocode}
-\providecommand{\insertsectionHEAD}{\expandafter\formatsectionhead\insertsectionhead}
-\providecommand{\formatsectionhead}[3]{#1{#2}{\mthemetitleformat{#3}}}
 %    \end{macrocode}
 % \end{macro}
 %

@@ -74,16 +74,6 @@
 }
 %    \end{macrocode}
 %
-% protectframetitle
-%
-%    \begin{macrocode}
-\newif\if@protectFrameTitle
-\@protectFrameTitlefalse
-\DeclareOptionBeamer{protectframetitle}{
-  \@protectFrameTitletrue
-}
-%    \end{macrocode}
-%
 % nooffset
 %
 %    \begin{macrocode}
@@ -121,13 +111,6 @@
 \ProcessOptionsBeamer
 %    \end{macrocode}
 %
-% mthemetitleformat
-%
-% \begin{macro}{\mthemetitleformat}
-%    \begin{macrocode}
-\def\mthemetitleformat#1{\scshape #1}
-%    \end{macrocode}
-% \end{macro}
 % \subsection{Component sub-packages}
 %
 % Having processed the options, we can now load the component sub-packages of
@@ -163,12 +146,57 @@
 }
 %    \end{macrocode}
 %
-%
-%
 % \subsection{Custom commands}
 %
 % We define custom commands in this package as their proper usage may depend
-% depend on multiple sub-packages.
+% on multiple sub-packages.
+%
+% \begin{macro}{\mthemetitleformat}
+% \begin{macro}{\mthemesectiontitleformat}
+% \begin{macro}{\mthemeframetitleformat}
+% \begin{macro}{\mthemeplaintitleformat}
+%   Creates hooks to change the case format of the four different titles.
+%    \begin{macrocode}
+\def\mthemetitleformat#1{\MakeLowercase{#1}}
+\def\mthemesectiontitleformat#1{\mthemetitleformat{#1}}
+\def\mthemeframetitleformat#1{\mthemetitleformat{#1}}
+\def\mthemeplaintitleformat#1{\mthemetitleformat{#1}}
+%    \end{macrocode}
+%
+%   To give users the option to |\MakeUppercase| or |\MakeLowercase| the
+%   section title and frame title we need to patch the commands
+%   |\sectionentry|, |\beamer@section| and |\beamer@@frametitle|. This
+%   solution was suggested by Enrico Gregorio in an  answer to
+%   \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
+%   question}.
+%
+%    \begin{macrocode}
+\patchcmd{\sectionentry}
+  {\def\insertsectionhead{#2}}
+  {\def\insertsectionhead{\mthemesectiontitleformat{#2}}}
+  {}{}
+\patchcmd{\beamer@section}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{\mthemesectiontitleformat{#1}}}}
+  {}{}
+
+\patchcmd{\beamer@@frametitle}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{\mthemeframetitleformat{#2}\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {}{}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \begin{macro}{\plain}
 %   Creates a plain frame with dark background, suitable for displaying images
@@ -183,7 +211,7 @@
       \vspace{1em}
       \usebeamercolor[fg]{palette primary}
       \usebeamerfont{section title}
-      \mthemetitleformat{#2}
+      \mthemeplaintitleformat{#2}
       \vfill
     \end{frame}
   \endgroup

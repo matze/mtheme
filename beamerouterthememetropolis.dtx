@@ -95,11 +95,7 @@
       ht=2.5ex,
       dp=1.5ex
     ]{frametitle}
-  \if@protectFrameTitle%
-      \mthemetitleformat{\protect\insertframetitle}%
-  \else%
-      \mthemetitleformat{\insertframetitle}%
-  \fi%
+  \insertframetitle%
   \end{beamercolorbox}%
   \if@useTitleProgressBar
     \nointerlineskip

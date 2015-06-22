@@ -140,10 +140,10 @@ computer. The complete list of make rules is as follows:
 
 Depending on the Linux distribution, the packaged name of |Fira Sans| might be
 |Fira Sans OT| instead of |Fira Sans|. In that case, you may have to edit
-|beamerfontthememetropolis.dtx|. You may also need to install Fira Sans; see the
-|contrib/| directory for more. Users of Debian or Ubuntu can also install this
-\href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb
-package} containing the theme files as well as the Fira Sans font files.
+|beamerfontthememetropolis.dtx|. You may also need to install Fira Sans; see
+the |contrib/| directory for more. Users of Debian or Ubuntu can also install
+this \href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb package} containing the theme files as well
+as the Fira Sans font files.
 
 
 \subsection{Pandoc}
@@ -158,8 +158,8 @@ $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 
 \subsection{A Minimal Example}
 
-To get started with the theme is very simple. The following code shows a minimal
-example of a Beamer presentation using the \textsc{mtheme}.
+To get started with the theme is very simple. The following code shows a
+minimal example of a Beamer presentation using the \textsc{mtheme}.
 
 \begin{lstlisting}
 \documentclass[10pt]{beamer}
@@ -191,10 +191,6 @@ them when invoking \textsc{mtheme} in the preamble of the slides, i.e.
 \noindent\DescribeMacro{usetitleprogressbar}
 Adds a thin progress bar similar to the section progress bar underneath each
 frame title.\\
-
-\noindent\DescribeMacro{protectframetitle}
-In order to use |\cite|, |\ref| and similar commands in a frame title you have
-to protect the title. This can be done automatically with this option.\\
 
 \noindent\DescribeMacro{blockbg}
 Adds background color to the blocks similar to other beamer themes.\\
@@ -239,26 +235,24 @@ in your preamble. For greater customization, you can redefine any of the other
 colors in |beamercolorthememetropolis|, including progress bar.
 
 
-\subsection{Title Formatting}
+\subsection{Title Case Formatting}
 
-The main title, section titles, and frame titles are all formatted according to
-the custom command |\mthemetitleformat|. By default, this is equivalent to
-|\scshape| and sets the titles in small capitals, but you can change it in your
-preamble. For example:
+The main title, section titles, frame titles and plain frame titles are all
+formatted according to the custom command |\mthemetitleformat|. By default,
+this is equivalent to |\MakeLowercase{#1}|, hence seting the titles in small
+capitals. You can change this behaviour in your preamble. For example:
 
 \begin{lstlisting}
-% no small capitals
+% camel case
 \renewcommand{\mthemetitleformat}{}
-% all small capitals
-\renewcommand{\mthemetitleformat}{\scshape\MakeLowercase}
-% all capitals
+% lowercase
+\renewcommand{\mthemetitleformat}\MakeLowercase}
+% uppercase
 \renewcommand{\mthemetitleformat}{\MakeUppercase}
 \end{lstlisting}
 
-Note that |\MakeLowercase| and |\MakeUppercase| can have unexpected behaviour in
-math mode, are disabled when |protectframetitle| is used, and cause crashes when
-an unprotected frametitle appears on a slide with |allowframebreaks|.
-
+Be aware that these formatting macros will be replaced with theme options in
+the future.
 
 \subsection{Commands}
 
