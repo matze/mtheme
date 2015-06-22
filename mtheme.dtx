@@ -13,7 +13,7 @@
 \documentclass{ltxdoc}
 %\OnlyDescription
 
-\usepackage[parfill]{parskip}
+\usepackage{parskip}
 \usepackage{setspace}
 \onehalfspacing
 
@@ -62,7 +62,7 @@
   xrightmargin=0em,
   aboveskip=1em,
   belowskip=1em,
-  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,plain,setbeamercolor},
+  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,plain,setbeamercolor,metropolisset},
 }
 \lstMakeShortInline|
 
@@ -71,6 +71,13 @@
             menucolor=mLightBrown,
             pagecolor=mLightBrown,
             urlcolor=mLightBrown]{hyperref}
+
+\newcommand{\DescribeOption}[4]{
+  \noindent\DescribeMacro{#1}\textit{\textbf{\textcolor{mLightGreen}{#2}}}\dotfill\,#3\par
+  \begingroup
+  \leftskip2em #4\par
+  \endgroup
+}
 
 \GetFileInfo{beamerthemem.dtx}
 \title{Modern Beamer Presentations\\with the\\\textsc{mtheme} package}
@@ -82,21 +89,21 @@
 \maketitle
 
 \section{Introduction}
-Beamer is an awesome way to make presentations with LaTeX. But the stock themes
-do not necessarily look particularly nice and the custom themes often scream
-“Beamer” at first sight. The goal of \textsc{mtheme} is to provide a modern
-Beamer theme with minimal visual noise. It provides section slides with a neat
-progress bar and It is intended to be used with
-\href{https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/}{Fira
-Sans}, a gorgeous typeface commissioned by Mozilla and designed by
+Beamer is an awesome way to make presentations with LaTeX. But the stock
+themes do not necessarily look particularly nice and the custom themes often
+scream “Beamer” at first sight. The goal of \textsc{mtheme} is to provide a
+modern Beamer theme with minimal visual noise. It provides section slides with
+a neat progress bar and it is intended to be used with
+\href{https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/}
+{Fira Sans}, a gorgeous typeface commissioned by Mozilla and designed by
 \href{http://www.carrois.com/fira-3-1/}{Carrois}. Hence to get the best results
 you should have installed the Fira typeface and use XeTeX to typeset your
 slides. Nevertheless this is no hard dependency. The theme also works fine with
 pdfTeX and the Computer Modern typeface.
 
-The codebase is maintained on \href{https://github.com/matze/mtheme}{GitHub}. So
-if you have issues, find mistakes in the manual or want to contribute – to make
-the theme even better – get in touch there.
+The codebase is maintained on \href{https://github.com/matze/mtheme}{GitHub}.
+So if you have issues, find mistakes in the manual or want to contribute – to
+make the theme even better – get in touch there.
 
 
 \section{Getting Started}
@@ -182,38 +189,48 @@ minimal example of a Beamer presentation using the \textsc{mtheme}.
 
 \section{Customization}
 \subsection{Package options}
-The theme provides a number of options. To use any of the options below, call
-them when invoking \textsc{mtheme} in the preamble of the slides, i.e.
+The theme provides a number of options. The options use a key=value interface.
+So every option is controlled by a key its value. To use any of the options
+below, you can either provide a comma separated list of options when invoking
+\textsc{mtheme} in the preamble of the presentation,
 \begin{lstlisting}[numbers=none]
-\usetheme[<options>]{m}
+\usetheme[<key=value list>]{m}
+\end{lstlisting}
+or set them at any time with
+\begin{lstlisting}[numbers=none]
+\metropolisset[<key=value list>]
 \end{lstlisting}
 
-\noindent\DescribeMacro{usetitleprogressbar}
-Adds a thin progress bar similar to the section progress bar underneath each
-frame title.\\
+\DescribeOption{sectionpage}{none, progressbar}{progressbar}{
+  Adds a thin progress bar similar to the section progress bar underneath each frame title.
+}
 
-\noindent\DescribeMacro{blockbg}
-Adds background color to the blocks similar to other beamer themes.\\
+\DescribeOption{block}{transparent, fill}{transparent}{
+  This option controls the block background. It can either be filled with a
+  light grey or be transparent.
+}
 
-\noindent\DescribeMacro{nooffset}
-By default, the \textsc{mtheme} adds |\vspace{2em}| after the frametitle to
-center content vertically on the frame. This option removes this additional
-space in order to get more content per slide.\\
+\DescribeOption{numbering}{none, counter, fraction}{counter}{
+  In the bottom right corner of each frame the current frame number is
+  displayed. This can be disabled or the total framenumber can be added
+  additionally.
+}
 
-\noindent\DescribeMacro{nosectionslide}
-By default when using the |\section| command, a slide is created with just the
-title and the progress bar on it. This option prevents the creation of these
-additional slides.\\
+\DescribeOption{progressbar}{none, head}{none}{
+  If enabled this option adds a thin progress bar similar to the sections
+  progress bar underneath each frame title.
+}
 
-\noindent\DescribeMacro{usetotalslideindicator}
-By default, only the current page number is printed in the lower right corner.
-This option changes the slide numbering format to |#current/#total|.\\
+\DescribeOption{frametitleoffset\\noframetitleoffset}{<dimension>}{2em}{
+  The frametitle offset is an additional vertical space after the frame title
+  to center the content vertically on the frame. To remove this space entirely
+  the short option |noframetitleoffset| is defined.
+}
 
-\noindent\DescribeMacro{noslidenumbers}
-Omits slide numbers entirely.\\
-
-\noindent\DescribeMacro{darkcolors}
-Makes the background dark and the foreground light.\\
+\DescribeOption{background}{dark, light}{light}{
+  This option defines whether the background shall be dark and the foreground
+  be light or vice versa.
+}
 
 
 \subsection{Color Customization}
