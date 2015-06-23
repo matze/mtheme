@@ -190,7 +190,10 @@
 %    \begin{macrocode}
 \newcommand{\plain}[2][]{%
   \begingroup
-    \setbeamercolor{background canvas}{use=palette primary,parent=palette primary}
+    \setbeamercolor{background canvas}{
+      use=palette primary,
+      parent=palette primary
+    }
     \begin{frame}{#1}
       \centering
       \vfill

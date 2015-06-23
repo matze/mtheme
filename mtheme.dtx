@@ -73,10 +73,13 @@
             urlcolor=mLightBrown]{hyperref}
 
 \newcommand{\DescribeOption}[4]{
-  \noindent\DescribeMacro{#1}\textit{\textbf{\textcolor{mLightGreen}{#2}}}\dotfill\,#3\par
-  \begingroup
-  \leftskip2em #4\par
-  \endgroup
+  \DescribeMacro{#1}
+  \begin{minipage}[t]{\textwidth}
+    \textit{\textbf{\textcolor{mLightGreen}{#2}}}\dotfill\,#3\par
+    \begingroup
+    \leftskip2em #4\par
+    \endgroup
+  \end{minipage}
 }
 
 \GetFileInfo{beamerthemem.dtx}
@@ -190,26 +193,41 @@ minimal example of a Beamer presentation using the \textsc{mtheme}.
 \section{Customization}
 \subsection{Package options}
 The theme provides a number of options. The options use a key=value interface.
-So every option is controlled by a key its value. To use any of the options
-below, you can either provide a comma separated list of options when invoking
-\textsc{mtheme} in the preamble of the presentation,
+So every option is controlled by a key its value. To use an option you can
+either provide a comma separated list of options when invoking
+\textsc{mtheme} in the preamble of the presentation.
 \begin{lstlisting}[numbers=none]
 \usetheme[<key=value list>]{m}
 \end{lstlisting}
-or set them at any time with
+Or you can set them at any time with the |\metropolisset| macro.
 \begin{lstlisting}[numbers=none]
 \metropolisset[<key=value list>]
 \end{lstlisting}
+To set an option on a specific sub-package only you have to add the
+corresponding prefix (inner, outer, color), e.g.
+\begin{lstlisting}[numbers=none]
+\metropolisset[inner/block=fill]
+\end{lstlisting}
+The following list of options is structured as shown in the following example.
 
-\DescribeOption{sectionpage}{none, progressbar}{progressbar}{
-  Adds a thin progress bar similar to the section progress bar underneath each frame title.
+\DescribeOption{key}{list of possible values}{default value}{
+  A short description of the option.
 }
 
+Although the options are grouped into the corresponding sub-packages every
+option can and in most cases should be set on the main theme directly. If an
+option is listed in multiple themes, setting it on the main theme will set the
+option on every sub-package.
+
+\subsubsection{Inner theme}
 \DescribeOption{block}{transparent, fill}{transparent}{
   This option controls the block background. It can either be filled with a
   light grey or be transparent.
 }
-
+\DescribeOption{sectionpage}{none, progressbar}{progressbar}{
+  Adds a thin progress bar similar to the section progress bar underneath each frame title.
+}
+\subsubsection{Outer theme}
 \DescribeOption{numbering}{none, counter, fraction}{counter}{
   In the bottom right corner of each frame the current frame number is
   displayed. This can be disabled or the total framenumber can be added
@@ -226,7 +244,11 @@ or set them at any time with
   to center the content vertically on the frame. To remove this space entirely
   the short option |noframetitleoffset| is defined.
 }
-
+\subsubsection{Color theme}
+\DescribeOption{block}{transparent, fill}{transparent}{
+  This option controls the block background. It can either be filled with a
+  light grey or be transparent.
+}
 \DescribeOption{background}{dark, light}{light}{
   This option defines whether the background shall be dark and the foreground
   be light or vice versa.
