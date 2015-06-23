@@ -28,7 +28,7 @@
 %<*package>
 % ------------------------------------------------------------------------- \fi
 %
-% \section{Implementation: \textsc{metropolis} main theme}
+% \subsection{\textsc{metropolis} main theme}
 %
 % The primary job of this package is to load the component sub-packages of the
 % \textsc{metropolis} theme and route the theme options accordingly. It also
@@ -42,7 +42,7 @@
 \RequirePackage{ifluatex}
 %    \end{macrocode}
 %
-% \subsection{Options}
+% \subsubsection{Options}
 %
 % \begin{macro}{\metropolisset}
 % First of all we define a macro for the user to set options.
@@ -68,9 +68,40 @@
   block/.code=\pgfkeysalso{
     inner/block=#1,
     color/block=#1,
-  }
+  },
 }
 %    \end{macrocode}
+%
+% \begin{macro}{plaintitleformat}
+% Control the case style of the plain title
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/plaintitleformat/.cd,
+    .is choice,
+    regular/.code=\renewcommand{\@metropolis@plaintitleformat}{#1},
+    lowercase/.code={%
+      \renewcommand{\@metropolis@plaintitleformat}{\MakeLowercase{#1}}
+    },
+    uppercase/.code={%
+      \renewcommand{\@metropolis@plaintitleformat}{\MakeUppercase{#1}}
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{everytitleformat}
+% Control the case style of the every title
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/everytitleformat/.code=\pgfkeysalso{
+      inner/titleformat=#1,
+      inner/sectiontitleformat=#1,
+      outer/frametitleformat=#1,
+      plaintitleformat=#1,
+    }
+}
+%    \end{macrocode}
+% \end{macro}
 %
 % For backwards compatibility with earlier betas of the theme, we implement
 % deprecated option names as aliases to the corresponding |key=value| options.
@@ -91,13 +122,14 @@
 %    \begin{macrocode}
 \newcommand{\@metropolis@setdefaults}{
   \pgfkeys{/metropolis/.cd,
+    plaintitleformat=lowercase,
   }
 }
 %    \end{macrocode}
 %
 %
 %
-% \subsection{Component sub-packages}
+% \subsubsection{Component sub-packages}
 %
 % Having processed the options, we can now load the component sub-packages of
 % the theme.
@@ -132,56 +164,16 @@
 %
 %
 %
-% \subsection{Custom commands}
+% \subsubsection{Custom commands}
 %
 % We define custom commands in this package as their proper usage may depend
 % on multiple sub-packages.
 %
-% \begin{macro}{\@metropolis@titleformat}
-% \begin{macro}{\@metropolis@sectiontitleformat}
-% \begin{macro}{\@metropolis@frametitleformat}
 % \begin{macro}{\@metropolis@plaintitleformat}
-%   Creates hooks to change the case format of the four different titles.
+%   Define a hook to change the case format of the plain title.
 %    \begin{macrocode}
-\def\@metropolis@titleformat#1{\MakeLowercase{#1}}
-\def\@metropolis@sectiontitleformat#1{\@metropolis@titleformat{#1}}
-\def\@metropolis@frametitleformat#1{\@metropolis@titleformat{#1}}
-\def\@metropolis@plaintitleformat#1{\@metropolis@titleformat{#1}}
+\def\@metropolis@plaintitleformat#1{#1}
 %    \end{macrocode}
-%
-%   To give users the option to |\MakeUppercase| or |\MakeLowercase| the
-%   section title and frame title we need to patch the commands
-%   |\sectionentry|, |\beamer@section| and |\beamer@@frametitle|. This
-%   solution was suggested by Enrico Gregorio in an  answer to
-%   \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
-%   question}.
-%
-%    \begin{macrocode}
-\patchcmd{\sectionentry}
-  {\def\insertsectionhead{#2}}
-  {\def\insertsectionhead{\@metropolis@sectiontitleformat{#2}}}
-  {}{}
-\patchcmd{\beamer@section}
-  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
-  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{\@metropolis@sectiontitleformat{#1}}}}
-  {}{}
-
-\patchcmd{\beamer@@frametitle}
-  {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {}{}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\plain}

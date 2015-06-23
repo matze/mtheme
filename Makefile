@@ -22,7 +22,7 @@ DOCKER_CONTAINER = latex-container
 
 .PHONY: sty doc demo demo-min ctan clean install uninstall docker-run docker-build docker-rm
 
-all: sty doc demo
+all: sty doc demo demo-min
 
 $(STY): $(DTX) $(INS)
 	@latex $(INS)

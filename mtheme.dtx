@@ -130,11 +130,13 @@ computer. The complete list of make rules is as follows:
   \item[uninstall] \hfill \\
   Remove the theme from your local texmf folder.
   \item[sty] \hfill \\
-  Build the manual.
-  \item[manual] \hfill \\
-  Build the manual.
+  Creat the package files.
+  \item[doc] \hfill \\
+  Build the documentation.
   \item[demo] \hfill \\
   Build the demo presentation.
+  \item[demo-min] \hfill \\
+  Build the minimal demo presentation.
   \item[ctan] \hfill \\
   Create a package for CTAN distribution.
 \end{description}
@@ -196,37 +198,56 @@ The theme provides a number of options. The options use a key=value interface.
 So every option is controlled by a key its value. To use an option you can
 either provide a comma separated list of options when invoking
 \textsc{mtheme} in the preamble of the presentation.
-\begin{lstlisting}[numbers=none]
+\begin{lstlisting}
 \usetheme[<key=value list>]{m}
 \end{lstlisting}
 Or you can set them at any time with the |\metropolisset| macro.
-\begin{lstlisting}[numbers=none]
+\begin{lstlisting}
 \metropolisset[<key=value list>]
 \end{lstlisting}
 To set an option on a specific sub-package only you have to add the
 corresponding prefix (inner, outer, color), e.g.
-\begin{lstlisting}[numbers=none]
+\begin{lstlisting}
 \metropolisset[inner/block=fill]
 \end{lstlisting}
-The following list of options is structured as shown in the following example.
+The list of options is structured as shown in the following example.
 
 \DescribeOption{key}{list of possible values}{default value}{
   A short description of the option.
 }
 
-Although the options are grouped into the corresponding sub-packages every
-option can and in most cases should be set on the main theme directly. If an
-option is listed in multiple themes, setting it on the main theme will set the
-option on every sub-package.
+Although the options are grouped into the corresponding packages every option
+can and in most cases should be set on the main theme directly. If an option
+is listed in multiple sub-packages, setting it on the main theme will set the
+option on every sub-package accordingly.
+
+\subsubsection{Main theme}
+\DescribeOption{everytitleformat}{regular, lowercase, uppercase}{lowercase}{
+  Shortcut option to change the case style of all titles together.
+}
+
+\DescribeOption{plainformat}{regular, lowercase, uppercase}{lowercase}{
+  Control the case style of the plain title.
+}
 
 \subsubsection{Inner theme}
 \DescribeOption{block}{transparent, fill}{transparent}{
   This option controls the block background. It can either be filled with a
   light grey or be transparent.
 }
+
 \DescribeOption{sectionpage}{none, progressbar}{progressbar}{
   Adds a thin progress bar similar to the section progress bar underneath each frame title.
 }
+
+\DescribeOption{titleformat}{regular, lowercase, uppercase}{lowercase}{
+  Control the case style of the title.
+}
+
+\DescribeOption{sectiontitleformat}{regular, lowercase, uppercase}{lowercase}{
+  Control the case style of the section title.
+}
+
 \subsubsection{Outer theme}
 \DescribeOption{numbering}{none, counter, fraction}{counter}{
   In the bottom right corner of each frame the current frame number is
@@ -239,27 +260,32 @@ option on every sub-package.
   progress bar underneath each frame title.
 }
 
+\DescribeOption{frametitleformat}{regular, lowercase, uppercase}{lowercase}{
+  Control the case style of the frame title.
+}
+
 \DescribeOption{frametitleoffset\\noframetitleoffset}{<dimension>}{2em}{
   The frametitle offset is an additional vertical space after the frame title
   to center the content vertically on the frame. To remove this space entirely
   the short option |noframetitleoffset| is defined.
 }
+
 \subsubsection{Color theme}
 \DescribeOption{block}{transparent, fill}{transparent}{
   This option controls the block background. It can either be filled with a
   light grey or be transparent.
 }
+
 \DescribeOption{background}{dark, light}{light}{
   This option defines whether the background shall be dark and the foreground
   be light or vice versa.
 }
 
-
 \subsection{Color Customization}
 
-The included metropolis color theme is used by default, but its colors can be
-easily changed to suit your tastes. All of the theme's styles are defined in
-terms of three beamer colors:
+The included \textsc{metropolis} color theme is used by default, but its
+colors can be easily changed to suit your tastes. All of the theme's styles
+are defined in terms of three beamer colors:
 \begin{itemize}
     \item |normal text| (dark fg, light bg)
     \item |alerted text| (colored fg, should be visible against dark or light)
@@ -267,37 +293,25 @@ terms of three beamer colors:
 \end{itemize}
 An easy way to customize the theme is to redefine these colors using
 
-\begin{lstlisting}[numbers=none]
+\begin{lstlisting}
 \setbeamercolor{ ... }{ fg= ... , bg= ... }
 \end{lstlisting}
 in your preamble. For greater customization, you can redefine any of the other
-colors in |beamercolorthememetropolis|, including progress bar.
-
-
-\subsection{Title Case Formatting}
-
-The main title, section titles, frame titles and plain frame titles are all
-formatted according to the custom command |\@metropolis@titleformat|. By default,
-this is equivalent to |\MakeLowercase{#1}|, hence seting the titles in small
-capitals. You can change this behaviour in your preamble. For example:
+stock beamer colors. In addition to the stock colors the theme defines a number
+of \textsc{metropolis} specific colors, which can also be redefined to your
+liking.
 
 \begin{lstlisting}
-% camel case
-\renewcommand{\@metropolis@titleformat}{}
-% lowercase
-\renewcommand{\@metropolis@titleformat}\MakeLowercase}
-% uppercase
-\renewcommand{\@metropolis@titleformat}{\MakeUppercase}
+\setbeamercolor{progress bar}{ ... }
+\setbeamercolor{title separator}{ ... }
+\setbeamercolor{progress bar in head/foot}{ ... }
+\setbeamercolor{progress bar in section page}{ ... }
 \end{lstlisting}
-
-Be aware that these formatting macros will be replaced with theme options in
-the future.
 
 \subsection{Commands}
 
 The |\plain{title=[]}{<body>}| command sets a slide in plain dark colors which
 can be useful to focus attention on a single sentence or image.
-
 
 \subsection{Paul Tol's colors: a \texttt{pgfplots} theme}
 

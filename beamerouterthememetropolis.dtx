@@ -28,20 +28,21 @@
 %<*package>
 % ------------------------------------------------------------------------- \fi
 %
-% \section{Implementation: \textsc{metropolis} outer theme}
+% \subsection{\textsc{metropolis} outer theme}
 %
 % A |beamer| outer theme dictates the style of the frame elements traditionally
 % set outside the body of each slide: the head, footline, and frame title.
 %
 % Load required packages.
 %    \begin{macrocode}
+\RequirePackage{etoolbox}
 \RequirePackage{calc}
 \RequirePackage{pgfopts}
 %    \end{macrocode}
 %
 %
 %
-% \subsection{Options}
+% \subsubsection{Options}
 %
 % \begin{macro}{numbering}
 % This option controls the page numbering.
@@ -63,7 +64,24 @@
   /metropolis/outer/progressbar/.cd,
     .is choice,
     none/.code=\setbeamertemplate{progress bar in head/foot}[none],
-    head/.code=\setbeamertemplate{progress bar in head/foot}[head],
+    top/.code=\setbeamertemplate{progress bar in head/foot}[top],
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{frametitleformat}
+% Control the case style of the frame title
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/outer/frametitleformat/.cd,
+    .is choice,
+    regular/.code=\renewcommand{\@metropolis@frametitleformat}{},
+    lowercase/.code={%
+      \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}
+    },
+    uppercase/.code={%
+      \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}
+    },
 }
 %    \end{macrocode}
 % \end{macro}
@@ -86,6 +104,7 @@
   \pgfkeys{/metropolis/outer/.cd,
     numbering=counter,
     progressbar=none,
+    frametitleformat=lowercase,
     frametitleoffset=2em,
   }
 }
@@ -94,7 +113,7 @@
 %
 %
 %
-% \subsection{Head and footline}
+% \subsubsection{Head and footline}
 %
 % All good |beamer| presentations should already remove the navigation symbols,
 % but \textsc{metropolis} removes them automatically (just in case).
@@ -143,12 +162,41 @@
 %
 %
 %
-% \subsection{Frametitle}
+% \subsubsection{Frametitle}
+%
+% \begin{macro}{\@metropolis@frametitleformat}
+%   Define a hook to change the case format of the frame title.
+%    \begin{macrocode}
+\def\@metropolis@frametitleformat#1{#1}
+%    \end{macrocode}
+% \end{macro}
+%
+% To make the |\MakeLowercase| and |\MakeUppercase| macros work in the
+% frame title we have to patch |\beamer@@frametitle|. This solution was
+% suggested by Enrico Gregorio in an answer to
+% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
+% question}.
+%
+%    \begin{macrocode}
+\patchcmd{\beamer@@frametitle}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {}
+  {\PackageError{beamerouterthememetropolis}{Patching frame title failed.}}
+%    \end{macrocode}
 %
 % \begin{macro}{frametitle}
 %
-%   Template for the frame title, which is optionally underlined with a
-%   progress bar.
+% Template for the frame title, which is optionally underlined with a
+% progress bar.
 %
 %    \begin{macrocode}
 \setbeamertemplate{frametitle}{%
@@ -170,9 +218,9 @@
 %
 % \begin{macro}{progress bar in head/foot}
 %
-%   Template for the progress bar optionally displayed below the frame title
-%   on each page. Much of this code is duplicated in the inner theme's template
-%   |progress bar in section page|.
+% Template for the progress bar optionally displayed below the frame title
+% on each page. Much of this code is duplicated in the inner theme's template
+% |progress bar in section page|.
 %
 %    \begin{macrocode}
 \newlength{\metropolis@progressinheadfoot}
