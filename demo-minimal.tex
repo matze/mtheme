@@ -1,0 +1,49 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{m}
+\metropolisset{
+  numbering=fraction,
+  progressbar=top,
+}
+
+\title{A modern beamer theme}
+\subtitle{}
+\date{\today}
+\author{Matthias Vogelgesang}
+\institute{Institute or miscellaneous information}
+
+\begin{document}
+
+\maketitle
+
+\section{Section 1}
+
+\begin{frame}{Frame 1}
+  Content 1
+\end{frame}
+
+\begin{frame}{Frame 2}
+  Content 2
+\end{frame}
+
+\section{Section 2}
+
+\begin{frame}{Frame 3}
+  Content 3
+  \begin{block}{Block 1}
+    Block 1 content
+  \end{block}
+\end{frame}
+
+\metropolisset{
+  block=fill,
+}
+
+\begin{frame}{Frame 4}
+  Content 4
+  \begin{block}{Block 2}
+    Block 2 content
+  \end{block}
+\end{frame}
+
+\end{document}

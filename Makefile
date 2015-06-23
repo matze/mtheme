@@ -1,28 +1,28 @@
-INS = mtheme.ins
-CONTRIB_SRC = contributors.py
-CONTRIB_TEX = contributors.tex
-DTX = $(wildcard *.dtx)
-STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx pgfplotsthemetol.dtx))
 TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
-MANUAL_DIR = $(TEXMFHOME)/doc/latex/mtheme
+DOC_DIR = $(TEXMFHOME)/doc/latex/mtheme
 TEMP_DIR = .temptex
 
+INS = mtheme.ins
 DEMO_SRC = demo.tex
 DEMO_PDF = demo.pdf
-MANUAL_SRC = mtheme.dtx
-MANUAL_PDF = mtheme.pdf
-TEXC := latexmk -xelatex -output-directory=$(TEMP_DIR)
+DEMO_MIN_SRC = demo-minimal.tex
+DEMO_MIN_PDF = demo-minimal.pdf
+DOC_SRC = mtheme.dtx
+DOC_PDF = mtheme.pdf
+DTX = $(wildcard *.dtx)
+STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx pgfplotsthemetol.dtx))
+CTAN_CONTENT = $(INS) $(DTX) $(DOC_PDF)
 
-CTAN_CONTENT = $(INS) $(DTX) $(MANUAL_PDF)
+TEXC := latexmk -xelatex -output-directory=$(TEMP_DIR)
 
 DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
 
 
-.PHONY: sty manual demo ctan clean install uninstall docker-run docker-build docker-rm
+.PHONY: sty doc demo demo-min ctan clean install uninstall docker-run docker-build docker-rm
 
-all: sty manual demo
+all: sty doc demo
 
 $(STY): $(DTX) $(INS)
 	@latex $(INS)
@@ -31,15 +31,21 @@ $(DEMO_PDF): $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
 	@cp $(TEMP_DIR)/$(DEMO_PDF) .
 
-$(MANUAL_PDF): $(MANUAL_SRC)
-	@$(TEXC) $(MANUAL_SRC)
-	@cp $(TEMP_DIR)/$(MANUAL_PDF) .
+$(DEMO_MIN_PDF): $(STY) $(DEMO_MIN_SRC)
+	$(TEXC) $(DEMO_MIN_SRC)
+	@cp $(TEMP_DIR)/$(DEMO_MIN_PDF) .
+
+$(DOC_PDF): $(DOC_SRC) $(DTX)
+	@$(TEXC) $(DOC_SRC)
+	@cp $(TEMP_DIR)/$(DOC_PDF) .
 
 sty: $(STY)
 
-manual: $(MANUAL_PDF)
+doc: $(DOC_PDF)
 
 demo: $(DEMO_PDF)
+
+demo-min: $(DEMO_MIN_PDF)
 
 ctan: $(CTAN_CONTENT)
 	@mkdir -p mtheme
@@ -50,17 +56,17 @@ ctan: $(CTAN_CONTENT)
 clean:
 	@git clean -xfd
 
-install: $(STY) $(MANUAL_PDF)
+install: $(STY) $(DOC_PDF)
 	@mkdir -p $(INSTALL_DIR)
 	@cp $(STY) $(INSTALL_DIR)
-	@mkdir -p $(MANUAL_DIR)
-	@cp $(MANUAL_PDF) $(MANUAL_DIR)
+	@mkdir -p $(DOC_DIR)
+	@cp $(DOC_PDF) $(DOC_DIR)
 
 uninstall:
 	@rm -f $(addprefix $(INSTALL_DIR)/, $(STY))
-	@rm -f $(MANUAL_DIR)/$(MANUAL_PDF)
+	@rm -f $(DOC_DIR)/$(DOC_PDF)
 	@rmdir $(INSTALL_DIR)
-	@rmdir $(MANUAL_DIR)
+	@rmdir $(DOC_DIR)
 
 docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) make
