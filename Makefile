@@ -62,7 +62,7 @@ uninstall:
 	@rmdir $(INSTALL_DIR)
 	@rmdir $(MANUAL_DIR)
 
-docker-run: docker-build $(DEMO_PDF) $(MANUAL_PDF) $(STY)
+docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) /data/build.sh
 
 docker-build: 
