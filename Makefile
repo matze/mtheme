@@ -65,7 +65,7 @@ uninstall:
 docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) /data/build.sh
 
-docker-build: 
+docker-build:
 	docker build -t $(DOCKER_IMAGE) .
 
 docker-rm:
