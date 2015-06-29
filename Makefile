@@ -2,7 +2,7 @@ INS = mtheme.ins
 CONTRIB_SRC = contributors.py
 CONTRIB_TEX = contributors.tex
 DTX = $(wildcard *.dtx)
-STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx))
+STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx pgfplotsthemetol.dtx))
 TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
 MANUAL_DIR = $(TEXMFHOME)/doc/latex/mtheme
