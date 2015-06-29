@@ -63,8 +63,8 @@
 \pgfkeys{
   /metropolis/outer/progressbar/.cd,
     .is choice,
-    none/.code=\setbeamertemplate{progress bar in head/foot}[none],
-    top/.code=\setbeamertemplate{progress bar in head/foot}[top],
+    none/.code=\setbeamertemplate{frametitle}[plain],
+    frametitle/.code=\setbeamertemplate{frametitle}[progressbar],
 }
 %    \end{macrocode}
 % \end{macro}
@@ -195,11 +195,24 @@
 %
 % \begin{macro}{frametitle}
 %
-% Template for the frame title, which is optionally underlined with a
+% Templates for the frame title, which is optionally underlined with a
 % progress bar.
 %
 %    \begin{macrocode}
-\setbeamertemplate{frametitle}{%
+\defbeamertemplate{frametitle}{plain}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,
+      leftskip=0.3cm,
+      rightskip=0.3cm,
+      ht=2.5ex,
+      dp=1.5ex
+    ]{frametitle}
+  \insertframetitle%
+  \end{beamercolorbox}%
+  \vspace{\@metropolis@voffset}
+}
+\defbeamertemplate{frametitle}{progressbar}{%
   \nointerlineskip
   \begin{beamercolorbox}[%
       wd=\paperwidth,
@@ -224,8 +237,7 @@
 %
 %    \begin{macrocode}
 \newlength{\metropolis@progressinheadfoot}
-\defbeamertemplate{progress bar in head/foot}{none}{}
-\defbeamertemplate{progress bar in head/foot}{head}{
+\setbeamertemplate{progress bar in head/foot}{
   \nointerlineskip
   \setlength{\metropolis@progressinheadfoot}{%
     \paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%

@@ -44,10 +44,10 @@
 %
 % \subsubsection{Options}
 %
-% \begin{macro}{\metropolisset}
+% \begin{macro}{\metroset}
 % First of all we define a macro for the user to set options.
 %    \begin{macrocode}
-\newcommand{\metropolisset}[1]{\pgfkeys{/metropolis/.cd,#1}}
+\newcommand{\metroset}[1]{\pgfkeys{/metropolis/.cd,#1}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -59,7 +59,7 @@
     /metropolis/inner,
     /metropolis/outer,
     /metropolis/color,
-    },
+  },
 %    \end{macrocode}
 %
 % We have to forwarded keys that affect multiple sub-packages manually.
@@ -108,7 +108,7 @@
 %
 %    \begin{macrocode}
 \pgfkeys{/metropolis/.cd,
-  usetitleprogressbar/.code=\pgfkeysalso{outer/progressbar=head},
+  usetitleprogressbar/.code=\pgfkeysalso{outer/progressbar=frametitle},
   noslidenumbers/.code=\pgfkeysalso{outer/numbering=none},
   usetotalslideindicator/.code=\pgfkeysalso{outer/numbering=fraction},
   nosectionslide/.code=\pgfkeysalso{inner/sectionpage=none},
