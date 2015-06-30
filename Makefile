@@ -6,8 +6,6 @@ TEMP_DIR = .temptex
 INS = mtheme.ins
 DEMO_SRC = demo.tex
 DEMO_PDF = demo.pdf
-DEMO_MIN_SRC = demo-minimal.tex
-DEMO_MIN_PDF = demo-minimal.pdf
 DOC_SRC = mtheme.dtx
 DOC_PDF = mtheme.pdf
 DTX = $(wildcard *.dtx)
@@ -20,9 +18,9 @@ DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
 
 
-.PHONY: sty doc demo demo-min ctan clean install uninstall docker-run docker-build docker-rm
+.PHONY: sty doc demo ctan clean install uninstall docker-run docker-build docker-rm
 
-all: sty doc demo demo-min
+all: sty doc demo
 
 $(STY): $(DTX) $(INS)
 	@latex $(INS)
@@ -30,10 +28,6 @@ $(STY): $(DTX) $(INS)
 $(DEMO_PDF): $(STY) $(DEMO_SRC)
 	$(TEXC) $(DEMO_SRC)
 	@cp $(TEMP_DIR)/$(DEMO_PDF) .
-
-$(DEMO_MIN_PDF): $(STY) $(DEMO_MIN_SRC)
-	$(TEXC) $(DEMO_MIN_SRC)
-	@cp $(TEMP_DIR)/$(DEMO_MIN_PDF) .
 
 $(DOC_PDF): $(DOC_SRC) $(DTX)
 	@$(TEXC) $(DOC_SRC)
@@ -44,8 +38,6 @@ sty: $(STY)
 doc: $(DOC_PDF)
 
 demo: $(DEMO_PDF)
-
-demo-min: $(DEMO_MIN_PDF)
 
 ctan: $(CTAN_CONTENT)
 	@mkdir -p mtheme
