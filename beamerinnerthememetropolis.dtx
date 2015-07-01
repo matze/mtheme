@@ -27,7 +27,8 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
-% \section{Implementation: \textsc{metropolis} inner theme}
+%
+% \subsection{\textsc{metropolis} inner theme}
 %
 % A |beamer| inner theme dictates the style of the frame elements traditionally
 % set in the ``body'' of each slide. These include:
@@ -40,14 +41,124 @@
 %   \item footnotes and plain text.
 % \end{itemize}
 %
-% \subsection{Title page}
+% Load required packages.
+%    \begin{macrocode}
+\RequirePackage{etoolbox}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\RequirePackage{tikz}
+%    \end{macrocode}
 %
-% \begin{macro}{title page}
 %
-%   Template for the title page.
+%
+% \subsubsection{Options}
+%
+% \begin{macro}{block}
+% This option controls the block style.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/block/.cd,
+    .is choice,
+    transparent/.code=\setlength{\@metropolis@blockskip}{0ex},
+    fill/.code=\setlength{\@metropolis@blockskip}{1ex},
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat}
+% Control the case style of the title
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/titleformat/.cd,
+    .is choice,
+    regular/.code=\renewcommand{\@metropolis@titleformat}{},
+    lowercase/.code={%
+      \renewcommand{\@metropolis@titleformat}{\MakeLowercase}
+    },
+    uppercase/.code={%
+      \renewcommand{\@metropolis@titleformat}{\MakeUppercase}
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{sectiontitleformat}
+% Control the case style of the section title
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/sectiontitleformat/.cd,
+    .is choice,
+    regular/.code=\renewcommand{\@metropolis@sectiontitleformat}{},
+    lowercase/.code={%
+      \renewcommand{\@metropolis@sectiontitleformat}{\MakeLowercase}
+    },
+    uppercase/.code={%
+      \renewcommand{\@metropolis@sectiontitleformat}{\MakeUppercase}
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{sectionpage}
+% The |sectionpage| option defines the behaviour of the sectionpage.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/sectionpage/.cd,
+    .is choice,
+    none/.code=\@metropolis@sectionpage@none,
+    progressbar/.code=\@metropolis@sectionpage@progressbar,
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@metropolis@inner@setdefaults}
+% Set default values for inner theme options.
+%    \begin{macrocode}
+\newcommand{\@metropolis@inner@setdefaults}{
+  \pgfkeys{/metropolis/inner/.cd,
+    sectionpage=progressbar,
+    block=transparent,
+    titleformat=lowercase,
+    sectiontitleformat=lowercase,
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
+% \subsubsection{Title page}
+%
+% \begin{macro}{\@metropolis@titleformat}
+%   Define hooks to change the case format of the titles.
+%    \begin{macrocode}
+\def\@metropolis@titleformat#1{#1}
+\def\@metropolis@sectiontitleformat#1{#1}
+%    \end{macrocode}
+% \end{macro}
+%
+% To make the |\MakeLowercase| and |\MakeUppercase| macros work in the
+% sectiontitle we have to patch |\sectionentry| and |\beamer@section|. This
+% solution was suggested by Enrico Gregorio in an answer to
+% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
+% question}.
 %
 %    \begin{macrocode}
-\RequirePackage{tikz}
+\patchcmd{\sectionentry}
+  {\def\insertsectionhead{#2}}
+  {\def\insertsectionhead{\@metropolis@sectiontitleformat{#2}}}
+  {}
+  {\PackageError{beamerinnerthememetropolis}{Patching section title failed.}}
+\patchcmd{\beamer@section}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{\@metropolis@sectiontitleformat{#1}}}}
+  {}
+  {\PackageError{beamerinnerthememetropolis}{Patching section title failed.}}
+%    \end{macrocode}
+%
+% \begin{macro}{title page}
+%   Template for the title page.
+%    \begin{macrocode}
 \setbeamertemplate{title page}{
   \begin{minipage}[b][\paperheight]{\textwidth}
 %    \end{macrocode}
@@ -78,7 +189,7 @@
       \linespread{1.0}%
       \usebeamerfont{title}%
       \usebeamercolor[fg]{title}%
-      \mthemetitleformat{\inserttitle}%
+      \@metropolis@titleformat{\inserttitle}%
       \par%
       \vspace*{0.5em}
     }}
@@ -177,14 +288,19 @@
 %
 %
 %
-% \subsection{Section page}
+% \subsubsection{Section page}
 %
 % \begin{macro}{section page}
 %
 %   Template for the section title slide at the beginning of each section.
 %
 %    \begin{macrocode}
-\setbeamertemplate{section page}{
+\newcommand{\@metropolis@sectionpage@none}{
+  \AtBeginSection{
+    % intenionally empty
+  }
+}
+\defbeamertemplate{section page}{progressbar}{
   \vspace{2em}
   \centering
   \begin{minipage}{22em}
@@ -195,7 +311,8 @@
   \end{minipage}
   \par
 }
-\if@noSectionSlide\else%
+\newcommand{\@metropolis@sectionpage@progressbar}{
+  \setbeamertemplate{section page}[progressbar]
   \AtBeginSection{
     \ifbeamer@inframe
       \sectionpage
@@ -203,7 +320,7 @@
       \frame[plain,c]{\sectionpage}
     \fi
   }
-\fi
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -214,7 +331,6 @@
 %   |progress bar in head/foot|.
 %
 %    \begin{macrocode}
-\RequirePackage{calc}
 \newlength{\metropolis@progressonsectionpage}
 \setbeamertemplate{progress bar in section page}{
   \setlength{\metropolis@progressonsectionpage}{%
@@ -244,30 +360,27 @@
 %
 %
 %
-% \subsection{Block environments}
+% \subsubsection{Block environments}
+%
+% Regular block environment
 %
 %    \begin{macrocode}
-\newlength{\leftrightskip}
-\if@beamer@metropolis@blockbg
-  \setlength{\leftrightskip}{1ex}
-\else
-  \setlength{\leftrightskip}{0ex}
-\fi
+\newlength{\@metropolis@blockskip}
 \setbeamertemplate{block begin}{%
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip]{block title}
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip]{block title}
       \usebeamerfont*{block title}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip,
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block end}{%
@@ -284,16 +397,16 @@
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip]{block title alerted}
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip]{block title alerted}
       \usebeamerfont*{block title alerted}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body alerted}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip,
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block alerted end}{%
@@ -310,16 +423,16 @@
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip]{block title example}
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip]{block title example}
       \usebeamerfont*{block title example}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body example}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\leftrightskip,
-    rightskip=\leftrightskip,
+    leftskip=\@metropolis@blockskip,
+    rightskip=\@metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block example end}{%
@@ -330,7 +443,7 @@
 %
 %
 %
-% \subsection{Itemize/enumerate environments}
+% \subsubsection{Itemize/enumerate environments}
 %    \begin{macrocode}
 \setlength{\leftmargini}{1em}
 \setlength{\leftmarginii}{1em}
@@ -340,13 +453,17 @@
 \setbeamertemplate{itemize subsubitem}{\textbullet}
 %    \end{macrocode}
 %
-% \subsection{Figures and tables}
+%
+%
+% \subsubsection{Figures and tables}
 %    \begin{macrocode}
 \setbeamertemplate{caption label separator}{: }
 \setbeamertemplate{caption}[numbered]
 %    \end{macrocode}
 %
-% \subsection{Footnotes}
+%
+%
+% \subsubsection{Footnotes}
 %    \begin{macrocode}
 \setbeamertemplate{footnote}{%
   \parindent 0em\noindent%
@@ -355,14 +472,21 @@
 }
 %    \end{macrocode}
 %
-% \subsection{General text}
+%
+%
+% \subsubsection{General text settings}
 %    \begin{macrocode}
 \mode<all>
 \setlength{\parskip}{0.5em}
 \linespread{1.15}
 %    \end{macrocode}
 %
+% Process package options
 %
+%    \begin{macrocode}
+\@metropolis@inner@setdefaults
+\ProcessPgfPackageOptions{/metropolis/inner}
+%    \end{macrocode}
 %
 % \iffalse
 %</package>
