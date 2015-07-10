@@ -15,6 +15,7 @@
 
 \usepackage{parskip}
 \usepackage{setspace}
+\usepackage{xspace}
 \onehalfspacing
 
 \usepackage{fontspec}
@@ -82,8 +83,10 @@
   \end{minipage}
 }
 
+\newcommand{\themename}{\textsc{metropolis}\xspace}
+
 \GetFileInfo{beamerthemem.dtx}
-\title{Modern Beamer Presentations\\with the\\\textsc{mtheme} package}
+\title{Modern Beamer Presentations\\with the\\\themename package}
 \author{Matthias Vogelgesang \\ \url{matthias.vogelgesang@gmail.com}}
 \date{v0.x.x}
 
@@ -92,11 +95,12 @@
 \maketitle
 
 \section{Introduction}
-Beamer is an awesome way to make presentations with LaTeX. But the stock
-themes do not necessarily look particularly nice and the custom themes often
-scream “Beamer” at first sight. The goal of \textsc{mtheme} is to provide a
-modern Beamer theme with minimal visual noise. It provides section slides with
-a neat progress bar and it is intended to be used with
+
+Beamer is an awesome way to make presentations with LaTeX. But the stock themes
+do not necessarily look particularly nice and the custom themes often scream
+“Beamer” at first sight. The goal of \themename is to provide a modern Beamer
+theme with minimal visual noise. It provides section slides with a neat progress
+bar and it is intended to be used with
 \href{https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/}
 {Fira Sans}, a gorgeous typeface commissioned by Mozilla and designed by
 \href{http://www.carrois.com/fira-3-1/}{Carrois}. Hence to get the best results
@@ -113,7 +117,7 @@ make the theme even better – get in touch there.
 
 \subsection{Installation}
 
-The \textsc{mtheme} uses Make as build system. Hence the installation is very
+The \themename theme uses Make as build system. Hence the installation is very
 straight forward. Simply type
 \begin{lstlisting}
 $ make
@@ -171,7 +175,7 @@ $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 \subsection{A Minimal Example}
 
 To get started with the theme is very simple. The following code shows a
-minimal example of a Beamer presentation using the \textsc{mtheme}.
+minimal example of a Beamer presentation using \themename.
 
 \begin{lstlisting}
 \documentclass[10pt]{beamer}
@@ -283,9 +287,9 @@ option on every sub-package accordingly.
 
 \subsection{Color Customization}
 
-The included \textsc{metropolis} color theme is used by default, but its
-colors can be easily changed to suit your tastes. All of the theme's styles
-are defined in terms of three beamer colors:
+The included \themename color theme is used by default, but its colors can be
+easily changed to suit your tastes. All of the theme's styles are defined in
+terms of three beamer colors:
 \begin{itemize}
     \item |normal text| (dark fg, light bg)
     \item |alerted text| (colored fg, should be visible against dark or light)
@@ -298,8 +302,7 @@ An easy way to customize the theme is to redefine these colors using
 \end{lstlisting}
 in your preamble. For greater customization, you can redefine any of the other
 stock beamer colors. In addition to the stock colors the theme defines a number
-of \textsc{metropolis} specific colors, which can also be redefined to your
-liking.
+of \themename specific colors, which can also be redefined to your liking.
 
 \begin{lstlisting}
 \setbeamercolor{progress bar}{ ... }
