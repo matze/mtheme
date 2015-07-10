@@ -186,14 +186,11 @@
       use=palette primary,
       parent=palette primary
     }
-    \begin{frame}{#1}
+    \begin{frame}[c]{#1}
       \centering
-      \vfill
-      \vspace{1em}
       \usebeamercolor[fg]{palette primary}
       \usebeamerfont{section title}
       \@metropolis@plaintitleformat{#2}
-      \vfill
     \end{frame}
   \endgroup
 }

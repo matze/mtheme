@@ -86,17 +86,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{frametitleoffset}
-% This option controls the frame title offset.
-%    \begin{macrocode}
-\pgfkeys{
-  /metropolis/outer/.cd,
-    frametitleoffset/.code=\setlength{\@metropolis@voffset}{#1},
-    noframetitleoffset/.code=\setlength{\@metropolis@voffset}{0em},
-}
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@metropolis@outer@setdefaults}
 % Set default values for outer theme options.
 %    \begin{macrocode}
@@ -105,7 +94,6 @@
     numbering=counter,
     progressbar=none,
     frametitleformat=lowercase,
-    frametitleoffset=2em,
   }
 }
 %    \end{macrocode}%
@@ -135,12 +123,6 @@
 \defbeamertemplate{frame numbering}{fraction}{
   \insertframenumber/\inserttotalframenumber
 }
-%    \end{macrocode}
-%
-% Define additional space between frame title and content. By default 2em.
-%
-%    \begin{macrocode}
-\newlength{\@metropolis@voffset}
 %    \end{macrocode}
 %
 % The only element in the footline by default is the frame number.
@@ -210,7 +192,6 @@
     ]{frametitle}
   \insertframetitle%
   \end{beamercolorbox}%
-  \vspace{\@metropolis@voffset}
 }
 \defbeamertemplate{frametitle}{progressbar}{%
   \nointerlineskip
@@ -224,7 +205,6 @@
   \insertframetitle%
   \end{beamercolorbox}%
   \usebeamertemplate*{progress bar in head/foot}
-  \vspace{\@metropolis@voffset}
 }
 %    \end{macrocode}
 % \end{macro}

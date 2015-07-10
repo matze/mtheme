@@ -301,7 +301,6 @@
   }
 }
 \defbeamertemplate{section page}{progressbar}{
-  \vspace{2em}
   \centering
   \begin{minipage}{22em}
     \usebeamercolor[fg]{section title}
@@ -474,11 +473,28 @@
 %
 %
 %
-% \subsubsection{General text settings}
+% \subsubsection{Text and spacing settings}
+%
 %    \begin{macrocode}
-\mode<all>
 \setlength{\parskip}{0.5em}
 \linespread{1.15}
+%    \end{macrocode}
+%
+% By default, Beamer frames offer the |c| option to \textit{almost} vertically
+% center the text, but the placement is a little too high. To fix this, we
+% redefine the |c| option to equalize |\beamer@frametopskip| and
+% |\beamer@framebottomskip|. This solution was suggested by Enrico Gregorio in
+% an answer to \href{http://tex.stackexchange.com/questions/247826/}{this
+% Stack Exchange question}.
+%
+%    \begin{macrocode}
+\define@key{beamerframe}{c}[true]{% centered
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt plus 1fill\relax%
+  \beamer@frametopskipautobreak=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskipautobreak=0pt plus .6\paperheight\relax%
+  \def\beamer@initfirstlineunskip{}%
+}
 %    \end{macrocode}
 %
 % Process package options
