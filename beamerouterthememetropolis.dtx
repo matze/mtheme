@@ -75,13 +75,18 @@
 \pgfkeys{
   /metropolis/outer/frametitleformat/.cd,
     .is choice,
-    regular/.code=\renewcommand{\@metropolis@frametitleformat}{},
+    regular/.code={%
+       \renewcommand{\@metropolis@frametitleformat}{}%
+       \setlength{\@metropolis@frametitlestrut}{\heightof{ABCDEFGHIJKLMNOPQRSTUVXYZ}}% Usually around 1.6ex but is font dependant
+       },
     lowercase/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}
-    },
+       \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}%
+       \setlength{\@metropolis@frametitlestrut}{\heightof{abcdefghijklmnopqrstuvxyz}}
+       },
     uppercase/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}
-    },
+       \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}%
+       \setlength{\@metropolis@frametitlestrut}{\heightof{ABCDEFGHIJKLMNOPQRSTUVXYZ}}% Usually around 1.6ex but is font dependant
+       },
 }
 %    \end{macrocode}
 % \end{macro}
@@ -199,13 +204,14 @@
 % progress bar.
 %
 %    \begin{macrocode}
+\newlength{\@metropolis@frametitlestrut}
 \defbeamertemplate{frametitle}{plain}{%
   \nointerlineskip
   \begin{beamercolorbox}[%
       wd=\paperwidth,
       sep=1.5ex,
     ]{frametitle}
-  \insertframetitle\rule{0pt}{1ex}%
+  \insertframetitle\rule{0pt}{\@metropolis@frametitlestrut}%
   \end{beamercolorbox}%
   \vspace{\@metropolis@voffset}
 }
@@ -215,7 +221,7 @@
       wd=\paperwidth,
       sep=1.5ex,
     ]{frametitle}
-  \insertframetitle\rule{0pt}{1ex}%
+  \insertframetitle\rule{0pt}{\@metropolis@frametitlestrut}%
   \end{beamercolorbox}%
   \usebeamertemplate*{progress bar in head/foot}
   \vspace{\@metropolis@voffset}
