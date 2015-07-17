@@ -259,9 +259,9 @@ option on every sub-package accordingly.
   additionally.
 }
 
-\DescribeOption{progressbar}{none, frametitle}{none}{
-  Setting this option to frametitle adds a progress bar underneath each frame
-  title similar to the section progress bar.
+\DescribeOption{progressbar}{none, head, frametitle, foot}{none}{
+  Adds a progress bar to the top of each frame (|head|), the bottom of each
+  frame (|foot|), or directly below each frame title (|frametitle|).
 }
 
 \DescribeOption{frametitleformat}{regular, lowercase, uppercase}{lowercase}{
@@ -337,6 +337,8 @@ or horizontal |mbarplot| to plot bar charts.
 
 \section{Known Issues}
 
+The |\plain| command does not work if you override the \textsc{metropolis}
+color theme with the default beamer color theme |fly|.
 
 \section{License}
 
