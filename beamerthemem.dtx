@@ -187,10 +187,11 @@
       parent=palette primary
     }
     \begin{frame}[c]{#1}
-      \centering
-      \usebeamercolor[fg]{palette primary}
-      \usebeamerfont{section title}
-      \@metropolis@plaintitleformat{#2}
+      \begin{center}
+        \usebeamercolor[fg]{palette primary}
+        \usebeamerfont{section title}
+        \@metropolis@plaintitleformat{#2}
+      \end{center}
     \end{frame}
   \endgroup
 }
