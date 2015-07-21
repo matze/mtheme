@@ -196,11 +196,11 @@
 %    \begin{macrocode}
 \newlength{\@metropolis@frametitlestrut}
 \defbeamertemplate{frametitle}{plain}{%
-  \nointerlineskip
+  \nointerlineskip%
   \begin{beamercolorbox}[%
-      wd=\paperwidth,
-      sep=1.5ex,
-    ]{frametitle}
+      wd=\paperwidth,%
+      sep=1.5ex,%
+    ]{frametitle}%
   \@metropolis@frametitlestrut\insertframetitle\@metropolis@frametitlestrut%
   \end{beamercolorbox}%
 }
