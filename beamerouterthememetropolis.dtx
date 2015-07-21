@@ -87,13 +87,24 @@
 \pgfkeys{
   /metropolis/outer/frametitleformat/.cd,
     .is choice,
-    regular/.code=\renewcommand{\@metropolis@frametitleformat}{},
+    regular/.code={%
+       \renewcommand{\@metropolis@frametitleformat}{}%
+       \renewcommand{\@metropolis@frametitlestrut}{%
+           \rule{0pt}{\heightof{ABCDEFGHIJKLMNOPQRSTUVWXYZ}}
+       }
+       },
     lowercase/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}
-    },
+       \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}%
+       \renewcommand{\@metropolis@frametitlestrut}{%
+           \rule{0pt}{\heightof{abcdefghijklmnopqrstuvwxyz}}
+       }
+       },
     uppercase/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}
-    },
+       \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}%
+       \renewcommand{\@metropolis@frametitlestrut}{%
+           \rule{0pt}{\heightof{ABCDEFGHIJKLMNOPQRSTUVWXYZ}}
+       }
+       },
 }
 %    \end{macrocode}
 % \end{macro}
@@ -183,16 +194,14 @@
 % progress bar.
 %
 %    \begin{macrocode}
+\newlength{\@metropolis@frametitlestrut}
 \defbeamertemplate{frametitle}{plain}{%
-  \nointerlineskip
+  \nointerlineskip%
   \begin{beamercolorbox}[%
-      wd=\paperwidth,
-      leftskip=0.3cm,
-      rightskip=0.3cm,
-      ht=2.5ex,
-      dp=1.5ex
-    ]{frametitle}
-  \insertframetitle%
+      wd=\paperwidth,%
+      sep=1.5ex,%
+    ]{frametitle}%
+  \@metropolis@frametitlestrut\insertframetitle\@metropolis@frametitlestrut%
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
