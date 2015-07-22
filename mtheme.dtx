@@ -63,7 +63,7 @@
   xrightmargin=0em,
   aboveskip=1em,
   belowskip=1em,
-  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,plain,setbeamercolor,metropolisset},
+  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,plain,setbeamercolor,metroset},
 }
 \lstMakeShortInline|
 
@@ -205,14 +205,14 @@ either provide a comma separated list of options when invoking
 \begin{lstlisting}
 \usetheme[<key=value list>]{m}
 \end{lstlisting}
-Or you can set them at any time with the |\metropolisset| macro.
+Or you can set them at any time with the |\metroset| macro.
 \begin{lstlisting}
-\metropolisset[<key=value list>]
+\metroset[<key=value list>]
 \end{lstlisting}
 To set an option on a specific sub-package only you have to add the
 corresponding prefix (inner, outer, color), e.g.
 \begin{lstlisting}
-\metropolisset[inner/block=fill]
+\metroset[inner/block=fill]
 \end{lstlisting}
 The list of options is structured as shown in the following example.
 
