@@ -8,9 +8,8 @@
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
 
-
-\title{A modern beamer theme}
-\subtitle{}
+\title{Metropolis}
+\subtitle{A modern beamer theme}
 \date{\today}
 \author{Matthias Vogelgesang}
 \institute{Institute or miscellaneous information}
@@ -31,8 +30,8 @@
 \begin{frame}[fragile]
   \frametitle{mtheme}
 
-  The \emph{mtheme} is a Beamer theme with minimal visual noise inspired by the
-  \href{https://github.com/hsrmbeamertheme/hsrmbeamertheme}{\textsc{hsrm} Beamer
+  The \textsc{Metropolis} theme is a Beamer theme with minimal visual noise
+  inspired by the \href{https://github.com/hsrmbeamertheme/hsrmbeamertheme}{\textsc{hsrm} Beamer
   Theme} by Benjamin Weiss.
 
   Enable the theme by loading
@@ -43,14 +42,13 @@
   Note, that you have to have Mozilla's \emph{Fira Sans} font and XeTeX
   installed to enjoy this wonderful typography.
 \end{frame}
-
 \begin{frame}[fragile]
   \frametitle{Sections}
   Sections group slides of the same topic
 
   \begin{verbatim}    \section{Elements}\end{verbatim}
 
-  for which the \emph{mtheme} provides a nice progress indicator \ldots
+  for which \textsc{Metropolis} provides a nice progress indicator \ldots
 \end{frame}
 
 \section{Elements}
@@ -67,25 +65,25 @@ or show \textbf{bold} results.\end{verbatim}
   \alert{accent} parts or show \textbf{bold} results.
 \end{frame}
 \begin{frame}{Lists}
-  \begin{columns}[onlytextwidth]
-    \column{0.5\textwidth}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.33\textwidth}
       Items
       \begin{itemize}
         \item Milk \item Eggs \item Potatos
       \end{itemize}
 
-    \column{0.5\textwidth}
+    \column{0.33\textwidth}
       Enumerations
       \begin{enumerate}
         \item First, \item Second and \item Last.
       \end{enumerate}
+
+    \column{0.33\textwidth}
+      Descriptions
+      \begin{description}
+        \item[PowerPoint] Meeh. \item[Beamer] Yeeeha.
+      \end{description}
   \end{columns}
-\end{frame}
-\begin{frame}{Descriptions}
-  \begin{description}
-    \item[PowerPoint] Meeh.
-    \item[Beamer] Yeeeha.
-  \end{description}
 \end{frame}
 \begin{frame}{Animation}
   \begin{itemize}[<+- | alert@+>]
@@ -136,25 +134,41 @@ or show \textbf{bold} results.\end{verbatim}
   \end{table}
 \end{frame}
 \begin{frame}{Blocks}
-  There are 3 different block enivironmnents already defined. The normal block uses the normal color, ...
-  \begin{block}{This is a block title}
-    This is soothing.
-  \end{block}
-\end{frame}
-\begin{frame}{Blocks}
-  ... the alert block the alert color ....
-  \begin{alertblock}{This is an alert block title}
-    This is soothing.
-  \end{alertblock}
-\end{frame}
-\begin{frame}{Blocks}
-  ... and the example block the example color.
-  \begin{exampleblock}{This is an example block title}
-    This is soothing.
-  \end{exampleblock}
-  The blocks can have a background (option \texttt{blockbg}) or not.
-\end{frame}
+  Three different block environments are pre-defined and may be styled with an
+  optional background color.
 
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+      \begin{block}{Default}
+        Block content.
+      \end{block}
+
+      \begin{alertblock}{Altert}
+        Block content.
+      \end{alertblock}
+
+      \begin{exampleblock}{Example}
+        Block content.
+      \end{exampleblock}
+
+    \column{0.5\textwidth}
+
+      \metroset{block=fill}
+
+      \begin{block}{Default}
+        Block content.
+      \end{block}
+
+      \begin{alertblock}{Altert}
+        Block content.
+      \end{alertblock}
+
+      \begin{exampleblock}{Example}
+        Block content.
+      \end{exampleblock}
+
+  \end{columns}
+\end{frame}
 \begin{frame}{Math}
   \begin{equation*}
     e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
