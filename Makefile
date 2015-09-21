@@ -1,43 +1,49 @@
-TEXMFHOME = $(shell kpsewhich -var-value=TEXMFHOME)
-INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
-DOC_DIR = $(TEXMFHOME)/doc/latex/mtheme
-TEMP_DIR = .temptex
+INS         = source/beamerthemem.ins
+PACKAGE_SRC = $(wildcard source/*.dtx)
+PACKAGE_STY = $(notdir $(PACKAGE_SRC:%.dtx=%.sty))
+DEMO_SRC    = demo/demo.tex demo/demo.bib
+DEMO_PDF    = demo/demo.pdf
+DOC_SRC     = doc/metropolistheme.dtx
+DOC_PDF     = doc/metropolistheme.pdf
 
-INS = mtheme.ins
-DEMO_SRC = demo.tex
-DEMO_PDF = demo.pdf
-DOC_SRC = mtheme.dtx
-DOC_PDF = mtheme.pdf
-DTX = $(wildcard *.dtx)
-STY = $(patsubst %.dtx,%.sty,$(wildcard beamer*.dtx pgfplotsthemetol.dtx))
 CTAN_CONTENT = $(INS) $(DTX) $(DOC_PDF)
 
-TEXC := latexmk -xelatex -output-directory=$(TEMP_DIR)
+TEXMFHOME   = $(shell kpsewhich -var-value=TEXMFHOME)
+INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
+DOC_DIR     = $(TEXMFHOME)/doc/latex/mtheme
+TEMP_DIR    = $(shell pwd)/.latex-cache
 
 DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
 
+COMPILE_TEX := TEXINPUTS=".//:$$TEXINPUTS" latexmk -xelatex -output-directory=$(TEMP_DIR)
 
-.PHONY: sty doc demo ctan clean install uninstall docker-run docker-build docker-rm
 
-all: sty doc demo
+.PHONY: all clean sty doc demo install uninstall ctan docker-run docker-build docker-rm
 
-$(STY): $(DTX) $(INS)
-	@latex $(INS)
+all: sty doc
 
-$(DEMO_PDF): $(STY) $(DEMO_SRC)
-	$(TEXC) $(DEMO_SRC)
-	@cp $(TEMP_DIR)/$(DEMO_PDF) .
+clean:
+	@rm -f $(TEMP_DIR)/*
+	@rm -f $(PACKAGE_STY)
 
-$(DOC_PDF): $(DOC_SRC) $(DTX)
-	@$(TEXC) $(DOC_SRC)
-	@cp $(TEMP_DIR)/$(DOC_PDF) .
-
-sty: $(STY)
+sty: $(PACKAGE_STY)
 
 doc: $(DOC_PDF)
 
 demo: $(DEMO_PDF)
+
+install: $(PACKAGE_STY) $(DOC_PDF)
+	@mkdir -p $(INSTALL_DIR)
+	@cp $(PACKAGE_STY) $(INSTALL_DIR)
+	@mkdir -p $(DOC_DIR)
+	@cp $(DOC_PDF) $(DOC_DIR)
+
+uninstall:
+	@rm -f $(addprefix $(INSTALL_DIR)/, $(PACKAGE_STY))
+	@rmdir $(INSTALL_DIR)
+	@rm -f $(DOC_DIR)/$(DOC_PDF)
+	@rmdir $(DOC_DIR)
 
 ctan: $(CTAN_CONTENT)
 	@mkdir -p mtheme
@@ -45,20 +51,20 @@ ctan: $(CTAN_CONTENT)
 	@zip -q mtheme-$(shell grep -A1 ProvidesPackage < beamerthemem.dtx | grep -P -o '\d\.\d\.\d').zip mtheme/*
 	@rm -rf mtheme
 
-clean:
-	@git clean -xfd
+$(TEMP_DIR):
+	@mkdir -p $(TEMP_DIR)
 
-install: $(STY) $(DOC_PDF)
-	@mkdir -p $(INSTALL_DIR)
-	@cp $(STY) $(INSTALL_DIR)
-	@mkdir -p $(DOC_DIR)
-	@cp $(DOC_PDF) $(DOC_DIR)
+$(PACKAGE_STY): $(PACKAGE_SRC) $(INS) | $(TEMP_DIR)
+	@cd $(dir $(INS)) && latex -output-directory=$(TEMP_DIR) $(notdir $(INS))
+	@cp $(addprefix $(TEMP_DIR)/,$(PACKAGE_STY)) .
 
-uninstall:
-	@rm -f $(addprefix $(INSTALL_DIR)/, $(STY))
-	@rm -f $(DOC_DIR)/$(DOC_PDF)
-	@rmdir $(INSTALL_DIR)
-	@rmdir $(DOC_DIR)
+$(DOC_PDF): $(DOC_SRC) $(PACKAGE_STY) | $(TEMP_DIR)
+	@$(COMPILE_TEX) $(DOC_SRC)
+	@cp $(TEMP_DIR)/$(notdir $(DOC_PDF)) $(DOC_PDF)
+
+$(DEMO_PDF): $(DEMO_SRC) $(PACKAGE_STY) | $(TEMP_DIR)
+	$(COMPILE_TEX) $(DEMO_SRC)
+	@cp $(TEMP_DIR)/$(notdir $(DEMO_PDF)) $(DEMO_PDF)
 
 docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) make
