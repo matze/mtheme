@@ -9,7 +9,7 @@ Not convinced? Have a look at the [demo slides](demo.pdf).
 
 ## Installation
 
-Installing \themename{}, like any Beamer theme, involves four easy steps:
+Installing Metropolis, like any Beamer theme, involves four easy steps:
 
 1. **Download the source** with a `git clone` of the [Metropolis repository](https://github.com/matze/mtheme) or as a [zip archive](https://github.com/matze/mtheme/archive/master.zip) of the latest development version.
 
@@ -24,7 +24,7 @@ Installing \themename{}, like any Beamer theme, involves four easy steps:
 
 ## Usage
 
-The following code shows a minimal example of a Beamer presentation using \themename.
+The following code shows a minimal example of a Beamer presentation using Metropolis.
 
 ```latex
 \documentclass{beamer}
