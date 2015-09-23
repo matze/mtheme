@@ -12,6 +12,7 @@ TEXMFHOME   = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
 DOC_DIR     = $(TEXMFHOME)/doc/latex/mtheme
 TEMP_DIR    = $(shell pwd)/.latex-cache
+CACHE_DIR   := $(shell pwd)/.latex-cache
 
 DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
@@ -19,19 +20,17 @@ DOCKER_CONTAINER = latex-container
 COMPILE_TEX := TEXINPUTS=".//:$$TEXINPUTS" latexmk -xelatex -output-directory=$(TEMP_DIR)
 
 
-.PHONY: all clean sty doc demo install uninstall ctan docker-run docker-build docker-rm
+.PHONY: all sty doc demo clean install uninstall ctan clean-cache clean-sty ctan-version docker-run docker-build docker-rm
 
 all: sty doc
-
-clean:
-	@rm -f $(TEMP_DIR)/*
-	@rm -f $(PACKAGE_STY)
 
 sty: $(PACKAGE_STY)
 
 doc: $(DOC_PDF)
 
 demo: $(DEMO_PDF)
+
+clean: clean-cache clean-sty
 
 install: $(PACKAGE_STY) $(DOC_PDF)
 	@mkdir -p $(INSTALL_DIR)
@@ -50,6 +49,12 @@ ctan: $(CTAN_CONTENT)
 	@cp $(CTAN_CONTENT) mtheme/
 	@zip -q mtheme-$(shell grep -A1 ProvidesPackage < beamerthemem.dtx | grep -P -o '\d\.\d\.\d').zip mtheme/*
 	@rm -rf mtheme
+clean-cache:
+	@rm -f $(CACHE_DIR)/*
+
+clean-sty:
+	@rm -f $(PACKAGE_STY)
+
 
 $(TEMP_DIR):
 	@mkdir -p $(TEMP_DIR)
