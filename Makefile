@@ -40,7 +40,7 @@ install: $(PACKAGE_STY) $(DOC_PDF)
 uninstall:
 	@rm -f $(addprefix $(INSTALL_DIR)/, $(PACKAGE_STY))
 	@rmdir $(INSTALL_DIR)
-	@rm -f $(DOC_DIR)/$(DOC_PDF)
+	@rm -f $(DOC_DIR)/$(notdir $(DOC_PDF))
 	@rmdir $(DOC_DIR)
 
 ctan: $(CTAN_CONTENT)
