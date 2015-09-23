@@ -56,12 +56,12 @@ clean-sty:
 	@rm -f $(PACKAGE_STY)
 
 
-$(TEMP_DIR):
-	@mkdir -p $(TEMP_DIR)
+$(CACHE_DIR):
+	@mkdir -p $(CACHE_DIR)
 
-$(PACKAGE_STY): $(PACKAGE_SRC) $(INS) | $(TEMP_DIR)
-	@cd $(dir $(INS)) && latex -output-directory=$(TEMP_DIR) $(notdir $(INS))
-	@cp $(addprefix $(TEMP_DIR)/,$(PACKAGE_STY)) .
+$(PACKAGE_STY): $(PACKAGE_SRC) $(INS) | $(CACHE_DIR) clean-cache
+	@cd $(dir $(INS)) && latex -output-directory=$(CACHE_DIR) $(notdir $(INS))
+	@cp $(addprefix $(CACHE_DIR)/,$(PACKAGE_STY)) .
 
 $(DOC_PDF): $(DOC_SRC) $(PACKAGE_STY) | $(TEMP_DIR)
 	@$(COMPILE_TEX) $(DOC_SRC)
