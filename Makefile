@@ -11,14 +11,13 @@ CTAN_CONTENT = $(INS) $(DTX) $(DOC_PDF)
 TEXMFHOME   = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
 DOC_DIR     = $(TEXMFHOME)/doc/latex/mtheme
-TEMP_DIR    = $(shell pwd)/.latex-cache
 CACHE_DIR   := $(shell pwd)/.latex-cache
+
+COMPILE_TEX := latexmk -xelatex -output-directory=$(CACHE_DIR)
+export TEXINPUTS:=$(shell pwd):$(shell pwd)/source:${TEXINPUTS}
 
 DOCKER_IMAGE = latex-image
 DOCKER_CONTAINER = latex-container
-
-COMPILE_TEX := TEXINPUTS=".//:$$TEXINPUTS" latexmk -xelatex -output-directory=$(TEMP_DIR)
-
 
 .PHONY: all sty doc demo clean install uninstall ctan clean-cache clean-sty ctan-version docker-run docker-build docker-rm
 
@@ -63,13 +62,13 @@ $(PACKAGE_STY): $(PACKAGE_SRC) $(INS) | $(CACHE_DIR) clean-cache
 	@cd $(dir $(INS)) && latex -output-directory=$(CACHE_DIR) $(notdir $(INS))
 	@cp $(addprefix $(CACHE_DIR)/,$(PACKAGE_STY)) .
 
-$(DOC_PDF): $(DOC_SRC) $(PACKAGE_STY) | $(TEMP_DIR)
-	@$(COMPILE_TEX) $(DOC_SRC)
-	@cp $(TEMP_DIR)/$(notdir $(DOC_PDF)) $(DOC_PDF)
+$(DOC_PDF): $(DOC_SRC) $(PACKAGE_STY) | $(CACHE_DIR) clean-cache
+	@cd $(dir $(DOC_SRC)) && $(COMPILE_TEX) $(notdir $(DOC_SRC))
+	@cp $(CACHE_DIR)/$(notdir $(DOC_PDF)) $(DOC_PDF)
 
-$(DEMO_PDF): $(DEMO_SRC) $(PACKAGE_STY) | $(TEMP_DIR)
-	$(COMPILE_TEX) $(DEMO_SRC)
-	@cp $(TEMP_DIR)/$(notdir $(DEMO_PDF)) $(DEMO_PDF)
+$(DEMO_PDF): $(DEMO_SRC) $(PACKAGE_STY) | $(CACHE_DIR) clean-cache
+	@cd $(dir $(DEMO_SRC)) && $(COMPILE_TEX) $(notdir $(DEMO_SRC))
+	@cp $(CACHE_DIR)/$(notdir $(DEMO_PDF)) $(DEMO_PDF)
 
 docker-run: docker-build
 	docker run --rm=true --name $(DOCKER_CONTAINER) -i -t -v `pwd`:/data $(DOCKER_IMAGE) make
