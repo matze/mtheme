@@ -6,7 +6,7 @@ DEMO_PDF    = demo/demo.pdf
 DOC_SRC     = doc/metropolistheme.dtx
 DOC_PDF     = doc/metropolistheme.pdf
 
-CTAN_CONTENT = $(INS) $(DTX) $(DOC_PDF)
+CTAN_CONTENT = $(INS) $(PACKAGE_SRC) $(DOC_PDF)
 
 TEXMFHOME   = $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
@@ -43,17 +43,17 @@ uninstall:
 	@rm -f $(DOC_DIR)/$(notdir $(DOC_PDF))
 	@rmdir $(DOC_DIR)
 
-ctan: $(CTAN_CONTENT)
-	@mkdir -p mtheme
-	@cp $(CTAN_CONTENT) mtheme/
-	@zip -q mtheme-$(shell grep -A1 ProvidesPackage < beamerthemem.dtx | grep -P -o '\d\.\d\.\d').zip mtheme/*
-	@rm -rf mtheme
+ctan: $(CTAN_CONTENT) ctan-version
+	@zip mtheme-$(shell date "+%Y-%m-%d").zip $(CTAN_CONTENT)
+
 clean-cache:
 	@rm -f $(CACHE_DIR)/*
 
 clean-sty:
 	@rm -f $(PACKAGE_STY)
 
+ctan-version:
+	@sed -i '' -- 's@\(ProvidesPackage.*\[\)[0-9/]*@\1$(shell date "+%Y/%m/%d")@' $(PACKAGE_SRC)
 
 $(CACHE_DIR):
 	@mkdir -p $(CACHE_DIR)
