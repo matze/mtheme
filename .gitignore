@@ -1,7 +1,6 @@
-demo.pdf
-mtheme.pdf
+# Temporary files
 
-*.fls
+.latex-cache
 *.acn
 *.acr
 *.alg
@@ -10,6 +9,7 @@ mtheme.pdf
 *.blg
 *.dvi
 *.fdb_latexmk
+*.fls
 *.glg
 *.glo
 *.gls
@@ -34,6 +34,8 @@ mtheme.pdf
 *.vrb
 *.xdy
 *.tdo
-*.sty
 
-.temptex
+
+# Output
+
+*.sty
