@@ -2,7 +2,7 @@
 
 Metropolis is a simple, modern Beamer theme suitable for anyone to use. It tries to minimize noise and maximize space for content; the only visual flourish it offers is an (optional) progress bar added to each slide. The core design principles of the theme were described in a blog post [here](http://bloerg.net/2014/09/20/a-modern-beamer-theme.html).
 
-Not convinced? Have a look at the [demo slides](demo.pdf).
+Not convinced? Have a look at the [demo slides](demo/demo.pdf).
 
 ![Sample](http://i.imgur.com/Bxu52fz.png)
 
