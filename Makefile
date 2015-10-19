@@ -8,9 +8,9 @@ DOC_PDF     = doc/metropolistheme.pdf
 
 CTAN_CONTENT = $(INS) $(PACKAGE_SRC) $(DOC_PDF)
 
-TEXMFHOME   = $(shell kpsewhich -var-value=TEXMFHOME)
-INSTALL_DIR = $(TEXMFHOME)/tex/latex/mtheme
-DOC_DIR     = $(TEXMFHOME)/doc/latex/mtheme
+DESTDIR     ?= $(shell kpsewhich -var-value=TEXMFHOME)
+INSTALL_DIR = $(DESTDIR)/tex/latex/mtheme
+DOC_DIR     = $(DESTDIR)/doc/latex/mtheme
 CACHE_DIR   := $(shell pwd)/.latex-cache
 
 COMPILE_TEX := latexmk -xelatex -output-directory=$(CACHE_DIR)
