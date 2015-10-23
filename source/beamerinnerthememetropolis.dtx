@@ -105,6 +105,7 @@
   /metropolis/inner/sectionpage/.cd,
     .is choice,
     none/.code=\@metropolis@sectionpage@none,
+    simple/.code=\@metropolis@sectionpage@simple,
     progressbar/.code=\@metropolis@sectionpage@progressbar,
 }
 %    \end{macrocode}
@@ -308,6 +309,22 @@
 \newcommand{\@metropolis@sectionpage@none}{
   \AtBeginSection{
     % intenionally empty
+  }
+}
+\defbeamertemplate{section page}{simple}{
+  \centering
+  \usebeamercolor[fg]{section title}
+  \usebeamerfont{section title}
+  \insertsectionhead\\
+}
+\newcommand{\@metropolis@sectionpage@simple}{
+  \setbeamertemplate{section page}[simple]
+  \AtBeginSection{
+    \ifbeamer@inframe
+      \sectionpage
+    \else
+      \frame[plain,c]{\sectionpage}
+    \fi
   }
 }
 \defbeamertemplate{section page}{progressbar}{
