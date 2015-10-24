@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamerfontthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerfontthememetropolis}[2015/06/12 Metropolis font theme]
+\ProvidesPackage{beamerfontthememetropolis}[2015/10/24 Metropolis font theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamerfontthememetropolis}
@@ -26,53 +26,141 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
-% \subsection{Fira font theme}
-% Font Definitions
+% \subsection{\textsc{metropolis} font theme}
+%
+%
+% Load required packages.
+%    \begin{macrocode}
+\RequirePackage{etoolbox}
+\RequirePackage{ifxetex}
+\RequirePackage{ifluatex}
+%    \end{macrocode}
+%
+% \subsubsection{Load Fira font}
+% If the presentation is compiled with XeLaTeX or LuaLaTeX the fontspec package
+% will be loaded.
+%    \begin{macrocode}
+\ifboolexpr{bool {xetex} or bool {luatex}}{
+  \RequirePackage[no-math]{fontspec}
+  \defaultfontfeatures{Mapping=tex-text}
+%    \end{macrocode}
+%
+% To simplify the check whether the |Fira| fonts are installed, a set macros is
+% defined.
+%
+% \begin{macro}{\checkfont}
+% Checks if a font is installed and increases |fontsnotfound| counter if not.
+%    \begin{macrocode}
+  \newcounter{fontsnotfound}
+  \newcommand{\checkfont}[1]{%
+    \suppressfontnotfounderror=1%
+    \font\x = "#1" at 10pt
+    \ifx\x\nullfont%
+      \stepcounter{fontsnotfound}%
+    \fi%
+    \suppressfontnotfounderror=0%
+  }
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\iffontexists}
+% Resets the |fontsnotfound| counter and calls |\checkfont| for each font in the comma
+% separated list in the first argument.
+%    \begin{macrocode}
+  \newcommand{\iffontsexist}[3]{%
+    \setcounter{fontsnotfound}{0}%
+    \expandafter\forcsvlist\expandafter%
+    \checkfont\expandafter{#1}%
+    \ifnum\value{fontsnotfound}=0%
+      #2%
+    \else%
+      #3%
+    \fi%
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% Using the previously defined macros it is tried to load the |Fira| fonts. First the default
+% |Fira| name will be tried. Second the |Fira| fonts with the suffix OT -- used by some Linux
+% distributions -- will be tried. If this also fails a warning will be displayed and the
+% standard fonts will be used.
 %
 %    \begin{macrocode}
-\RequirePackage[no-math]{fontspec}
-\defaultfontfeatures{Mapping=tex-text}
-\setsansfont[BoldItalicFont={Fira Sans Italic},%
-             ItalicFont={Fira Sans Light Italic},%
-             BoldFont={Fira Sans}]{Fira Sans Light}
-\setmonofont{Fira Mono}
-\newfontfamily\ExtraLight{Fira Sans ExtraLight}
-\newfontfamily\Light{Fira Sans Light}
-\newfontfamily\Book{Fira Sans}
-\newfontfamily\Medium{Fira Sans Medium}
-\AtBeginEnvironment{tabular}{%
-    \setsansfont[BoldFont={Fira Sans},%
-                 Numbers={Monospaced}]{Fira Sans Light}%
+  \iffontsexist{Fira Sans Light,%
+                Fira Sans Light Italic,%
+                Fira Sans,%
+                Fira Sans Italic}{%
+    \setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}%
+  }{%
+    \iffontsexist{Fira Sans Light OT,%
+                  Fira Sans Light Italic OT,%
+                  Fira Sans OT,%
+                  Fira Sans Italic OT}{%
+      \setsansfont[BoldFont={Fira Sans OT}]{Fira Sans Light OT}%
+    }{%
+      \PackageWarning{beamerthemem}{%
+        Could not find Fira Sans fonts.%
+      }
     }
+  }
+  \iffontsexist{Fira Mono, Fira Mono Bold}{%
+    \setmonofont{Fira Mono}%
+  }{%
+    \iffontsexist{Fira Mono OT, Fira Mono Bold OT}{%
+      \setmonofont{Fira Mono OT}%
+    }{%
+      \PackageWarning{beamerthemem}{%
+        Could not find Fira Mono fonts.%
+      }
+    }
+  }
+  \AtBeginEnvironment{tabular}{%
+    \addfontfeature{Numbers={Monospaced}}%
+  }
+}{%
+  \PackageWarning{beamerthemem}{%
+    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts.%
+  }
+}
 %    \end{macrocode}
 %
-% Font Assignment
+%
+%
+% \subsubsection{General font definitions}
 %
 %    \begin{macrocode}
-\setbeamerfont{title}{family=\Book, size=\Large, shape=\scshape}
-\setbeamerfont{author}{family=\ExtraLight, size=\small}
-\setbeamerfont{date}{family=\ExtraLight, size=\small}
-\setbeamerfont{section title}{family=\Book, size=\Large, shape=\scshape}
-\setbeamerfont{block title}{family=\Book, size=\normalsize}
-\setbeamerfont{block title alerted}{family=\Book,size=\normalsize}
-\setbeamerfont{subtitle}{family=\Light, size=\fontsize{12}{14}}
-\setbeamerfont{frametitle}{family=\Book, size=\large, shape=\scshape}
+\setbeamerfont{title}{size=\Large,%
+                      series=\bfseries,%
+                      shape=\scshape}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{section title}{size=\Large,%
+                              series=\bfseries,%
+                              shape=\scshape}
+\setbeamerfont{block title}{size=\normalsize,%
+                            series=\bfseries}
+\setbeamerfont{block title alerted}{size=\normalsize,%
+                                    series=\bfseries}
+\setbeamerfont*{subtitle}{size=\large,%
+                          shape=\scshape}
+\setbeamerfont{frametitle}{size=\large,%
+                           series=\bfseries,%
+                           shape=\scshape}
 \setbeamerfont{caption}{size=\small}
-\setbeamerfont{caption name}{family=\Book}
-\setbeamerfont{description item}{family=\Book}
+\setbeamerfont{caption name}{series=\bfseries}
+\setbeamerfont{description item}{series=\bfseries}
 \setbeamerfont{page number in head/foot}{size=\scriptsize}
-%    \end{macrocode}
-%
-% Bibliograpy
-%
-%    \begin{macrocode}
-\setbeamerfont{bibliography entry author}{family=\Light, size=\normalsize}
-\setbeamerfont{bibliography entry title}{family=\Book, size=\normalsize}
-\setbeamerfont{bibliography entry location}{family=\Light, size=\normalsize}
-\setbeamerfont{bibliography entry note}{family=\Light, size=\small}
+\setbeamerfont{bibliography entry author}{size=\normalsize,%
+                                          series=\normalfont}
+\setbeamerfont{bibliography entry title}{size=\normalsize,%
+                                         series=\bfseries}
+\setbeamerfont{bibliography entry location}{size=\normalsize,%
+                                            series=\normalfont}
+\setbeamerfont{bibliography entry note}{size=\small,%
+                                        series=\normalfont}
 \linespread{1.15}
 %    \end{macrocode}
-
 %
 % \iffalse
 %</package>

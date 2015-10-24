@@ -18,12 +18,69 @@
 \usepackage{xspace}
 \onehalfspacing
 
-\usepackage{fontspec}
-\setmainfont[BoldItalicFont={Fira Sans Italic},%
-             ItalicFont={Fira Sans Light Italic},%
-             BoldFont={Fira Sans}]{Fira Sans Light}
-\setmonofont{Fira Mono}
-\defaultfontfeatures{Ligatures=TeX}
+\usepackage{etoolbox}
+\usepackage{ifxetex}
+\usepackage{ifluatex}
+
+\ifboolexpr{bool {xetex} or bool {luatex}}{
+  \usepackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+
+  \newcounter{fontsnotfound}
+  \newcommand{\checkfont}[1]{%
+    \suppressfontnotfounderror=1%
+    \font\x = "#1" at 10pt
+    \ifx\x\nullfont%
+      \stepcounter{fontsnotfound}%
+    \fi%
+    \suppressfontnotfounderror=0%
+  }
+
+  \newcommand{\iffontsexist}[3]{%
+    \setcounter{fontsnotfound}{0}%
+    \expandafter\forcsvlist\expandafter%
+    \checkfont\expandafter{#1}%
+    \ifnum\value{fontsnotfound}=0%
+      #2%
+    \else%
+      #3%
+    \fi%
+  }
+  \iffontsexist{Fira Sans Light,%
+                Fira Sans Light Italic,%
+                Fira Sans,%
+                Fira Sans Italic}{%
+    \setmainfont[BoldFont={Fira Sans}]{Fira Sans Light}%
+  }{%
+    \iffontsexist{Fira Sans Light OT,%
+                  Fira Sans Light Italic OT,%
+                  Fira Sans OT,%
+                  Fira Sans Italic OT}{%
+      \setmainfont[BoldFont={Fira Sans OT}]{Fira Sans Light OT}%
+    }{%
+      \typeout{%
+        Could not find Fira Sans fonts. Creating documentation%
+        with standard fonts.%
+      }
+    }
+  }
+  \iffontsexist{Fira Mono, Fira Mono Bold}{%
+    \setmonofont{Fira Mono}%
+  }{%
+    \iffontsexist{Fira Mono OT, Fira Mono Bold OT}{%
+      \setmonofont{Fira Mono OT}%
+    }{%
+      \typeout{%
+        Could not find Fira Sans fonts. Creating documentation%
+        with standard monospaced fonts.%
+      }
+    }
+  }
+}{
+  \typeout{%
+    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts.%
+  }
+}
 
 \usepackage{enumitem}
 \setlist[itemize]{noitemsep}
@@ -63,7 +120,8 @@
   xrightmargin=0em,
   aboveskip=1em,
   belowskip=1em,
-  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,plain,setbeamercolor,metroset},
+  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,%
+                plain,setbeamercolor,metroset,setsansfont,setmonofont},
 }
 \lstMakeShortInline|
 
@@ -83,7 +141,7 @@
   \end{minipage}
 }
 
-\newcommand{\themename}{\textsc{metropolis}\xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
 
 \GetFileInfo{beamerthemem.dtx}
 \title{Modern Beamer Presentations with the \themename{} package}
@@ -113,7 +171,7 @@ By default, \themename{} uses
 {Fira Sans}, a gorgeous typeface commissioned by Mozilla and designed by
 \href{http://www.carrois.com/fira-3-1/}{Carrois}. For best results, you will
 need the Fira typeface installed and use Xe\LaTeX{} to typeset your slides.
-However, \themename{} can also be used other typefaces and \LaTeX{} build
+However, \themename{} can also be used with other typefaces and \LaTeX{} build
 systems.
 
 \themename's codebase is maintained on \href{https://github.com/matze/mtheme}
@@ -124,6 +182,23 @@ the theme even better, please get in touch there. The
 
 
 \section{Getting Started}
+
+% \subsection{Installing from CTAN}
+% For the regular user it is recommended to install \themename{} from
+% \href{https://www.ctan.org}{CTAN}. In case you keep your \TeX\ distribution up-to-date,
+% chances are good that \themename{} is already installed. If it is not, you need to update
+% your packages. For  \TeX\ Live (or Mac\TeX\ on OS X) the following command updates all
+% packages.
+
+% \begin{lstlisting}
+% sudo tlmgr update --all
+% \end{lstlisting}
+
+% For any other distribution please refer to its documentation on how to update your
+% packages.
+
+% To get the most out of the theme you should also install the |Fira| fonts. Yet this
+% is not mandatory. \themename{} also works with the standard fonts.
 
 \subsection{Installing from GitHub}
 
@@ -161,6 +236,10 @@ options for advanced users:
   \item[|make ctan|] creates a package for CTAN distribution.
 \end{description}
 
+\subsection{Installing the Debian Package}
+As an alternative users of Debian or Ubuntu can also install this
+\href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb package}
+containing the theme files as well as the Fira Sans font files.
 
 \subsection{A Minimal Example}
 
@@ -191,13 +270,10 @@ The following code shows a minimal example of a Beamer presentation using \theme
   \item TikZ
 \end{itemize}
 
-Depending on the Linux distribution, the packaged name of |Fira Sans| might be
-|Fira Sans OT| instead of |Fira Sans|. In that case, you may have to edit
-|beamerfontthememetropolis.dtx|. You may also need to install Fira Sans; see
-the |contrib/| directory for more. Users of Debian or Ubuntu can also install
-this \href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb package} containing the theme files as well
-as the Fira Sans font files.
-
+The |Fira Sans| font is not a hard dependency. \themename will try to load the
+font and use it if it is installed, but if not it will just use the standard
+font. Depending on the Linux distribution, the packaged name of |Fira Sans| might be
+|Fira Sans OT| instead of |Fira Sans|. \themename will check for this name too.
 
 \subsection{Pandoc}
 
@@ -321,9 +397,21 @@ of \themename specific colors, which can also be redefined to your liking.
 \setbeamercolor{progress bar in section page}{ ... }
 \end{lstlisting}
 
+\subsection{Font Customization}
+
+The default font for \themename{} is |Fira|. Yet this can be easily changed using
+the standard font selection commands of the |fontspec| package. So if you for
+example prefer the \href{http://font.ubuntu.com}{|Ubuntu|} font family just add
+the following two commands after loading the \themename{} theme.
+
+\begin{lstlisting}
+\setsansfont{Ubuntu}
+\setmonofont{Ubuntu Mono}
+\end{lstlisting}
+
 \subsection{Commands}
 
-The |\plain{title=[]}{<body>}| command sets a slide in plain dark colors which
+The \lstinline|\plain{title=[]}{<body>}| command sets a slide in plain dark colors which
 can be useful to focus attention on a single sentence or image.
 
 \subsection{Paul Tol's colors: a \texttt{pgfplots} theme}
@@ -347,7 +435,7 @@ or horizontal |mbarplot| to plot bar charts.
 
 \section{Known Issues}
 
-The |\plain| command does not work if you override the \textsc{metropolis}
+The \lstinline|\plain| command does not work if you override the \textsc{metropolis}
 color theme with the default beamer color theme |fly|.
 
 \section{License}
