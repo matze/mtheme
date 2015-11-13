@@ -37,8 +37,6 @@
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{pgfopts}
-\RequirePackage{ifxetex}
-\RequirePackage{ifluatex}
 %    \end{macrocode}
 %
 % \subsubsection{Options}
@@ -136,19 +134,7 @@
 \useinnertheme{metropolis}
 \useoutertheme{metropolis}
 \usecolortheme{metropolis}
-%    \end{macrocode}
-%
-% The |fira| font theme, which depends on |fontspec|, is only loaded if the
-% document is being processed by Xe\LaTeX{} or Lua\LaTeX{}.
-%
-%    \begin{macrocode}
-\ifboolexpr{bool {xetex} or bool {luatex}}{
-  \usefonttheme{metropolis}
-}{
-  \PackageWarning{beamerthemem}{%
-    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts.
-  }
-}
+\usefonttheme{metropolis}
 %    \end{macrocode}
 %
 % The |tol| theme for |pgfplots| is only loaded if |pgfplots| is used.
