@@ -87,23 +87,23 @@
   /metropolis/outer/frametitleformat/.cd,
     .is choice,
     regular/.code={%
-       \renewcommand{\@metropolis@frametitleformat}{}%
-       \renewcommand{\@metropolis@frametitlestrut}{%
-           \rule{0pt}{\heightof{ABCDEFGHIJKLMNOPQRSTUVWXYZ}}
-       }
-       },
+      \renewcommand{\@metropolis@frametitleformat}{}%
+      \renewcommand{\@metropolis@frametitlestrut}{%
+        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
+      }
+    },
     lowercase/.code={%
-       \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}%
-       \renewcommand{\@metropolis@frametitlestrut}{%
-           \rule{0pt}{\heightof{abcdefghijklmnopqrstuvwxyz}}
-       }
-       },
+      \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}%
+      \renewcommand{\@metropolis@frametitlestrut}{%
+        \vphantom{abcdefghijklmnopqrstuvwxyz}%
+      }
+    },
     uppercase/.code={%
-       \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}%
-       \renewcommand{\@metropolis@frametitlestrut}{%
-           \rule{0pt}{\heightof{ABCDEFGHIJKLMNOPQRSTUVWXYZ}}
-       }
-       },
+      \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}%
+      \renewcommand{\@metropolis@frametitlestrut}{%
+        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZ}%
+      }
+    },
 }
 %    \end{macrocode}
 % \end{macro}
