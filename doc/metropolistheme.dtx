@@ -143,7 +143,7 @@
 
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
 
-\GetFileInfo{beamerthemem.dtx}
+\GetFileInfo{beamerthememetropolis.dtx}
 \title{Modern Beamer Presentations with the \themename{} package}
 \author{Matthias Vogelgesang \\ \url{matthias.vogelgesang@gmail.com}}
 \date{v0.x.x}
@@ -247,7 +247,7 @@ The following code shows a minimal example of a Beamer presentation using \theme
 
 \begin{lstlisting}
 \documentclass{beamer}
-\usetheme{m}                     % Use metropolis theme
+\usetheme{metropolis}       % Use metropolis theme
 \title{A minimal example}
 \date{\today}
 \author{Matthias Vogelgesang}
@@ -292,9 +292,9 @@ $ pandoc -t beamer --latex-engine=xelatex -V theme:m -o output.pdf input.md
 The theme provides a number of options. The options use a key=value interface.
 So every option is controlled by a key its value. To use an option you can
 either provide a comma separated list of options when invoking
-\textsc{mtheme} in the preamble of the presentation.
+\textsc{metropolis} in the preamble of the presentation.
 \begin{lstlisting}
-\usetheme[<key=value list>]{m}
+\usetheme[<key=value list>]{metropolis}
 \end{lstlisting}
 Or you can set them at any time with the |\metroset| macro.
 \begin{lstlisting}
@@ -451,7 +451,7 @@ presentation that you create with the theme.
 
 \section{Implementation}
 
-\DocInput{beamerthemem.dtx}
+\DocInput{beamerthememetropolis.dtx}
 \DocInput{beamerinnerthememetropolis.dtx}
 \DocInput{beamerouterthememetropolis.dtx}
 \DocInput{beamerfontthememetropolis.dtx}
