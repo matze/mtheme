@@ -42,7 +42,7 @@
 %    \begin{macrocode}
 \ifboolexpr{bool {xetex} or bool {luatex}}{
   \RequirePackage[no-math]{fontspec}
-  \defaultfontfeatures{Mapping=tex-text}
+  \defaultfontfeatures[\rmfamily,\sffamily]{Ligatures=TeX}
 %    \end{macrocode}
 %
 % To simplify the check whether the |Fira| fonts are installed, a set macros is
