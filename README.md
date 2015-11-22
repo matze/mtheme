@@ -22,9 +22,9 @@ Installing Metropolis, like any Beamer theme, involves four easy steps:
 2. **Compile the style files** by running `make sty` inside the downloaded
     directory. (Or run LaTeX directly on `source/metropolistheme.ins`.)
 
-3. **Move the resulting `*.sty` files** to the folder containing your presentation. To use Metropolis with many presentations, run `make install` or move the `*.sty` files to a folder in your TeX path instead.
+3. **Move the resulting `*.sty` files** to the folder containing your presentation. To use Metropolis with many presentations, run `make install` or move the `*.sty` files to a folder in your TeX path instead (might require `sudo` rights).
 
-4. **Use the theme for your presentation** by declaring `\usetheme{m}` in
+4. **Use the theme for your presentation** by declaring `\usetheme{metropolis}` in
     the preamble of your Beamer document.
 
 
@@ -49,7 +49,7 @@ Metropolis.
 \end{document}
 ```
 
-Detailed information on using Metropolis can be found in the [manual](doc/metropolistheme.pdf).
+Detailed information on using Metropolis can be found in the [manual (PDF)](doc/metropolistheme.pdf).
 
 
 ## License
