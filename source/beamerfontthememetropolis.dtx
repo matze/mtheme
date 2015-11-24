@@ -54,6 +54,7 @@
   \newcommand{\checkfont}[1]{%
     \suppressfontnotfounderror=1%
     \font\x = "#1" at 10pt
+    \selectfont
     \ifx\x\nullfont%
       \stepcounter{fontsnotfound}%
     \fi%
