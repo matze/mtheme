@@ -64,35 +64,97 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{titleformat}
-% Control the case style of the title
+% \begin{macro}{titleformat title}
+% Control the titleformat of the title
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/inner/titleformat/.cd,
+  /metropolis/inner/titleformat title/.cd,
     .is choice,
-    regular/.code=\renewcommand{\@metropolis@titleformat}{},
-    lowercase/.code={%
-      \renewcommand{\@metropolis@titleformat}{\MakeLowercase}
+    regular/.code={%
+      \let\@metropolis@titleformat\@empty%
+      \setbeamerfont{title}{shape=\normalfont}%
     },
-    uppercase/.code={%
-      \renewcommand{\@metropolis@titleformat}{\MakeUppercase}
+    smallcaps/.code={%
+      \let\@metropolis@titleformat\@empty%
+      \setbeamerfont{title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\@metropolis@titleformat\MakeLowercase%
+      \setbeamerfont{title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat title=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\@metropolis@titleformat\MakeUppercase%
+      \setbeamerfont{title}{shape=\normalfont}
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat title=allcaps can lead to problems%
+      }
     },
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{sectiontitleformat}
-% Control the case style of the section title
+% \begin{macro}{titleformat subtitle}
+% Control the titleformat of the subtitle
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/inner/sectiontitleformat/.cd,
+  /metropolis/inner/titleformat subtitle/.cd,
     .is choice,
-    regular/.code=\renewcommand{\@metropolis@sectiontitleformat}{},
-    lowercase/.code={%
-      \renewcommand{\@metropolis@sectiontitleformat}{\MakeLowercase}
+    regular/.code={%
+      \let\@metropolis@subtitleformat\@empty%
+      \setbeamerfont{subtitle}{shape=\normalfont}%
     },
-    uppercase/.code={%
-      \renewcommand{\@metropolis@sectiontitleformat}{\MakeUppercase}
+    smallcaps/.code={%
+      \let\@metropolis@subtitleformat\@empty%
+      \setbeamerfont{subtitle}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\@metropolis@subtitleformat\MakeLowercase%
+      \setbeamerfont{subtitle}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat subtitle=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\@metropolis@subtitleformat\MakeUppercase%
+      \setbeamerfont{subtitle}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat subtitle=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat section}
+% Control the titleformat of the section title
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/titleformat section/.cd,
+    .is choice,
+    regular/.code={%
+      \let\@metropolis@sectiontitleformat\@empty%
+      \setbeamerfont{section title}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\@metropolis@sectiontitleformat\@empty%
+      \setbeamerfont{section title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\@metropolis@sectiontitleformat\MakeLowercase%
+      \setbeamerfont{section title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat section=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\@metropolis@sectiontitleformat\MakeUppercase%
+      \setbeamerfont{section title}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat section=allcaps can lead to problems%
+      }
     },
 }
 %    \end{macrocode}
@@ -118,8 +180,9 @@
   \pgfkeys{/metropolis/inner/.cd,
     sectionpage=progressbar,
     block=transparent,
-    titleformat=lowercase,
-    sectiontitleformat=lowercase,
+    titleformat title=regular,
+    titleformat subtitle=regular,
+    titleformat section=regular,
   }
 }
 %    \end{macrocode}
@@ -130,9 +193,10 @@
 % \subsubsection{Title page}
 %
 % \begin{macro}{\@metropolis@titleformat}
-%   Define hooks to change the case format of the titles.
+% Define hooks to change the case format of the titles.
 %    \begin{macrocode}
 \def\@metropolis@titleformat#1{#1}
+\def\@metropolis@subtitleformat#1{#1}
 \def\@metropolis@sectiontitleformat#1{#1}
 %    \end{macrocode}
 % \end{macro}
@@ -148,18 +212,19 @@
   {\def\insertsectionhead{#2}}
   {\def\insertsectionhead{\@metropolis@sectiontitleformat{#2}}}
   {}
-  {\PackageError{beamerinnerthememetropolis}{Patching section title failed.}}
+  {\PackageError{beamerinnerthememetropolis}{Patching section title failed}}
 \patchcmd{\beamer@section}
   {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
-  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{\@metropolis@sectiontitleformat{#1}}}}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{%
+  \@metropolis@sectiontitleformat{#1}}}}
   {}
-  {\PackageError{beamerinnerthememetropolis}{Patching section title failed.}}
+  {\PackageError{beamerinnerthememetropolis}{Patching section title failed}}
 %    \end{macrocode}
 %
 % \begin{macro}{title page}
-%   Template for the title page. Each element is only typset if it is defined
-%   by the user. If |\subtitle| is empty, for example, it won't leave a blank
-%   space on the title slide.
+% Template for the title page. Each element is only typset if it is defined
+% by the user. If |\subtitle| is empty, for example, it won't leave a blank
+% space on the title slide.
 %    \begin{macrocode}
 \setbeamertemplate{title page}{
   \begin{minipage}[b][\paperheight]{\textwidth}
@@ -170,11 +235,11 @@
     \usebeamertemplate*{title separator}
 %    \end{macrocode}
 %
-%   Beamer's definition of |\insertauthor| is always nonempty, so we have
-%   to test another macro initialized by |\author{...}| to see if the user has
-%   defined an author. This solution was suggested by Enrico Gregorio in an
-%   answer to \href{https://tex.stackexchange.com/questions/241306/}{this
-%   Stack Exchange question}.
+% Beamer's definition of |\insertauthor| is always nonempty, so we have
+% to test another macro initialized by |\author{...}| to see if the user has
+% defined an author. This solution was suggested by Enrico Gregorio in an
+% answer to \href{https://tex.stackexchange.com/questions/241306/}{this
+% Stack Exchange question}.
 %
 %    \begin{macrocode}
     \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
@@ -244,7 +309,7 @@
 %   Set the subtitle on the title page.
 %    \begin{macrocode}
 \setbeamertemplate{subtitle}{
-  \insertsubtitle%
+  \@metropolis@subtitleformat{\insertsubtitle}%
   \par%
   \vspace*{0.5em}
 }

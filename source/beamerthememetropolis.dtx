@@ -69,32 +69,48 @@
 }
 %    \end{macrocode}
 %
-% \begin{macro}{plaintitleformat}
-% Control the case style of the plain title
+% \begin{macro}{titleformat plain}
+% Control the titleformat of the plain title
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/plaintitleformat/.cd,
+  /metropolis/titleformat plain/.cd,
     .is choice,
-    regular/.code=\renewcommand{\@metropolis@plaintitleformat}{#1},
-    lowercase/.code={%
-      \renewcommand{\@metropolis@plaintitleformat}{\MakeLowercase{#1}}
+    regular/.code={%
+      \let\@metropolis@plaintitleformat\@empty%
+      \setbeamerfont{plain title}{shape=\normalfont}%
     },
-    uppercase/.code={%
-      \renewcommand{\@metropolis@plaintitleformat}{\MakeUppercase{#1}}
+    smallcaps/.code={%
+      \let\@metropolis@plaintitleformat\@empty%
+      \setbeamerfont{plain title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\@metropolis@plaintitleformat\MakeLowercase%
+      \setbeamerfont{plain title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat plain=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\@metropolis@plaintitleformat\MakeUppercase%
+      \setbeamerfont{plain title}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat plain=allcaps can lead to problems%
+      }
     },
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{everytitleformat}
-% Control the case style of the every title
+% \begin{macro}{titleformat}
+% Control the titleformat of every title type together
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/everytitleformat/.code=\pgfkeysalso{
-      inner/titleformat=#1,
-      inner/sectiontitleformat=#1,
-      outer/frametitleformat=#1,
-      plaintitleformat=#1,
+  /metropolis/titleformat/.code=\pgfkeysalso{
+      inner/titleformat title=#1,
+      inner/titleformat subtitle=#1,
+      inner/titleformat section=#1,
+      outer/titleformat frame=#1,
+      titleformat plain=#1,
     }
 }
 %    \end{macrocode}
@@ -119,7 +135,7 @@
 %    \begin{macrocode}
 \newcommand{\@metropolis@setdefaults}{
   \pgfkeys{/metropolis/.cd,
-    plaintitleformat=lowercase,
+    titleformat plain=regular,
   }
 }
 %    \end{macrocode}
@@ -174,7 +190,7 @@
     \begin{frame}[c]{#1}
       \begin{center}
         \usebeamercolor[fg]{palette primary}
-        \usebeamerfont{section title}
+        \usebeamerfont{plain title}
         \@metropolis@plaintitleformat{#2}
       \end{center}
     \end{frame}

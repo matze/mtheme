@@ -65,8 +65,8 @@
 % \end{macro}
 %
 % \begin{macro}{\iffontexists}
-% Resets the |fontsnotfound| counter and calls |\checkfont| for each font in the comma
-% separated list in the first argument.
+% Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
+% the comma separated list in the first argument.
 %    \begin{macrocode}
   \newcommand{\iffontsexist}[3]{%
     \setcounter{fontsnotfound}{0}%
@@ -81,10 +81,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% Using the previously defined macros it is tried to load the |Fira| fonts. First the default
-% |Fira| name will be tried. Second the |Fira| fonts with the suffix OT -- used by some Linux
-% distributions -- will be tried. If this also fails a warning will be displayed and the
-% standard fonts will be used.
+% Using the previously defined macros it is tried to load the |Fira| fonts.
+% First the default |Fira| name will be tried. Second the |Fira| fonts with
+% the suffix OT -- used by some Linux distributions -- will be tried. If this
+% also fails a warning will be displayed and the standard fonts will be used.
 %
 %    \begin{macrocode}
   \iffontsexist{Fira Sans Light,%
@@ -100,7 +100,7 @@
       \setsansfont[BoldFont={Fira Sans OT}]{Fira Sans Light OT}%
     }{%
       \PackageWarning{beamerthememetropolis}{%
-        Could not find Fira Sans fonts.%
+        Could not find Fira Sans fonts%
       }
     }
   }
@@ -111,7 +111,7 @@
       \setmonofont{Fira Mono OT}%
     }{%
       \PackageWarning{beamerthememetropolis}{%
-        Could not find Fira Mono fonts.%
+        Could not find Fira Mono fonts%
       }
     }
   }
@@ -120,7 +120,7 @@
   }
 }{%
   \PackageWarning{beamerthememetropolis}{%
-    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts.%
+    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts%
   }
 }
 %    \end{macrocode}
@@ -131,22 +131,20 @@
 %
 %    \begin{macrocode}
 \setbeamerfont{title}{size=\Large,%
-                      series=\bfseries,%
-                      shape=\scshape}
+                      series=\bfseries}
 \setbeamerfont{author}{size=\small}
 \setbeamerfont{date}{size=\small}
 \setbeamerfont{section title}{size=\Large,%
-                              series=\bfseries,%
-                              shape=\scshape}
+                              series=\bfseries}
+\setbeamerfont{plain title}{size=\Large,%
+                            series=\bfseries}
 \setbeamerfont{block title}{size=\normalsize,%
                             series=\bfseries}
 \setbeamerfont{block title alerted}{size=\normalsize,%
                                     series=\bfseries}
-\setbeamerfont*{subtitle}{size=\large,%
-                          shape=\scshape}
+\setbeamerfont*{subtitle}{size=\large}
 \setbeamerfont{frametitle}{size=\large,%
-                           series=\bfseries,%
-                           shape=\scshape}
+                           series=\bfseries}
 \setbeamerfont{caption}{size=\small}
 \setbeamerfont{caption name}{series=\bfseries}
 \setbeamerfont{description item}{series=\bfseries}
@@ -159,7 +157,6 @@
                                             series=\normalfont}
 \setbeamerfont{bibliography entry note}{size=\small,%
                                         series=\normalfont}
-\linespread{1.15}
 %    \end{macrocode}
 %
 % \iffalse
