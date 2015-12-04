@@ -6,7 +6,7 @@ DEMO_PDF    = demo/demo.pdf
 DOC_SRC     = doc/metropolistheme.dtx
 DOC_PDF     = doc/metropolistheme.pdf
 
-CTAN_CONTENT = README.md $(INS) $(PACKAGE_SRC) $(DOC_SRC) $(DOC_PDF)
+CTAN_CONTENT = README.md $(INS) $(PACKAGE_SRC) $(DOC_SRC) $(DOC_PDF) $(DEMO_SRC) $(DEMO_PDF)
 
 DESTDIR     ?= $(shell kpsewhich -var-value=TEXMFHOME)
 INSTALL_DIR = $(DESTDIR)/tex/latex/metropolis
@@ -50,7 +50,7 @@ clean-sty:
 	@rm -f $(PACKAGE_STY)
 
 ctan: $(CTAN_CONTENT) ctan-version
-	@tar --transform "s@\(.*\)@mtheme/\1@" -cf metropolis-$(shell date "+%Y-%m-%d").tar.gz $(CTAN_CONTENT)
+	@tar --transform "s@\(.*\)@metropolis/\1@" -cf metropolis-$(shell date "+%Y-%m-%d").tar.gz $(CTAN_CONTENT)
 
 ctan-version:
 	@sed -i 's@\(ProvidesPackage.*\[\)[0-9/]*@\1$(shell date "+%Y/%m/%d")@' $(PACKAGE_SRC)
