@@ -53,7 +53,7 @@ clean-sty:
 	@rm -f $(PACKAGE_STY)
 
 ctan-version:
-	@sed -i '' -- 's@\(ProvidesPackage.*\[\)[0-9/]*@\1$(shell date "+%Y/%m/%d")@' $(PACKAGE_SRC)
+	@sed -i 's@\(ProvidesPackage.*\[\)[0-9/]*@\1$(shell date "+%Y/%m/%d")@' $(PACKAGE_SRC)
 
 $(CACHE_DIR):
 	@mkdir -p $(CACHE_DIR)
