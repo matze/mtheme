@@ -393,6 +393,7 @@
 %    \begin{macrocode}
 \newlength{\@metropolis@blockskip}
 \setbeamertemplate{block begin}{%
+  \setlength{\parskip}{\@metropolis@parskip}
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
@@ -419,6 +420,7 @@
 %
 %    \begin{macrocode}
 \setbeamertemplate{block alerted begin}{%
+  \setlength{\parskip}{\@metropolis@parskip}
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
@@ -445,6 +447,7 @@
 %
 %    \begin{macrocode}
 \setbeamertemplate{block example begin}{%
+  \setlength{\parskip}{\@metropolis@parskip}
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
@@ -493,7 +496,9 @@
 % \subsubsection{Text and spacing settings}
 %
 %    \begin{macrocode}
-\setlength{\parskip}{0.5em}
+\newlength{\@metropolis@parskip}
+\setlength{\@metropolis@parskip}{0.5em}
+\setlength{\parskip}{\@metropolis@parskip}
 \linespread{1.15}
 %    \end{macrocode}
 %
