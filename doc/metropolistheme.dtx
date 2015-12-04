@@ -400,15 +400,31 @@ of \themename specific colors, which can also be redefined to your liking.
 
 \subsection{Font Customization}
 
-The default font for \themename{} is |Fira|. Yet this can be easily changed using
-the standard font selection commands of the |fontspec| package. So if you for
-example prefer the \href{http://font.ubuntu.com}{|Ubuntu|} font family just add
-the following two commands after loading the \themename{} theme.
+The default font for \themename{} is |Fira|. Yet this can be easily changed
+using the standard font selection commands of the \textsf{fontspec} package. So
+if you for example prefer the \href{http://font.ubuntu.com}{|Ubuntu|} font
+family just add the following two commands after loading the \themename{} theme.
 
 \begin{lstlisting}
 \setsansfont{Ubuntu}
 \setmonofont{Ubuntu Mono}
 \end{lstlisting}
+
+
+\subsubsection{Old style figures}
+
+The regular \textsf{fontspec} mechanism for changing glyph appearance applies
+also to this theme. In case you want to have old style figures in the text but
+regular lined figures for math, you have to add the following to your preamble:
+
+\begin{lstlisting}
+\usefonttheme{professionalfonts}   % required for mathspec
+\usepackage{mathspec}
+\setsansfont[BoldFont={Fira Sans},
+             Numbers={OldStyle}]{Fira Sans Light}
+\setmathsfont(Digits)[Numbers={Lining, Proportional}]{Fira Sans Light}
+\end{lstlisting}
+
 
 \subsection{Commands}
 
