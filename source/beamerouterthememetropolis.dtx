@@ -68,40 +68,62 @@
       \setbeamertemplate{footline}[plain]
     },
     head/.code={\pgfkeys{/metropolis/outer/progressbar=none}
-      \addtobeamertemplate{headline}{}{\usebeamertemplate*{progress bar in head/foot}}
+      \addtobeamertemplate{headline}{}{%
+        \usebeamertemplate*{progress bar in head/foot}
+      }
     },
     frametitle/.code={\pgfkeys{/metropolis/outer/progressbar=none}
-      \addtobeamertemplate{frametitle}{}{\usebeamertemplate*{progress bar in head/foot}}
+      \addtobeamertemplate{frametitle}{}{%
+        \usebeamertemplate*{progress bar in head/foot}
+      }
     },
     foot/.code={\pgfkeys{/metropolis/outer/progressbar=none}
-      \addtobeamertemplate{footline}{}{\usebeamertemplate*{progress bar in head/foot}}
+      \addtobeamertemplate{footline}{}{%
+        \usebeamertemplate*{progress bar in head/foot}%
+      }
     },
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{frametitleformat}
-% Control the case style of the frame title
+% Control the titleformat of the frame title
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/outer/frametitleformat/.cd,
+  /metropolis/outer/titleformat frame/.cd,
     .is choice,
     regular/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{}%
+      \let\@metropolis@frametitleformat\@empty%
+      \setbeamerfont{frametitle}{shape=\normalfont}%
       \renewcommand{\@metropolis@frametitlestrut}{%
         \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
       }
     },
-    lowercase/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{\MakeLowercase}%
+    smallcaps/.code={%
+      \let\@metropolis@frametitleformat\@empty%
+      \setbeamerfont{frametitle}{shape=\scshape}%
+      \renewcommand{\@metropolis@frametitlestrut}{%
+        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
+      }
+    },
+    allsmallcaps/.code={%
+      \let\@metropolis@frametitleformat\MakeLowercase%
+      \setbeamerfont{frametitle}{shape=\scshape}%
       \renewcommand{\@metropolis@frametitlestrut}{%
         \vphantom{abcdefghijklmnopqrstuvwxyz}%
       }
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat frame=allsmallcaps can lead to problems%
+      }
     },
-    uppercase/.code={%
-      \renewcommand{\@metropolis@frametitleformat}{\MakeUppercase}%
+    allcaps/.code={%
+      \let\@metropolis@frametitleformat\MakeUppercase%
+      \setbeamerfont{frametitle}{shape=\normalfont}
       \renewcommand{\@metropolis@frametitlestrut}{%
         \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZ}%
+      }
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat frame=allcaps can lead to problems%
       }
     },
 }
@@ -115,7 +137,7 @@
   \pgfkeys{/metropolis/outer/.cd,
     numbering=counter,
     progressbar=none,
-    frametitleformat=lowercase,
+    titleformat frame=regular,
   }
 }
 %    \end{macrocode}%
@@ -174,17 +196,20 @@
 %    \begin{macrocode}
 \patchcmd{\beamer@@frametitle}
   {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
+      \usebeamertemplate*{frametitle continuation}\fi}}%
     \gdef\beamer@frametitle{#2}%
     \gdef\beamer@shortframetitle{#1}%
     }}
   {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum%
+      \beamer@autobreakcount>0\relax{}\space%
+      \usebeamertemplate*{frametitle continuation}\fi}}%
     \gdef\beamer@frametitle{#2}%
     \gdef\beamer@shortframetitle{#1}%
     }}
   {}
-  {\PackageError{beamerouterthememetropolis}{Patching frame title failed.}}
+  {\PackageError{beamerouterthememetropolis}{Patching frame title failed}}
 %    \end{macrocode}
 %
 % \begin{macro}{frametitle}
