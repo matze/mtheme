@@ -8,7 +8,7 @@ offers is an (optional) progress bar added to each slide. The core design
 principles of the theme were described in a blog post
 [here](http://bloerg.net/2014/09/20/a-modern-beamer-theme.html).
 
-Not convinced? Have a look at the [demo slides](demo/demo.pdf).
+Not convinced? Have a look at the [demo slides][].
 
 ![Sample](http://i.imgur.com/Bxu52fz.png)
 
@@ -53,7 +53,7 @@ Metropolis.
 \end{document}
 ```
 
-Detailed information on using Metropolis can be found in the [manual (PDF)](doc/metropolistheme.pdf).
+Detailed information on using Metropolis can be found in the [manual (PDF)][].
 
 
 ## License
@@ -63,3 +63,7 @@ The theme itself is licensed under a [Creative Commons Attribution-ShareAlike
 means that if you change the theme and re-distribute it, you *must* retain the
 copyright notice header and license it under the same CC-BY-SA license. This
 does not affect the presentation that you create with the theme.
+
+
+[demo slides]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/demo/demo.pdf
+[manual (PDF)]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
