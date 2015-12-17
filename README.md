@@ -1,6 +1,13 @@
 ## Metropolis
 
-**NOTICE: The package name changed from *m* to *metropolis*!**
+
+**IMPORTANT NOTICES FOR VERSION 1.0**
+
+* The package and theme name changed from *m* to *metropolis*!
+* The `title format` values have been restructured. Please refer to the
+  [manual][].
+
+---
 
 Metropolis is a simple, modern Beamer theme suitable for anyone to use. It tries
 to minimize noise and maximize space for content; the only visual flourish it
@@ -53,7 +60,7 @@ Metropolis.
 \end{document}
 ```
 
-Detailed information on using Metropolis can be found in the [manual (PDF)][].
+Detailed information on using Metropolis can be found in the [manual][].
 
 
 ## License
@@ -66,4 +73,4 @@ does not affect the presentation that you create with the theme.
 
 
 [demo slides]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/demo/demo.pdf
-[manual (PDF)]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
+[manual]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
