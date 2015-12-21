@@ -17,7 +17,7 @@
 \date{\today}
 \author{Matthias Vogelgesang}
 \institute{Center for modern beamer themes}
-% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo/logo}}
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
 \begin{document}
 
@@ -66,7 +66,7 @@
 \end{frame}
 
 {
-\metroset{titleformat frame=smallcaps}
+    \metroset{titleformat frame=smallcaps}
 \begin{frame}{Small caps}
 	This frame uses the \texttt{smallcaps} titleformat.
 
@@ -280,6 +280,14 @@ or show \textbf{bold} results.\end{verbatim}
     Veni, Vidi, Vici
   \end{quote}
 \end{frame}
+
+{%
+\setbeamertemplate{frame footer}{My custom footer}
+\begin{frame}[fragile]{Frame footer}
+    \themename defines a custom beamer template to add a text to the footer. It can be set via
+    \begin{verbatim}\setbeamertemplate{frame footer}{My custom footer}\end{verbatim}
+\end{frame}
+}
 
 \begin{frame}{References}
   Some references to showcase [allowframebreaks] \cite{knuth92,ConcreteMath,Simpson,Er01,greenwade93}

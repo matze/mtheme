@@ -116,6 +116,11 @@
 %    Templates for the frame number. Can be omitted, shown or displayed as a
 %    fraction of the total frames.
 %    \begin{macrocode}
+\defbeamertemplate{frame footer}{none}{}
+\defbeamertemplate{frame footer}{custom}[1]{ #1 }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \defbeamertemplate{frame numbering}{none}{}
 \defbeamertemplate{frame numbering}{counter}{\insertframenumber}
 \defbeamertemplate{frame numbering}{fraction}{
@@ -131,8 +136,9 @@
 \defbeamertemplate{headline}{plain}{}
 \defbeamertemplate{footline}{plain}{%
   \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
-    \hfill%
     \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}
+    \hfill%
     \usebeamertemplate*{frame numbering}
   \end{beamercolorbox}%
 }
