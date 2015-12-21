@@ -43,6 +43,25 @@
 %
 % \subsubsection{Options}
 %
+% \begin{macro}{footer}
+% This option controls the page left footer text.
+% The default custom footer is the section name.
+% We can change it with:
+% \metroset{footer={custom=Some text}}
+% Maybe this is not the optimal solution, but it works for now
+% A possible nice way to do it is using this 
+% \href{http://tex.stackexchange.com/questions/149982/how-do-i-pass-an-unknown-value-to-a-choice-key-in-pgfkeys}{solution}
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/outer/footer/.cd,
+    .is choice,
+    none/.code=\setbeamertemplate{frame footer}[none],
+    custom/.code=\setbeamertemplate{frame footer}[custom]{#1},
+    custom/.default=\insertsection
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{numbering}
 % This option controls the page numbering.
 %    \begin{macrocode}
@@ -158,6 +177,11 @@
 % fraction of the total frames.
 %
 %    \begin{macrocode}
+\defbeamertemplate{frame footer}{none}{}
+\defbeamertemplate{frame footer}{custom}[1]{ #1 }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \defbeamertemplate{frame numbering}{none}{}
 \defbeamertemplate{frame numbering}{counter}{\insertframenumber}
 \defbeamertemplate{frame numbering}{fraction}{
@@ -169,8 +193,10 @@
 \defbeamertemplate{headline}{plain}{}
 \defbeamertemplate{footline}{plain}{%
   \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
-    \hfill%
     \usebeamerfont{page number in head/foot}%
+    \makebox[0pt][l]{}
+    \usebeamertemplate*{frame footer}
+    \hfill%
     \usebeamertemplate*{frame numbering}
   \end{beamercolorbox}%
 }
