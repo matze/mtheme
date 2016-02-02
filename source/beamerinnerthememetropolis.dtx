@@ -268,7 +268,7 @@
   \ifbeamer@inframe
     \titlepage
   \else
-    \frame[plain]{\titlepage}
+    \frame[plain,noframenumbering]{\titlepage}
   \fi
 }
 \def\titlepage{%
@@ -388,7 +388,7 @@
     \ifbeamer@inframe
       \sectionpage
     \else
-      \frame[plain,c]{\sectionpage}
+      \frame[plain,c,noframenumbering]{\sectionpage}
     \fi
   }
 }
@@ -408,7 +408,7 @@
     \ifbeamer@inframe
       \sectionpage
     \else
-      \frame[plain,c]{\sectionpage}
+      \frame[plain,c,noframenumbering]{\sectionpage}
     \fi
   }
 }
