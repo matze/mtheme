@@ -86,50 +86,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{frametitleformat}
-% Control the titleformat of the frame title
-%    \begin{macrocode}
-\pgfkeys{
-  /metropolis/outer/titleformat-frame/.cd,
-    .is choice,
-    regular/.code={%
-      \let\metropolis@frametitleformat\@empty%
-      \setbeamerfont{frametitle}{shape=\normalfont}%
-      \renewcommand{\metropolis@frametitlestrut}{%
-        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
-      }
-    },
-    smallcaps/.code={%
-      \let\metropolis@frametitleformat\@empty%
-      \setbeamerfont{frametitle}{shape=\scshape}%
-      \renewcommand{\metropolis@frametitlestrut}{%
-        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
-      }
-    },
-    allsmallcaps/.code={%
-      \let\metropolis@frametitleformat\MakeLowercase%
-      \setbeamerfont{frametitle}{shape=\scshape}%
-      \renewcommand{\metropolis@frametitlestrut}{%
-        \vphantom{abcdefghijklmnopqrstuvwxyz}%
-      }
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-frame=allsmallcaps can lead to problems%
-      }
-    },
-    allcaps/.code={%
-      \let\metropolis@frametitleformat\MakeUppercase%
-      \setbeamerfont{frametitle}{shape=\normalfont}
-      \renewcommand{\metropolis@frametitlestrut}{%
-        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZ}%
-      }
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-frame=allcaps can lead to problems%
-      }
-    },
-}
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\metropolis@outer@setdefaults}
 % Set default values for outer theme options.
 %    \begin{macrocode}
@@ -137,7 +93,6 @@
   \pgfkeys{/metropolis/outer/.cd,
     numbering=counter,
     progressbar=none,
-    titleformat-frame=regular,
   }
 }
 %    \end{macrocode}%
@@ -180,45 +135,15 @@
 %
 % \subsubsection{Frametitle}
 %
-% \begin{macro}{\metropolis@frametitleformat}
-%   Define a hook to change the case format of the frame title.
-%    \begin{macrocode}
-\def\metropolis@frametitleformat#1{#1}
-%    \end{macrocode}
-% \end{macro}
-%
-% To make the |\MakeLowercase| and |\MakeUppercase| macros work in the
-% frame title we have to patch |\beamer@@frametitle|. This solution was
-% suggested by Enrico Gregorio in an answer to
-% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
-% question}.
-%
-%    \begin{macrocode}
-\patchcmd{\beamer@@frametitle}
-  {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
-      \usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{\metropolis@frametitleformat{#2}\ifnum%
-      \beamer@autobreakcount>0\relax{}\space%
-      \usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {}
-  {\PackageError{beamerouterthememetropolis}{Patching frame title failed}}
-%    \end{macrocode}
-%
 % \begin{macro}{frametitle}
 %
 % Templates for the frame title, which is optionally underlined with a
 % progress bar.
 %
 %    \begin{macrocode}
-\newlength{\metropolis@frametitlestrut}
+\newcommand{\metropolis@frametitlestrut}{
+  \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
+}
 \defbeamertemplate{frametitle}{plain}{%
   \nointerlineskip%
   \begin{beamercolorbox}[%

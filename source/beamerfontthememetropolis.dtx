@@ -34,6 +34,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{ifxetex}
 \RequirePackage{ifluatex}
+\RequirePackage{pgfopts}
 %    \end{macrocode}
 %
 % \subsubsection{Load Fira font}
@@ -159,6 +160,221 @@
                                         series=\normalfont}
 %    \end{macrocode}
 %
+%
+%
+% \subsubsection{Title format options}
+%
+% \begin{macro}{titleformat-title}
+%    Controls the format of the title.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat-title/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@titleformat\@empty%
+      \setbeamerfont{title}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@titleformat\@empty%
+      \setbeamerfont{title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@titleformat\lowercase%
+      \setbeamerfont{title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-title=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@titleformat\uppercase%
+      \setbeamerfont{title}{shape=\normalfont}
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-title=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat-subtitle}
+%    Control the format of the subtitle.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat-subtitle/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@subtitleformat\@empty%
+      \setbeamerfont{subtitle}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@subtitleformat\@empty%
+      \setbeamerfont{subtitle}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@subtitleformat\lowercase%
+      \setbeamerfont{subtitle}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-subtitle=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@subtitleformat\uppercase%
+      \setbeamerfont{subtitle}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-subtitle=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat-section}
+%    Controls the format of the section title.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat-section/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@sectiontitleformat\@empty%
+      \setbeamerfont{section title}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@sectiontitleformat\@empty%
+      \setbeamerfont{section title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@sectiontitleformat\MakeLowercase%
+      \setbeamerfont{section title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-section=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@sectiontitleformat\MakeUppercase%
+      \setbeamerfont{section title}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-section=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{frametitleformat}
+%    Control the format of the frame title.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat-frame/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@frametitleformat\@empty%
+      \setbeamerfont{frametitle}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@frametitleformat\@empty%
+      \setbeamerfont{frametitle}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@frametitleformat\MakeLowercase%
+      \setbeamerfont{frametitle}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-frame=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@frametitleformat\MakeUppercase%
+      \setbeamerfont{frametitle}{shape=\normalfont}
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat-frame=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\metropolis@font@setdefaults}
+%    Sets default values for font theme options.
+%    \begin{macrocode}
+\newcommand{\metropolis@font@setdefaults}{
+  \pgfkeys{/metropolis/font/.cd,
+    titleformat-title=regular,
+    titleformat-subtitle=regular,
+    titleformat-section=regular,
+    titleformat-frame=regular,
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% We first define hooks to change the case format of the titles.
+%
+%    \begin{macrocode}
+\def\metropolis@titleformat#1{#1}
+\def\metropolis@subtitleformat#1{#1}
+\def\metropolis@sectiontitleformat#1{#1}
+\def\metropolis@frametitleformat#1{#1}
+%    \end{macrocode}
+%
+% To make the uppercase and lowercase macros work in the title, subtitle, etc.,
+% we have to patch the appropriate |beamer| commands that set their values.
+% This solution was suggested by Enrico Gregorio in an answer to
+% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
+% question}.
+%
+%    \begin{macrocode}
+\patchcmd{\beamer@title}%
+  {\def\inserttitle{#2}}%
+  {\def\inserttitle{\metropolis@titleformat{#2}}}%
+  {}%
+  {\PackageError{beamerfontthememetropolis}{Patching title failed}}
+\patchcmd{\beamer@subtitle}%
+  {\def\insertsubtitle{#2}}%
+  {\def\insertsubtitle{\metropolis@subtitleformat{#2}}}%
+  {}%
+  {\PackageError{beamerfontthememetropolis}{Patching subtitle failed}}
+\patchcmd{\sectionentry}
+  {\def\insertsectionhead{#2}}
+  {\def\insertsectionhead{\metropolis@sectiontitleformat{#2}}}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching section title failed}}
+\patchcmd{\beamer@section}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{%
+    \metropolis@sectiontitleformat{#1}}}}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching section title failed}}
+%    \end{macrocode}
+%
+% Similarly, to make the |\MakeLowercase| and |\MakeUppercase| macros work in
+% the frame title we have to patch |\beamer@@frametitle|.
+%
+%    \begin{macrocode}
+\patchcmd{\beamer@@frametitle}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
+      \usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{\metropolis@frametitleformat{#2}\ifnum%
+      \beamer@autobreakcount>0\relax{}\space%
+      \usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching frame title failed}}
+%    \end{macrocode}
+%
+%
+%
+% \subsubsection{Process package options}
+%
+%    \begin{macrocode}
+\metropolis@font@setdefaults
+\ProcessPgfPackageOptions{/metropolis/font}
+%    \end{macrocode}
 % \iffalse
 %</package>
 % \fi

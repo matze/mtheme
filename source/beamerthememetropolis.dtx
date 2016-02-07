@@ -56,6 +56,7 @@
     /metropolis/inner,
     /metropolis/outer,
     /metropolis/color,
+    /metropolis/font,
   },
 %    \end{macrocode}
 %
@@ -106,10 +107,10 @@
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/titleformat/.code=\pgfkeysalso{
-      inner/titleformat-title=#1,
-      inner/titleformat-subtitle=#1,
-      inner/titleformat-section=#1,
-      outer/titleformat-frame=#1,
+      font/titleformat-title=#1,
+      font/titleformat-subtitle=#1,
+      font/titleformat-section=#1,
+      font/titleformat-frame=#1,
       titleformat-plain=#1,
     }
 }
