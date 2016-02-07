@@ -65,11 +65,11 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\iffontexists}
-% Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
-% the comma separated list in the first argument.
+% \begin{macro}{\iffontsavailable}
+%    Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
+%    the comma separated list in the first argument.
 %    \begin{macrocode}
-  \newcommand{\iffontsexist}[3]{%
+  \newcommand{\iffontsavailable}[3]{%
     \setcounter{fontsnotfound}{0}%
     \expandafter\forcsvlist\expandafter%
     \checkfont\expandafter{#1}%
@@ -88,13 +88,13 @@
 % also fails a warning will be displayed and the standard fonts will be used.
 %
 %    \begin{macrocode}
-  \iffontsexist{Fira Sans Light,%
+  \iffontsavailable{Fira Sans Light,%
                 Fira Sans Light Italic,%
                 Fira Sans,%
                 Fira Sans Italic}{%
     \setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}%
   }{%
-    \iffontsexist{Fira Sans Light OT,%
+    \iffontsavailable{Fira Sans Light OT,%
                   Fira Sans Light Italic OT,%
                   Fira Sans OT,%
                   Fira Sans Italic OT}{%
@@ -105,10 +105,10 @@
       }
     }
   }
-  \iffontsexist{Fira Mono, Fira Mono Bold}{%
+  \iffontsavailable{Fira Mono, Fira Mono Bold}{%
     \setmonofont{Fira Mono}%
   }{%
-    \iffontsexist{Fira Mono OT, Fira Mono Bold OT}{%
+    \iffontsavailable{Fira Mono OT, Fira Mono Bold OT}{%
       \setmonofont{Fira Mono OT}%
     }{%
       \PackageWarning{beamerthememetropolis}{%

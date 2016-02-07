@@ -37,7 +37,7 @@
     \suppressfontnotfounderror=0%
   }
 
-  \newcommand{\iffontsexist}[3]{%
+  \newcommand{\iffontsavailable}[3]{%
     \setcounter{fontsnotfound}{0}%
     \expandafter\forcsvlist\expandafter%
     \checkfont\expandafter{#1}%
@@ -47,13 +47,13 @@
       #3%
     \fi%
   }
-  \iffontsexist{Fira Sans Light,%
+  \iffontsavailable{Fira Sans Light,%
                 Fira Sans Light Italic,%
                 Fira Sans,%
                 Fira Sans Italic}{%
     \setmainfont[BoldFont={Fira Sans}]{Fira Sans Light}%
   }{%
-    \iffontsexist{Fira Sans Light OT,%
+    \iffontsavailable{Fira Sans Light OT,%
                   Fira Sans Light Italic OT,%
                   Fira Sans OT,%
                   Fira Sans Italic OT}{%
@@ -65,10 +65,10 @@
       }
     }
   }
-  \iffontsexist{Fira Mono, Fira Mono Bold}{%
+  \iffontsavailable{Fira Mono, Fira Mono Bold}{%
     \setmonofont{Fira Mono}%
   }{%
-    \iffontsexist{Fira Mono OT, Fira Mono Bold OT}{%
+    \iffontsavailable{Fira Mono OT, Fira Mono Bold OT}{%
       \setmonofont{Fira Mono OT}%
     }{%
       \typeout{%
