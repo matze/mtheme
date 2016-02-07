@@ -29,7 +29,12 @@
 %
 % \subsection{\themename font theme}
 %
-% Load required packages.
+% A |beamer| font theme sets the style of the font used in the document.
+%
+%
+%
+% \subsubsection{Package dependencies}
+%
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{ifxetex}
@@ -37,19 +42,20 @@
 \RequirePackage{pgfopts}
 %    \end{macrocode}
 %
-% \subsubsection{Load Fira font}
-% If the presentation is compiled with XeLaTeX or LuaLaTeX the fontspec package
-% will be loaded.
+%
+%
+% \subsubsection{Load Fira fonts}
+%
+% If the presentation is compiled with Xe\LaTeX{} or Lua\LaTeX{}, the fontspec
+% package is loaded and we search for the |Fira| fonts.
+%
 %    \begin{macrocode}
 \ifboolexpr{bool {xetex} or bool {luatex}}{
   \RequirePackage[no-math]{fontspec}
 %    \end{macrocode}
 %
-% To simplify the check whether the |Fira| fonts are installed, a set macros is
-% defined.
-%
 % \begin{macro}{\checkfont}
-% Checks if a font is installed and increases |fontsnotfound| counter if not.
+%    Checks if a font is installed; if not, |fontsnotfound| is increased.
 %    \begin{macrocode}
   \newcounter{fontsnotfound}
   \newcommand{\checkfont}[1]{%
@@ -82,10 +88,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% Using the previously defined macros it is tried to load the |Fira| fonts.
-% First the default |Fira| name will be tried. Second the |Fira| fonts with
-% the suffix OT -- used by some Linux distributions -- will be tried. If this
-% also fails a warning will be displayed and the standard fonts will be used.
+% We search for regular, italic, light, light italic, mono, and mono bold
+% fonts under the default |Fira Sans| and |Fira Mono| names. If this fails,
+% the suffix OT --- used by some Linux distributions --- will be tried. If this
+% also fails, a warning will be displayed and the standard fonts will be used.
 %
 %    \begin{macrocode}
   \iffontsavailable{Fira Sans Light,%
@@ -125,6 +131,10 @@
   }
 }
 %    \end{macrocode}
+%
+% This concludes the portion of the code which is only run when compiled with
+% Xe\LaTeX{} or Lua\LaTeX{}. The remainder of this package applies regardless
+% of the compiling engine.
 %
 %
 %

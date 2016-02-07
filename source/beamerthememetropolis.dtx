@@ -33,22 +33,20 @@
 % \themename theme and route the theme options accordingly. It also
 % provides some custom commands and environments for the user.
 %
-% Load the required packages.
+%
+%
+% \subsubsection{Package dependencies}
+%
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{pgfopts}
 %    \end{macrocode}
 %
+%
+%
 % \subsubsection{Options}
 %
-% \begin{macro}{\metroset}
-% First of all we define a macro for the user to set options.
-%    \begin{macrocode}
-\newcommand{\metroset}[1]{\pgfkeys{/metropolis/.cd,#1}}
-%    \end{macrocode}
-% \end{macro}
-%
-% Then we need to pass the unknown options to the sub-packages.
+% Most options are passed off to the component sub-packages.
 %
 %    \begin{macrocode}
 \pgfkeys{/metropolis/.cd,
@@ -60,7 +58,8 @@
   },
 %    \end{macrocode}
 %
-% We have to forwarded keys that affect multiple sub-packages manually.
+% Currently, the |block| option affects two subthemes and has to be handled
+% separately.
 %
 %    \begin{macrocode}
   block/.code=\pgfkeysalso{
@@ -70,8 +69,8 @@
 }
 %    \end{macrocode}
 %
-% Control the titleformat of the plain title
 % \begin{macro}{titleformat-plain}
+%    Controls the formatting of the text on standout ``plain'' frames.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/titleformat-plain/.cd,
@@ -103,7 +102,8 @@
 % \end{macro}
 %
 % \begin{macro}{titleformat}
-% Control the titleformat of every title type together
+%    Sets a standard format for titles, subtitles, section titles, frame
+%    titles, and the text on standout ``plain'' frames.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/titleformat/.code=\pgfkeysalso{
@@ -147,6 +147,7 @@
 %
 % Having processed the options, we can now load the component sub-packages of
 % the theme.
+%
 %    \begin{macrocode}
 \useinnertheme{metropolis}
 \useoutertheme{metropolis}
@@ -168,13 +169,20 @@
 %
 % \subsubsection{Custom commands}
 %
-% We define custom commands in this package as their proper usage may depend
+% The parent theme defines custom commands as their proper usage may depend
 % on multiple sub-packages.
 %
+% \begin{macro}{\metroset}
+%    Allows the user to change options midway through a presentation.
+%    \begin{macrocode}
+\newcommand{\metroset}[1]{\pgfkeys{/metropolis/.cd,#1}}
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\plain}
 %   Creates a plain frame with dark background, suitable for displaying images
-%   or a few words.
+%   or a few words. The format of the text can be set with the
+%   |titleformat plain| option.
 %    \begin{macrocode}
 \def\metropolis@plaintitleformat#1{#1}
 \newcommand{\plain}[2][]{%
@@ -201,7 +209,9 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% Process package options
+%
+%
+% \subsubsection{Process package options}
 %
 %    \begin{macrocode}
 \metropolis@setdefaults

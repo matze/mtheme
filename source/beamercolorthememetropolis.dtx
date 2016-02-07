@@ -29,7 +29,9 @@
 %
 % \subsection{\themename color theme}
 %
-% Load required packages.
+%
+%
+% \subsubsection{Package dependencies}
 %    \begin{macrocode}
 \RequirePackage{pgfopts}
 %    \end{macrocode}
@@ -39,7 +41,7 @@
 % \subsubsection{Options}
 %
 % \begin{macro}{block}
-% This option controls whether the blocks are filled or transparent.
+%    Controls whether block environments are filled or transparent.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/color/block/.cd,
@@ -51,8 +53,8 @@
 % \end{macro}
 %
 % \begin{macro}{colors}
-% Defines whether the background shall be dark and the foreground be light or
-% vice versa
+%    Provides the option to have a dark background and light foreground instead
+%    of the reverse.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/color/background/.cd,
@@ -64,7 +66,7 @@
 % \end{macro}
 %
 % \begin{macro}{\metropolis@color@setdefaults}
-% Set default values for color theme options.
+%    Sets default values for color theme options.
 %    \begin{macrocode}
 \newcommand{\metropolis@color@setdefaults}{
   \pgfkeys{/metropolis/color/.cd,
