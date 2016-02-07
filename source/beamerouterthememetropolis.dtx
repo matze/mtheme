@@ -90,7 +90,7 @@
 % Control the titleformat of the frame title
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/outer/titleformat frame/.cd,
+  /metropolis/outer/titleformat-frame/.cd,
     .is choice,
     regular/.code={%
       \let\metropolis@frametitleformat\@empty%
@@ -113,7 +113,7 @@
         \vphantom{abcdefghijklmnopqrstuvwxyz}%
       }
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat frame=allsmallcaps can lead to problems%
+        Be aware that titleformat-frame=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
@@ -123,7 +123,7 @@
         \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZ}%
       }
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat frame=allcaps can lead to problems%
+        Be aware that titleformat-frame=allcaps can lead to problems%
       }
     },
 }
@@ -137,7 +137,7 @@
   \pgfkeys{/metropolis/outer/.cd,
     numbering=counter,
     progressbar=none,
-    titleformat frame=regular,
+    titleformat-frame=regular,
   }
 }
 %    \end{macrocode}%

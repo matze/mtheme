@@ -69,11 +69,11 @@
 }
 %    \end{macrocode}
 %
-% \begin{macro}{titleformat plain}
 % Control the titleformat of the plain title
+% \begin{macro}{titleformat-plain}
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/titleformat plain/.cd,
+  /metropolis/titleformat-plain/.cd,
     .is choice,
     regular/.code={%
       \let\metropolis@plaintitleformat\@empty%
@@ -87,14 +87,14 @@
       \let\metropolis@plaintitleformat\MakeLowercase%
       \setbeamerfont{plain title}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat plain=allsmallcaps can lead to problems%
+        Be aware that titleformat-plain=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
       \let\metropolis@plaintitleformat\MakeUppercase%
       \setbeamerfont{plain title}{shape=\normalfont}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat plain=allcaps can lead to problems%
+        Be aware that titleformat-plain=allcaps can lead to problems%
       }
     },
 }
@@ -106,11 +106,11 @@
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/titleformat/.code=\pgfkeysalso{
-      inner/titleformat title=#1,
-      inner/titleformat subtitle=#1,
-      inner/titleformat section=#1,
-      outer/titleformat frame=#1,
-      titleformat plain=#1,
+      inner/titleformat-title=#1,
+      inner/titleformat-subtitle=#1,
+      inner/titleformat-section=#1,
+      outer/titleformat-frame=#1,
+      titleformat-plain=#1,
     }
 }
 %    \end{macrocode}
@@ -135,7 +135,7 @@
 %    \begin{macrocode}
 \newcommand{\metropolis@setdefaults}{
   \pgfkeys{/metropolis/.cd,
-    titleformat plain=regular,
+    titleformat-plain=regular,
   }
 }
 %    \end{macrocode}
