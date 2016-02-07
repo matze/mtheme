@@ -44,8 +44,8 @@
 \pgfkeys{
   /metropolis/color/block/.cd,
     .is choice,
-    transparent/.code=\@metropolis@block@transparent,
-    fill/.code=\@metropolis@block@fill,
+    transparent/.code=\metropolis@block@transparent,
+    fill/.code=\metropolis@block@fill,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -57,16 +57,16 @@
 \pgfkeys{
   /metropolis/color/background/.cd,
     .is choice,
-    dark/.code=\@metropolis@colors@dark,
-    light/.code=\@metropolis@colors@light,
+    dark/.code=\metropolis@colors@dark,
+    light/.code=\metropolis@colors@light,
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@metropolis@color@setdefaults}
+% \begin{macro}{\metropolis@color@setdefaults}
 % Set default values for color theme options.
 %    \begin{macrocode}
-\newcommand{\@metropolis@color@setdefaults}{
+\newcommand{\metropolis@color@setdefaults}{
   \pgfkeys{/metropolis/color/.cd,
     background=light,
     block=transparent,
@@ -94,13 +94,13 @@
 % |alerted text|, and |example text|.
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@colors@dark}{
+\newcommand{\metropolis@colors@dark}{
   \setbeamercolor{normal text}{%
     fg=black!2,
     bg=mDarkTeal
   }
 }
-\newcommand{\@metropolis@colors@light}{
+\newcommand{\metropolis@colors@light}{
   \setbeamercolor{normal text}{%
     fg=mDarkTeal,
     bg=black!2
@@ -177,10 +177,10 @@
 % Blocks
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@block@transparent}{
+\newcommand{\metropolis@block@transparent}{
   \setbeamercolor{block title}{use=normal text, parent=normal text}
 }
-\newcommand{\@metropolis@block@fill}{
+\newcommand{\metropolis@block@fill}{
   \setbeamercolor{block title}{%
     use=normal text,
     fg=normal text.fg,
@@ -215,7 +215,7 @@
 % Process package options
 %
 %    \begin{macrocode}
-\@metropolis@color@setdefaults
+\metropolis@color@setdefaults
 \ProcessPgfPackageOptions{/metropolis/color}
 %    \end{macrocode}
 %

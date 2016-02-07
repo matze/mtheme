@@ -76,22 +76,22 @@
   /metropolis/titleformat plain/.cd,
     .is choice,
     regular/.code={%
-      \let\@metropolis@plaintitleformat\@empty%
+      \let\metropolis@plaintitleformat\@empty%
       \setbeamerfont{plain title}{shape=\normalfont}%
     },
     smallcaps/.code={%
-      \let\@metropolis@plaintitleformat\@empty%
+      \let\metropolis@plaintitleformat\@empty%
       \setbeamerfont{plain title}{shape=\scshape}%
     },
     allsmallcaps/.code={%
-      \let\@metropolis@plaintitleformat\MakeLowercase%
+      \let\metropolis@plaintitleformat\MakeLowercase%
       \setbeamerfont{plain title}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
         Be aware that titleformat plain=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
-      \let\@metropolis@plaintitleformat\MakeUppercase%
+      \let\metropolis@plaintitleformat\MakeUppercase%
       \setbeamerfont{plain title}{shape=\normalfont}%
       \PackageWarning{beamerthememetropolis}{%
         Be aware that titleformat plain=allcaps can lead to problems%
@@ -133,7 +133,7 @@
 % Set default values for options.
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@setdefaults}{
+\newcommand{\metropolis@setdefaults}{
   \pgfkeys{/metropolis/.cd,
     titleformat plain=regular,
   }
@@ -170,17 +170,12 @@
 % We define custom commands in this package as their proper usage may depend
 % on multiple sub-packages.
 %
-% \begin{macro}{\@metropolis@plaintitleformat}
-%   Define a hook to change the case format of the plain title.
-%    \begin{macrocode}
-\def\@metropolis@plaintitleformat#1{#1}
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{\plain}
 %   Creates a plain frame with dark background, suitable for displaying images
 %   or a few words.
 %    \begin{macrocode}
+\def\metropolis@plaintitleformat#1{#1}
 \newcommand{\plain}[2][]{%
   \begingroup
     \setbeamercolor{background canvas}{
@@ -191,7 +186,7 @@
       \begin{center}
         \usebeamercolor[fg]{palette primary}
         \usebeamerfont{plain title}
-        \@metropolis@plaintitleformat{#2}
+        \metropolis@plaintitleformat{#2}
       \end{center}
     \end{frame}
   \endgroup
@@ -208,7 +203,7 @@
 % Process package options
 %
 %    \begin{macrocode}
-\@metropolis@setdefaults
+\metropolis@setdefaults
 \ProcessPgfOptions{/metropolis}
 %    \end{macrocode}
 %

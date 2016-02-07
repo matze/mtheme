@@ -93,23 +93,23 @@
   /metropolis/outer/titleformat frame/.cd,
     .is choice,
     regular/.code={%
-      \let\@metropolis@frametitleformat\@empty%
+      \let\metropolis@frametitleformat\@empty%
       \setbeamerfont{frametitle}{shape=\normalfont}%
-      \renewcommand{\@metropolis@frametitlestrut}{%
+      \renewcommand{\metropolis@frametitlestrut}{%
         \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
       }
     },
     smallcaps/.code={%
-      \let\@metropolis@frametitleformat\@empty%
+      \let\metropolis@frametitleformat\@empty%
       \setbeamerfont{frametitle}{shape=\scshape}%
-      \renewcommand{\@metropolis@frametitlestrut}{%
+      \renewcommand{\metropolis@frametitlestrut}{%
         \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
       }
     },
     allsmallcaps/.code={%
-      \let\@metropolis@frametitleformat\MakeLowercase%
+      \let\metropolis@frametitleformat\MakeLowercase%
       \setbeamerfont{frametitle}{shape=\scshape}%
-      \renewcommand{\@metropolis@frametitlestrut}{%
+      \renewcommand{\metropolis@frametitlestrut}{%
         \vphantom{abcdefghijklmnopqrstuvwxyz}%
       }
       \PackageWarning{beamerthememetropolis}{%
@@ -117,9 +117,9 @@
       }
     },
     allcaps/.code={%
-      \let\@metropolis@frametitleformat\MakeUppercase%
+      \let\metropolis@frametitleformat\MakeUppercase%
       \setbeamerfont{frametitle}{shape=\normalfont}
-      \renewcommand{\@metropolis@frametitlestrut}{%
+      \renewcommand{\metropolis@frametitlestrut}{%
         \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZ}%
       }
       \PackageWarning{beamerthememetropolis}{%
@@ -130,10 +130,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@metropolis@outer@setdefaults}
+% \begin{macro}{\metropolis@outer@setdefaults}
 % Set default values for outer theme options.
 %    \begin{macrocode}
-\newcommand{\@metropolis@outer@setdefaults}{
+\newcommand{\metropolis@outer@setdefaults}{
   \pgfkeys{/metropolis/outer/.cd,
     numbering=counter,
     progressbar=none,
@@ -180,10 +180,10 @@
 %
 % \subsubsection{Frametitle}
 %
-% \begin{macro}{\@metropolis@frametitleformat}
+% \begin{macro}{\metropolis@frametitleformat}
 %   Define a hook to change the case format of the frame title.
 %    \begin{macrocode}
-\def\@metropolis@frametitleformat#1{#1}
+\def\metropolis@frametitleformat#1{#1}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -202,7 +202,7 @@
     \gdef\beamer@shortframetitle{#1}%
     }}
   {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum%
+      \gdef\insertframetitle{{\metropolis@frametitleformat{#2}\ifnum%
       \beamer@autobreakcount>0\relax{}\space%
       \usebeamertemplate*{frametitle continuation}\fi}}%
     \gdef\beamer@frametitle{#2}%
@@ -218,14 +218,14 @@
 % progress bar.
 %
 %    \begin{macrocode}
-\newlength{\@metropolis@frametitlestrut}
+\newlength{\metropolis@frametitlestrut}
 \defbeamertemplate{frametitle}{plain}{%
   \nointerlineskip%
   \begin{beamercolorbox}[%
       wd=\paperwidth,%
       sep=1.5ex,%
     ]{frametitle}%
-  \@metropolis@frametitlestrut\insertframetitle\@metropolis@frametitlestrut%
+  \metropolis@frametitlestrut\insertframetitle\metropolis@frametitlestrut%
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
@@ -257,7 +257,7 @@
 % Process package options
 %
 %    \begin{macrocode}
-\@metropolis@outer@setdefaults
+\metropolis@outer@setdefaults
 \ProcessPgfPackageOptions{/metropolis/outer}
 %    \end{macrocode}
 %
