@@ -174,11 +174,11 @@
 %
 % \subsubsection{Title format options}
 %
-% \begin{macro}{titleformat-title}
+% \begin{macro}{titleformat title}
 %    Controls the format of the title.
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/font/titleformat-title/.cd,
+  /metropolis/font/titleformat title/.cd,
     .is choice,
     regular/.code={%
       \let\metropolis@titleformat\@empty%
@@ -192,25 +192,25 @@
       \let\metropolis@titleformat\lowercase%
       \setbeamerfont{title}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-title=allsmallcaps can lead to problems%
+        Be aware that titleformat title=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
       \let\metropolis@titleformat\uppercase%
       \setbeamerfont{title}{shape=\normalfont}
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-title=allcaps can lead to problems%
+        Be aware that titleformat title=allcaps can lead to problems%
       }
     },
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{titleformat-subtitle}
+% \begin{macro}{titleformat subtitle}
 %    Control the format of the subtitle.
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/font/titleformat-subtitle/.cd,
+  /metropolis/font/titleformat subtitle/.cd,
     .is choice,
     regular/.code={%
       \let\metropolis@subtitleformat\@empty%
@@ -224,25 +224,25 @@
       \let\metropolis@subtitleformat\lowercase%
       \setbeamerfont{subtitle}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-subtitle=allsmallcaps can lead to problems%
+        Be aware that titleformat subtitle=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
       \let\metropolis@subtitleformat\uppercase%
       \setbeamerfont{subtitle}{shape=\normalfont}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-subtitle=allcaps can lead to problems%
+        Be aware that titleformat subtitle=allcaps can lead to problems%
       }
     },
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{titleformat-section}
+% \begin{macro}{titleformat section}
 %    Controls the format of the section title.
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/font/titleformat-section/.cd,
+  /metropolis/font/titleformat section/.cd,
     .is choice,
     regular/.code={%
       \let\metropolis@sectiontitleformat\@empty%
@@ -256,14 +256,14 @@
       \let\metropolis@sectiontitleformat\MakeLowercase%
       \setbeamerfont{section title}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-section=allsmallcaps can lead to problems%
+        Be aware that titleformat section=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
       \let\metropolis@sectiontitleformat\MakeUppercase%
       \setbeamerfont{section title}{shape=\normalfont}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-section=allcaps can lead to problems%
+        Be aware that titleformat section=allcaps can lead to problems%
       }
     },
 }
@@ -274,7 +274,7 @@
 %    Control the format of the frame title.
 %    \begin{macrocode}
 \pgfkeys{
-  /metropolis/font/titleformat-frame/.cd,
+  /metropolis/font/titleformat frame/.cd,
     .is choice,
     regular/.code={%
       \let\metropolis@frametitleformat\@empty%
@@ -288,16 +288,30 @@
       \let\metropolis@frametitleformat\MakeLowercase%
       \setbeamerfont{frametitle}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-frame=allsmallcaps can lead to problems%
+        Be aware that titleformat frame=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
       \let\metropolis@frametitleformat\MakeUppercase%
       \setbeamerfont{frametitle}{shape=\normalfont}
       \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat-frame=allcaps can lead to problems%
+        Be aware that titleformat frame=allcaps can lead to problems%
       }
     },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat aliases}
+%    Allows |titleformat title| et al. to be used in the |\usetheme|
+%    declaration, where \LaTeX{} automatically removes all spaces.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/.cd,
+  titleformattitle/.code=\pgfkeysalso{titleformat title=#1},
+  titleformatsubtitle/.code=\pgfkeysalso{titleformat subtitle=#1},
+  titleformatsection/.code=\pgfkeysalso{titleformat section=#1},
+  titleformatframe/.code=\pgfkeysalso{titleformat frame=#1},
 }
 %    \end{macrocode}
 % \end{macro}
@@ -307,10 +321,10 @@
 %    \begin{macrocode}
 \newcommand{\metropolis@font@setdefaults}{
   \pgfkeys{/metropolis/font/.cd,
-    titleformat-title=regular,
-    titleformat-subtitle=regular,
-    titleformat-section=regular,
-    titleformat-frame=regular,
+    titleformat title=regular,
+    titleformat subtitle=regular,
+    titleformat section=regular,
+    titleformat frame=regular,
   }
 }
 %    \end{macrocode}
