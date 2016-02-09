@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamerfontthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerfontthememetropolis}[2015/12/04 Metropolis font theme]
+\ProvidesPackage{beamerfontthememetropolis}[2016/02/06 Metropolis font theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamerfontthememetropolis}
@@ -26,29 +26,36 @@
 % \iffalse
 %<*package>
 % ------------------------------------------------------------------------- \fi
-% \subsection{\textsc{metropolis} font theme}
+%
+% \subsection{\themename font theme}
+%
+% A |beamer| font theme sets the style of the font used in the document.
 %
 %
-% Load required packages.
+%
+% \subsubsection{Package dependencies}
+%
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{ifxetex}
 \RequirePackage{ifluatex}
+\RequirePackage{pgfopts}
 %    \end{macrocode}
 %
-% \subsubsection{Load Fira font}
-% If the presentation is compiled with XeLaTeX or LuaLaTeX the fontspec package
-% will be loaded.
+%
+%
+% \subsubsection{Load Fira fonts}
+%
+% If the presentation is compiled with Xe\LaTeX{} or Lua\LaTeX{}, the fontspec
+% package is loaded and we search for the |Fira| fonts.
+%
 %    \begin{macrocode}
 \ifboolexpr{bool {xetex} or bool {luatex}}{
   \RequirePackage[no-math]{fontspec}
 %    \end{macrocode}
 %
-% To simplify the check whether the |Fira| fonts are installed, a set macros is
-% defined.
-%
 % \begin{macro}{\checkfont}
-% Checks if a font is installed and increases |fontsnotfound| counter if not.
+%    Checks if a font is installed; if not, |fontsnotfound| is increased.
 %    \begin{macrocode}
   \newcounter{fontsnotfound}
   \newcommand{\checkfont}[1]{%
@@ -64,11 +71,11 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\iffontexists}
-% Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
-% the comma separated list in the first argument.
+% \begin{macro}{\iffontsavailable}
+%    Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
+%    the comma separated list in the first argument.
 %    \begin{macrocode}
-  \newcommand{\iffontsexist}[3]{%
+  \newcommand{\iffontsavailable}[3]{%
     \setcounter{fontsnotfound}{0}%
     \expandafter\forcsvlist\expandafter%
     \checkfont\expandafter{#1}%
@@ -81,19 +88,19 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% Using the previously defined macros it is tried to load the |Fira| fonts.
-% First the default |Fira| name will be tried. Second the |Fira| fonts with
-% the suffix OT -- used by some Linux distributions -- will be tried. If this
-% also fails a warning will be displayed and the standard fonts will be used.
+% We search for regular, italic, light, light italic, mono, and mono bold
+% fonts under the default |Fira Sans| and |Fira Mono| names. If this fails,
+% the suffix OT --- used by some Linux distributions --- will be tried. If this
+% also fails, a warning will be displayed and the standard fonts will be used.
 %
 %    \begin{macrocode}
-  \iffontsexist{Fira Sans Light,%
+  \iffontsavailable{Fira Sans Light,%
                 Fira Sans Light Italic,%
                 Fira Sans,%
                 Fira Sans Italic}{%
     \setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}%
   }{%
-    \iffontsexist{Fira Sans Light OT,%
+    \iffontsavailable{Fira Sans Light OT,%
                   Fira Sans Light Italic OT,%
                   Fira Sans OT,%
                   Fira Sans Italic OT}{%
@@ -104,10 +111,10 @@
       }
     }
   }
-  \iffontsexist{Fira Mono, Fira Mono Bold}{%
+  \iffontsavailable{Fira Mono, Fira Mono Bold}{%
     \setmonofont{Fira Mono}%
   }{%
-    \iffontsexist{Fira Mono OT, Fira Mono Bold OT}{%
+    \iffontsavailable{Fira Mono OT, Fira Mono Bold OT}{%
       \setmonofont{Fira Mono OT}%
     }{%
       \PackageWarning{beamerthememetropolis}{%
@@ -124,6 +131,10 @@
   }
 }
 %    \end{macrocode}
+%
+% This concludes the portion of the code which is only run when compiled with
+% Xe\LaTeX{} or Lua\LaTeX{}. The remainder of this package applies regardless
+% of the compiling engine.
 %
 %
 %
@@ -159,6 +170,235 @@
                                         series=\normalfont}
 %    \end{macrocode}
 %
+%
+%
+% \subsubsection{Title format options}
+%
+% \begin{macro}{titleformat title}
+%    Controls the format of the title.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat title/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@titleformat\@empty%
+      \setbeamerfont{title}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@titleformat\@empty%
+      \setbeamerfont{title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@titleformat\lowercase%
+      \setbeamerfont{title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat title=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@titleformat\uppercase%
+      \setbeamerfont{title}{shape=\normalfont}
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat title=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat subtitle}
+%    Control the format of the subtitle.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat subtitle/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@subtitleformat\@empty%
+      \setbeamerfont{subtitle}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@subtitleformat\@empty%
+      \setbeamerfont{subtitle}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@subtitleformat\lowercase%
+      \setbeamerfont{subtitle}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat subtitle=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@subtitleformat\uppercase%
+      \setbeamerfont{subtitle}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat subtitle=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat section}
+%    Controls the format of the section title.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat section/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@sectiontitleformat\@empty%
+      \setbeamerfont{section title}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@sectiontitleformat\@empty%
+      \setbeamerfont{section title}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@sectiontitleformat\MakeLowercase%
+      \setbeamerfont{section title}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat section=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@sectiontitleformat\MakeUppercase%
+      \setbeamerfont{section title}{shape=\normalfont}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat section=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{frametitleformat}
+%    Control the format of the frame title.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/titleformat frame/.cd,
+    .is choice,
+    regular/.code={%
+      \let\metropolis@frametitleformat\@empty%
+      \setbeamerfont{frametitle}{shape=\normalfont}%
+    },
+    smallcaps/.code={%
+      \let\metropolis@frametitleformat\@empty%
+      \setbeamerfont{frametitle}{shape=\scshape}%
+    },
+    allsmallcaps/.code={%
+      \let\metropolis@frametitleformat\MakeLowercase%
+      \setbeamerfont{frametitle}{shape=\scshape}%
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat frame=allsmallcaps can lead to problems%
+      }
+    },
+    allcaps/.code={%
+      \let\metropolis@frametitleformat\MakeUppercase%
+      \setbeamerfont{frametitle}{shape=\normalfont}
+      \PackageWarning{beamerthememetropolis}{%
+        Be aware that titleformat frame=allcaps can lead to problems%
+      }
+    },
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{titleformat aliases}
+%    Allows |titleformat title| et al. to be used in the |\usetheme|
+%    declaration, where \LaTeX{} automatically removes all spaces.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/font/.cd,
+  titleformattitle/.code=\pgfkeysalso{titleformat title=#1},
+  titleformatsubtitle/.code=\pgfkeysalso{titleformat subtitle=#1},
+  titleformatsection/.code=\pgfkeysalso{titleformat section=#1},
+  titleformatframe/.code=\pgfkeysalso{titleformat frame=#1},
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\metropolis@font@setdefaults}
+%    Sets default values for font theme options.
+%    \begin{macrocode}
+\newcommand{\metropolis@font@setdefaults}{
+  \pgfkeys{/metropolis/font/.cd,
+    titleformat title=regular,
+    titleformat subtitle=regular,
+    titleformat section=regular,
+    titleformat frame=regular,
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% We first define hooks to change the case format of the titles.
+%
+%    \begin{macrocode}
+\def\metropolis@titleformat#1{#1}
+\def\metropolis@subtitleformat#1{#1}
+\def\metropolis@sectiontitleformat#1{#1}
+\def\metropolis@frametitleformat#1{#1}
+%    \end{macrocode}
+%
+% To make the uppercase and lowercase macros work in the title, subtitle, etc.,
+% we have to patch the appropriate |beamer| commands that set their values.
+% This solution was suggested by Enrico Gregorio in an answer to
+% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
+% question}.
+%
+%    \begin{macrocode}
+\patchcmd{\beamer@title}%
+  {\def\inserttitle{#2}}%
+  {\def\inserttitle{\metropolis@titleformat{#2}}}%
+  {}%
+  {\PackageError{beamerfontthememetropolis}{Patching title failed}}
+\patchcmd{\beamer@subtitle}%
+  {\def\insertsubtitle{#2}}%
+  {\def\insertsubtitle{\metropolis@subtitleformat{#2}}}%
+  {}%
+  {\PackageError{beamerfontthememetropolis}{Patching subtitle failed}}
+\patchcmd{\sectionentry}
+  {\def\insertsectionhead{#2}}
+  {\def\insertsectionhead{\metropolis@sectiontitleformat{#2}}}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching section title failed}}
+\patchcmd{\beamer@section}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
+  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{%
+    \metropolis@sectiontitleformat{#1}}}}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching section title failed}}
+%    \end{macrocode}
+%
+% Similarly, to make the |\MakeLowercase| and |\MakeUppercase| macros work in
+% the frame title we have to patch |\beamer@@frametitle|.
+%
+%    \begin{macrocode}
+\patchcmd{\beamer@@frametitle}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
+      \usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {\beamer@ifempty{#2}{}{%
+      \gdef\insertframetitle{{\metropolis@frametitleformat{#2}\ifnum%
+      \beamer@autobreakcount>0\relax{}\space%
+      \usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+    }}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching frame title failed}}
+%    \end{macrocode}
+%
+%
+%
+% \subsubsection{Process package options}
+%
+%    \begin{macrocode}
+\metropolis@font@setdefaults
+\ProcessPgfPackageOptions{/metropolis/font}
+%    \end{macrocode}
 % \iffalse
 %</package>
 % \fi

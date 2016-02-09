@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamerinnerthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerinnerthememetropolis}[2015/12/04 Metropolis inner theme]
+\ProvidesPackage{beamerinnerthememetropolis}[2016/02/06 Metropolis inner theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamerinnerthememetropolis}
@@ -27,7 +27,7 @@
 %<*package>
 % ------------------------------------------------------------------------- \fi
 %
-% \subsection{\textsc{metropolis} inner theme}
+% \subsection{\themename inner theme}
 %
 % A |beamer| inner theme dictates the style of the frame elements traditionally
 % set in the ``body'' of each slide. These include:
@@ -40,7 +40,10 @@
 %   \item footnotes and plain text.
 % \end{itemize}
 %
-% Load required packages.
+%
+%
+% \subsubsection{Package dependencies}
+%
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{calc}
@@ -58,104 +61,8 @@
 \pgfkeys{
   /metropolis/inner/block/.cd,
     .is choice,
-    transparent/.code=\setlength{\@metropolis@blockskip}{0ex},
-    fill/.code=\setlength{\@metropolis@blockskip}{1ex},
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{titleformat title}
-% Control the titleformat of the title
-%    \begin{macrocode}
-\pgfkeys{
-  /metropolis/inner/titleformat title/.cd,
-    .is choice,
-    regular/.code={%
-      \let\@metropolis@titleformat\@empty%
-      \setbeamerfont{title}{shape=\normalfont}%
-    },
-    smallcaps/.code={%
-      \let\@metropolis@titleformat\@empty%
-      \setbeamerfont{title}{shape=\scshape}%
-    },
-    allsmallcaps/.code={%
-      \let\@metropolis@titleformat\MakeLowercase%
-      \setbeamerfont{title}{shape=\scshape}%
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat title=allsmallcaps can lead to problems%
-      }
-    },
-    allcaps/.code={%
-      \let\@metropolis@titleformat\MakeUppercase%
-      \setbeamerfont{title}{shape=\normalfont}
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat title=allcaps can lead to problems%
-      }
-    },
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{titleformat subtitle}
-% Control the titleformat of the subtitle
-%    \begin{macrocode}
-\pgfkeys{
-  /metropolis/inner/titleformat subtitle/.cd,
-    .is choice,
-    regular/.code={%
-      \let\@metropolis@subtitleformat\@empty%
-      \setbeamerfont{subtitle}{shape=\normalfont}%
-    },
-    smallcaps/.code={%
-      \let\@metropolis@subtitleformat\@empty%
-      \setbeamerfont{subtitle}{shape=\scshape}%
-    },
-    allsmallcaps/.code={%
-      \let\@metropolis@subtitleformat\MakeLowercase%
-      \setbeamerfont{subtitle}{shape=\scshape}%
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat subtitle=allsmallcaps can lead to problems%
-      }
-    },
-    allcaps/.code={%
-      \let\@metropolis@subtitleformat\MakeUppercase%
-      \setbeamerfont{subtitle}{shape=\normalfont}%
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat subtitle=allcaps can lead to problems%
-      }
-    },
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{titleformat section}
-% Control the titleformat of the section title
-%    \begin{macrocode}
-\pgfkeys{
-  /metropolis/inner/titleformat section/.cd,
-    .is choice,
-    regular/.code={%
-      \let\@metropolis@sectiontitleformat\@empty%
-      \setbeamerfont{section title}{shape=\normalfont}%
-    },
-    smallcaps/.code={%
-      \let\@metropolis@sectiontitleformat\@empty%
-      \setbeamerfont{section title}{shape=\scshape}%
-    },
-    allsmallcaps/.code={%
-      \let\@metropolis@sectiontitleformat\MakeLowercase%
-      \setbeamerfont{section title}{shape=\scshape}%
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat section=allsmallcaps can lead to problems%
-      }
-    },
-    allcaps/.code={%
-      \let\@metropolis@sectiontitleformat\MakeUppercase%
-      \setbeamerfont{section title}{shape=\normalfont}%
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat section=allcaps can lead to problems%
-      }
-    },
+    transparent/.code=\setlength{\metropolis@blockskip}{0ex},
+    fill/.code=\setlength{\metropolis@blockskip}{1ex},
 }
 %    \end{macrocode}
 % \end{macro}
@@ -166,23 +73,20 @@
 \pgfkeys{
   /metropolis/inner/sectionpage/.cd,
     .is choice,
-    none/.code=\@metropolis@sectionpage@none,
-    simple/.code=\@metropolis@sectionpage@simple,
-    progressbar/.code=\@metropolis@sectionpage@progressbar,
+    none/.code=\metropolis@sectionpage@none,
+    simple/.code=\metropolis@sectionpage@simple,
+    progressbar/.code=\metropolis@sectionpage@progressbar,
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@metropolis@inner@setdefaults}
+% \begin{macro}{\metropolis@inner@setdefaults}
 % Set default values for inner theme options.
 %    \begin{macrocode}
-\newcommand{\@metropolis@inner@setdefaults}{
+\newcommand{\metropolis@inner@setdefaults}{
   \pgfkeys{/metropolis/inner/.cd,
     sectionpage=progressbar,
     block=transparent,
-    titleformat title=regular,
-    titleformat subtitle=regular,
-    titleformat section=regular,
   }
 }
 %    \end{macrocode}
@@ -191,35 +95,6 @@
 %
 %
 % \subsubsection{Title page}
-%
-% \begin{macro}{\@metropolis@titleformat}
-% Define hooks to change the case format of the titles.
-%    \begin{macrocode}
-\def\@metropolis@titleformat#1{#1}
-\def\@metropolis@subtitleformat#1{#1}
-\def\@metropolis@sectiontitleformat#1{#1}
-%    \end{macrocode}
-% \end{macro}
-%
-% To make the |\MakeLowercase| and |\MakeUppercase| macros work in the
-% sectiontitle we have to patch |\sectionentry| and |\beamer@section|. This
-% solution was suggested by Enrico Gregorio in an answer to
-% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
-% question}.
-%
-%    \begin{macrocode}
-\patchcmd{\sectionentry}
-  {\def\insertsectionhead{#2}}
-  {\def\insertsectionhead{\@metropolis@sectiontitleformat{#2}}}
-  {}
-  {\PackageError{beamerinnerthememetropolis}{Patching section title failed}}
-\patchcmd{\beamer@section}
-  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
-  {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{%
-  \@metropolis@sectiontitleformat{#1}}}}
-  {}
-  {\PackageError{beamerinnerthememetropolis}{Patching section title failed}}
-%    \end{macrocode}
 %
 % \begin{macro}{title page}
 % Template for the title page. Each element is only typset if it is defined
@@ -298,7 +173,7 @@
 \setbeamertemplate{title}{
   \raggedright%
   \linespread{1.0}%
-  \@metropolis@titleformat{\inserttitle}%
+  \inserttitle%
   \par%
   \vspace*{0.5em}
 }
@@ -309,7 +184,7 @@
 %   Set the subtitle on the title page.
 %    \begin{macrocode}
 \setbeamertemplate{subtitle}{
-  \@metropolis@subtitleformat{\insertsubtitle}%
+  \insertsubtitle%
   \par%
   \vspace*{0.5em}
 }
@@ -371,7 +246,7 @@
 %   Template for the section title slide at the beginning of each section.
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@sectionpage@none}{
+\newcommand{\metropolis@sectionpage@none}{
   \AtBeginSection{
     % intenionally empty
   }
@@ -382,7 +257,7 @@
   \usebeamerfont{section title}
   \insertsectionhead\\
 }
-\newcommand{\@metropolis@sectionpage@simple}{
+\newcommand{\metropolis@sectionpage@simple}{
   \setbeamertemplate{section page}[simple]
   \AtBeginSection{
     \ifbeamer@inframe
@@ -402,7 +277,7 @@
   \end{minipage}
   \par
 }
-\newcommand{\@metropolis@sectionpage@progressbar}{
+\newcommand{\metropolis@sectionpage@progressbar}{
   \setbeamertemplate{section page}[progressbar]
   \AtBeginSection{
     \ifbeamer@inframe
@@ -456,23 +331,23 @@
 % Regular block environment
 %
 %    \begin{macrocode}
-\newlength{\@metropolis@blockskip}
+\newlength{\metropolis@blockskip}
 \setbeamertemplate{block begin}{%
-  \setlength{\parskip}{\@metropolis@parskip}
+  \setlength{\parskip}{\metropolis@parskip}
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\@metropolis@blockskip,
-    rightskip=\@metropolis@blockskip]{block title}
+    leftskip=\metropolis@blockskip,
+    rightskip=\metropolis@blockskip]{block title}
       \usebeamerfont*{block title}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\@metropolis@blockskip,
-    rightskip=\@metropolis@blockskip,
+    leftskip=\metropolis@blockskip,
+    rightskip=\metropolis@blockskip,
     vmode]{block body}%
 }
 \setbeamertemplate{block end}{%
@@ -485,21 +360,21 @@
 %
 %    \begin{macrocode}
 \setbeamertemplate{block alerted begin}{%
-  \setlength{\parskip}{\@metropolis@parskip}
+  \setlength{\parskip}{\metropolis@parskip}
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\@metropolis@blockskip,
-    rightskip=\@metropolis@blockskip]{block title alerted}
+    leftskip=\metropolis@blockskip,
+    rightskip=\metropolis@blockskip]{block title alerted}
       \usebeamerfont*{block title alerted}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body alerted}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\@metropolis@blockskip,
-    rightskip=\@metropolis@blockskip,
+    leftskip=\metropolis@blockskip,
+    rightskip=\metropolis@blockskip,
     vmode]{block body alerted}%
 }
 \setbeamertemplate{block alerted end}{%
@@ -512,21 +387,21 @@
 %
 %    \begin{macrocode}
 \setbeamertemplate{block example begin}{%
-  \setlength{\parskip}{\@metropolis@parskip}
+  \setlength{\parskip}{\metropolis@parskip}
   \vspace*{1ex}
   \begin{beamercolorbox}[%
     ht=2.4ex,
     dp=1ex,
-    leftskip=\@metropolis@blockskip,
-    rightskip=\@metropolis@blockskip]{block title example}
+    leftskip=\metropolis@blockskip,
+    rightskip=\metropolis@blockskip]{block title example}
       \usebeamerfont*{block title example}\insertblocktitle%
   \end{beamercolorbox}%
   \vspace*{-1pt}
   \usebeamerfont{block body example}%
   \begin{beamercolorbox}[%
     dp=1ex,
-    leftskip=\@metropolis@blockskip,
-    rightskip=\@metropolis@blockskip,
+    leftskip=\metropolis@blockskip,
+    rightskip=\metropolis@blockskip,
     vmode]{block body example}%
 }
 \setbeamertemplate{block example end}{%
@@ -561,9 +436,9 @@
 % \subsubsection{Text and spacing settings}
 %
 %    \begin{macrocode}
-\newlength{\@metropolis@parskip}
-\setlength{\@metropolis@parskip}{0.5em}
-\setlength{\parskip}{\@metropolis@parskip}
+\newlength{\metropolis@parskip}
+\setlength{\metropolis@parskip}{0.5em}
+\setlength{\parskip}{\metropolis@parskip}
 \linespread{1.15}
 %    \end{macrocode}
 %
@@ -587,7 +462,7 @@
 % Process package options
 %
 %    \begin{macrocode}
-\@metropolis@inner@setdefaults
+\metropolis@inner@setdefaults
 \ProcessPgfPackageOptions{/metropolis/inner}
 %    \end{macrocode}
 %

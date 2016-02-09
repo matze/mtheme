@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamercolorthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamercolorthememetropolis}[2015/12/04 Metropolis color theme]
+\ProvidesPackage{beamercolorthememetropolis}[2016/02/06 Metropolis color theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamercolorthememetropolis}
@@ -27,9 +27,11 @@
 %<*package>
 % ------------------------------------------------------------------------- \fi
 %
-% \subsection{\textsc{metropolis} color theme}
+% \subsection{\themename color theme}
 %
-% Load required packages.
+%
+%
+% \subsubsection{Package dependencies}
 %    \begin{macrocode}
 \RequirePackage{pgfopts}
 %    \end{macrocode}
@@ -39,34 +41,34 @@
 % \subsubsection{Options}
 %
 % \begin{macro}{block}
-% This option controls whether the blocks are filled or transparent.
+%    Controls whether block environments are filled or transparent.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/color/block/.cd,
     .is choice,
-    transparent/.code=\@metropolis@block@transparent,
-    fill/.code=\@metropolis@block@fill,
+    transparent/.code=\metropolis@block@transparent,
+    fill/.code=\metropolis@block@fill,
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{colors}
-% Defines whether the background shall be dark and the foreground be light or
-% vice versa
+%    Provides the option to have a dark background and light foreground instead
+%    of the reverse.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/color/background/.cd,
     .is choice,
-    dark/.code=\@metropolis@colors@dark,
-    light/.code=\@metropolis@colors@light,
+    dark/.code=\metropolis@colors@dark,
+    light/.code=\metropolis@colors@light,
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@metropolis@color@setdefaults}
-% Set default values for color theme options.
+% \begin{macro}{\metropolis@color@setdefaults}
+%    Sets default values for color theme options.
 %    \begin{macrocode}
-\newcommand{\@metropolis@color@setdefaults}{
+\newcommand{\metropolis@color@setdefaults}{
   \pgfkeys{/metropolis/color/.cd,
     background=light,
     block=transparent,
@@ -90,17 +92,17 @@
 %
 % \subsubsection{Base styles}
 %
-% All colors in the \textsc{metropolis} theme are derived from the definitions
-% of |normal text|, |alerted text|, and |example text|.
+% All colors in \themename are derived from the definitions of |normal text|,
+% |alerted text|, and |example text|.
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@colors@dark}{
+\newcommand{\metropolis@colors@dark}{
   \setbeamercolor{normal text}{%
     fg=black!2,
     bg=mDarkTeal
   }
 }
-\newcommand{\@metropolis@colors@light}{
+\newcommand{\metropolis@colors@light}{
   \setbeamercolor{normal text}{%
     fg=mDarkTeal,
     bg=black!2
@@ -133,8 +135,8 @@
 %    \end{macrocode}
 %
 % The “primary” palette should be used for the most important navigational
-% elements, and possibly of other elements. The \textsc{metropolis} theme uses
-% it for frame titles and slides.
+% elements, and possibly of other elements. \themename uses it for frame
+% titles and slides.
 %
 %    \begin{macrocode}
 \setbeamercolor{palette primary}{%
@@ -148,7 +150,7 @@
 }
 %    \end{macrocode}
 %
-% The \textsc{metropolis} inner or outer themes optionally display progress
+% The \themename inner or outer themes optionally display progress
 % bars in various locations. Their color is set by |progress bar| but the two
 % different kinds can be customized separately. The horizontal rule on the
 % title page is also set based on the progress bar color and can be customized
@@ -177,10 +179,10 @@
 % Blocks
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@block@transparent}{
+\newcommand{\metropolis@block@transparent}{
   \setbeamercolor{block title}{use=normal text, parent=normal text}
 }
-\newcommand{\@metropolis@block@fill}{
+\newcommand{\metropolis@block@fill}{
   \setbeamercolor{block title}{%
     use=normal text,
     fg=normal text.fg,
@@ -215,7 +217,7 @@
 % Process package options
 %
 %    \begin{macrocode}
-\@metropolis@color@setdefaults
+\metropolis@color@setdefaults
 \ProcessPgfPackageOptions{/metropolis/color}
 %    \end{macrocode}
 %
