@@ -54,6 +54,14 @@
   \RequirePackage[no-math]{fontspec}
 %    \end{macrocode}
 %
+% Xe\LaTeX{} does not enable regular \TeX{} ligatures so that
+% double-quotes and dashes are not printed correctly.  The following
+% line re-enables traditional \TeX{} ligatures.
+%
+%    \begin{macrocode}
+  \defaultfontfeatures{Ligatures=TeX}
+%    \end{macrocode}
+%
 % \begin{macro}{\checkfont}
 %    Checks if a font is installed; if not, |fontsnotfound| is increased.
 %    \begin{macrocode}
