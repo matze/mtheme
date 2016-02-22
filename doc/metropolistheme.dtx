@@ -523,7 +523,40 @@ only alphabetic characters and do not require the expansion of any macros.
 
 
 
+\subsection{Interactions with other color themes}
 
+\themename can be used along with any other Beamer color theme, such as
+|crane| or |seahorse|. If you wish to do this, it is usually best to include
+the \themename subpackages individually so the \themename color theme is
+never loaded. Although this will disable some features, including
+|\plain| slides, it will prevent conflicts between the \themename color theme
+and your preferred theme.
+
+For example, overriding the color theme as follows may not work as expected because |\usetheme{metropolis}| loads the \themename color theme, which
+defines a relationship between the frametitle background and the primary
+palette of the theme. Since |seahorse| assumes a different relationship
+between its palettes, the result is a grey, rather than periwinkle,
+frametitle background.
+
+\begin{lstlisting}
+\usetheme{metropolis}
+\usecolortheme{seahorse}
+\end{lstlisting}
+
+The correct colors are chosen if the \themename outer, inner, and font themes
+are loaded seperately:
+
+\begin{lstlisting}
+\useoutertheme{metropolis}
+\useinnertheme{metropolis}
+\usefonttheme{metropolis}
+\usecolortheme{seahorse}   % or your preferred color theme
+\end{lstlisting}
+
+Please note that \themename may not use all the colors defined in your
+favourite Beamer color theme. In particular, \themename does not set a
+background color for the title; this will cause issues when using color themes
+like |whale| which set a white foreground for the title.
 
 
 
