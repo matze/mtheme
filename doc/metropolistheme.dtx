@@ -155,8 +155,6 @@
 \tableofcontents
 
 
-
-
 \section{Introduction}
 
 Beamer is an awesome way to make presentations with LaTeX, but its theme
@@ -184,8 +182,6 @@ the theme even better, please get in touch there. The
 {full list of contributors} already contains over a dozen names!
 
 
-
-
 \section{Getting Started}
 
 \subsection{Installing from CTAN}
@@ -205,7 +201,6 @@ your packages.
 
 To get the most out of the theme you should also install the |Fira| fonts.
 Yet this is not mandatory. \themename also works with the standard fonts.
-
 
 
 \subsection{Installing from GitHub}
@@ -245,12 +240,10 @@ options for advanced users:
 \end{description}
 
 
-
 \subsection{Installing the Debian Package}
 As an alternative users of Debian or Ubuntu can also install this
 \href{https://launchpad.net/\%7Eedd/+archive/ubuntu/misc/+files/latex-mtheme_0.1.0vidid1_all.deb}{.deb package}
 containing the theme files as well as the Fira Sans font files.
-
 
 
 \subsection{A Minimal Example}
@@ -273,7 +266,6 @@ The following code shows a minimal example of a Beamer presentation using
   \end{frame}
 \end{document}
 \end{lstlisting}
-
 
 
 \subsection{Dependencies}
@@ -301,7 +293,6 @@ The packaged name of |Fira Sans| is |Fira Sans OT| in some Linux
 distributions; this case is automatically handled by \themename.
 
 
-
 \subsection{Pandoc}
 
 To use this theme with \href{http://johnmacfarlane.net/pandoc/}{Pandoc}-based
@@ -310,8 +301,6 @@ presentations, you can run the following command
 \begin{lstlisting}
 $ pandoc -t beamer --latex-engine=xelatex -V theme:metropolis -o output.pdf input.md
 \end{lstlisting}
-
-
 
 
 \section{Customization}
@@ -339,6 +328,7 @@ The list of options is structured as shown in the following example.
 
 
 \subsubsection{Main theme}
+
 \DescribeOption{titleformat}%
                {regular, smallcaps, allsmallcaps, allcaps}
                {regular}{
@@ -364,7 +354,9 @@ The list of options is structured as shown in the following example.
   disables the section page.
 }
 
+
 \subsubsection{Outer theme}
+
 \DescribeOption{numbering}{none, counter, fraction}{counter}{
   Controls whether the frame number at the bottom right of each slide is
   omitted (|none|), shown (|counter|) or displayed as a fraction of the total
@@ -388,6 +380,7 @@ The list of options is structured as shown in the following example.
   of the reverse.
 }
 
+
 \subsubsection{Font theme}
 
 \DescribeMacro{titleformat-title}
@@ -399,7 +392,6 @@ The list of options is structured as shown in the following example.
   Individually controls the format of titles, subtitles, section titles, and
   frame titles (see |titleformat|, above).
 }
-
 
 
 \subsection{Color Customization}
@@ -428,7 +420,6 @@ of \themename specific colors, which can also be redefined to your liking.
 \setbeamercolor{progress bar in head/foot}{ ... }
 \setbeamercolor{progress bar in section page}{ ... }
 \end{lstlisting}
-
 
 
 \subsection{Font Customization}
@@ -541,7 +532,6 @@ The |allsmallcaps| and |allcaps| options are safe to use if your titles contain
 only alphabetic characters and do not require the expansion of any macros.
 
 
-
 \subsection{Interactions with other color themes}
 
 \themename can be used along with any other Beamer color theme, such as
@@ -578,7 +568,6 @@ background color for the title; this will cause issues when using color themes
 like |whale| which set a white foreground for the title.
 
 
-
 \section{License}
 
 \themename is licensed under a
@@ -587,7 +576,6 @@ Attribution-ShareAlike 4.0 International License}.
 This means that if you change the theme and re-distribute it, you must retain
 the copyright notice header and license it under the same CC-BY-SA license.
 This does not affect any presentations that you create with the theme.
-
 
 
 \section{Implementation}
