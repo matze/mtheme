@@ -177,9 +177,16 @@
 \def\metropolis@plaintitleformat#1{#1}
 \newcommand{\plain}[2][]{%
   \begingroup
-    \setbeamercolor{background canvas}{
-      use=palette primary,
-      parent=palette primary
+    \ifbeamercolorempty[bg]{palette primary}{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=-palette primary.fg
+      }
+    }{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=palette primary.bg
+      }
     }
     \begin{frame}[c]{#1}
       \begin{center}
