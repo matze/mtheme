@@ -466,25 +466,44 @@ dark background, which can be useful to focus attention on a single sentence
 or image.
 \end{macro}
 
-\subsection{Paul Tol's colors: a \texttt{pgfplots} theme}
 
-A good presentation uses colors that are
+\section{\texttt{pgfplots} integration}
 
-\begin{itemize}
-  \item distinct from each other as much as possible, and
-  \item distinct from black and white,
-  \item under many different lighting and display environments, and
-  \item to color-blind viewers,
-  \item all while matching well together.
-\end{itemize}
+\themename comes with a set of pre-defined pgfplots styles and a color theme
+based on Paul Tol's color scheme.
+
+
+\subsection{Styles}
+
+Pass the following style keys to the axis environment to get the appropriate
+effect:
+
+\begin{macro}{mlineplot}
+  Plot regular line charts with reduced axis frames, less intrusive legend and
+  subdued grid.
+\end{macro}
+\begin{macro}{mbarplot}
+  Plot vertical bar charts in a similar way as |mlineplot| but reduce grid usage.
+\end{macro}
+\begin{macro}{horizontal mbarplot}
+  Plot horizontal bar charts.
+\end{macro}
+\begin{macro}{disable thousands separator}
+  Helper style to remove thousands separator.
+\end{macro}
+
+
+\subsection{Paul Tol colors}
+
+A good presentation uses colors that are distinct from each other as much as
+possible as well as from black and white, can be discerned item under different
+lighting and display environments and by color-blind viewers, while matching
+well together.
 
 In a \href{https://personal.sron.nl/~pault/colourschemes.pdf}{technical note}
 for SRON, Paul Tol proposed a palette of colors satisfying these constraints.
 The sub-package |pgfplotsthemetol| defines palettes for |pgfplots| charts
-based on Tol's work. Use the |mlineplot| key to plot line data and |mbarplot|
-or horizontal |mbarplot| to plot bar charts.
-
-
+based on Tol's work.
 
 
 \section{Known Issues}
