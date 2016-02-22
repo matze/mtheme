@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamerthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthememetropolis}[2016/02/06 Metropolis Beamer theme]
+\ProvidesPackage{beamerthememetropolis}[2016/02/21 Metropolis Beamer theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamerthememetropolis}
@@ -55,17 +55,7 @@
     /metropolis/outer,
     /metropolis/color,
     /metropolis/font,
-  },
-%    \end{macrocode}
-%
-% Currently, the |block| option affects two subthemes and has to be handled
-% separately.
-%
-%    \begin{macrocode}
-  block/.code=\pgfkeysalso{
-    inner/block=#1,
-    color/block=#1,
-  },
+  }
 }
 %    \end{macrocode}
 %
@@ -187,9 +177,16 @@
 \def\metropolis@plaintitleformat#1{#1}
 \newcommand{\plain}[2][]{%
   \begingroup
-    \setbeamercolor{background canvas}{
-      use=palette primary,
-      parent=palette primary
+    \ifbeamercolorempty[bg]{palette primary}{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=-palette primary.fg
+      }
+    }{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=palette primary.bg
+      }
     }
     \begin{frame}[c]{#1}
       \begin{center}

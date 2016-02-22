@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamercolorthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamercolorthememetropolis}[2016/02/06 Metropolis color theme]
+\ProvidesPackage{beamercolorthememetropolis}[2016/02/21 Metropolis color theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamercolorthememetropolis}
@@ -41,7 +41,8 @@
 % \subsubsection{Options}
 %
 % \begin{macro}{block}
-%    Controls whether block environments are filled or transparent.
+%    Optionally adds a light grey background to block environments like
+%    |theorem| and |example|.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/color/block/.cd,
@@ -176,17 +177,32 @@
 }
 %    \end{macrocode}
 %
-% Blocks
+% Block environments such as |theorem| and |example| have no background color
+% by default. The option |block=fill| sets a background color based on the
+% background and foreground of |normal text|. The option |block=transparent|
+% reverts the block environments to an empty background, which can be useful
+% if changing colors mid-presentation.
 %
 %    \begin{macrocode}
 \newcommand{\metropolis@block@transparent}{
-  \setbeamercolor{block title}{use=normal text, parent=normal text}
+  \setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=
+  }
+  \setbeamercolor{block body}{
+    bg=
+  }
 }
 \newcommand{\metropolis@block@fill}{
   \setbeamercolor{block title}{%
     use=normal text,
     fg=normal text.fg,
     bg=normal text.bg!80!fg
+  }
+  \setbeamercolor{block body}{
+    use={block title, normal text},
+    bg=block title.bg!50!normal text.bg
   }
 }
 \setbeamercolor{block title alerted}{%
@@ -201,10 +217,6 @@
 }
 \setbeamercolor{block body alerted}{use=block body, parent=block body}
 \setbeamercolor{block body example}{use=block body, parent=block body}
-\setbeamercolor{block body}{
-  use={block title, normal text},
-  bg=block title.bg!50!normal text.bg
-}
 %    \end{macrocode}
 %
 % Footnotes
@@ -214,7 +226,9 @@
 \setbeamercolor{footnote mark}{fg=.}
 %    \end{macrocode}
 %
-% Process package options
+%
+%
+% \subsubsection{Process package options}
 %
 %    \begin{macrocode}
 \metropolis@color@setdefaults
