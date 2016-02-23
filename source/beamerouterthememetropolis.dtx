@@ -186,6 +186,18 @@
 %
 %
 %
+% \begin{macro}{appendix}
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \apptocmd{\appendix}{%
+    \pgfkeys{%
+      /metropolis/outer/.cd,
+      numbering=none,
+      progressbar=none}
+    }{}{}
+}
+%    \end{macrocode}
+% \end{macro}
 % \subsubsection{Process package options}
 %
 %    \begin{macrocode}
