@@ -186,6 +186,22 @@
 %
 %
 %
+% \begin{macro}{appendix}
+%    Removes page numbering and per-slide progress bars when |\appendix| is
+%    called. This makes it easier to include additional ``backup slides'' at
+%    the end of the presentation, especially in conjunction with the package
+%    |appendixnumberbeamer|.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \apptocmd{\appendix}{%
+    \pgfkeys{%
+      /metropolis/outer/.cd,
+      numbering=none,
+      progressbar=none}
+    }{}{}
+}
+%    \end{macrocode}
+% \end{macro}
 % \subsubsection{Process package options}
 %
 %    \begin{macrocode}
