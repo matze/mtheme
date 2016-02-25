@@ -44,13 +44,14 @@
 % \subsubsection{Options}
 %
 % \begin{macro}{footer}
-% This option controls the page left footer text.
-% The default custom footer is the section name.
-% We can change it with:
+% This option controls the page left footer text, using the
+% command
+% \setbeamertemplate{frame footer}{My custom footer}
+% but it can also be set with the command
 % \metroset{footer={custom=Some text}}
-% Maybe this is not the optimal solution, but it works for now
-% A possible nice way to do it is using this 
-% \href{http://tex.stackexchange.com/questions/149982/how-do-i-pass-an-unknown-value-to-a-choice-key-in-pgfkeys}{solution}
+% where, if no text is specified, i.e. doing
+% \metroset{footer={custom}}
+% it will show the section name.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/outer/footer/.cd,
@@ -194,7 +195,6 @@
 \defbeamertemplate{footline}{plain}{%
   \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
     \usebeamerfont{page number in head/foot}%
-    \makebox[0pt][l]{}
     \usebeamertemplate*{frame footer}
     \hfill%
     \usebeamertemplate*{frame numbering}
