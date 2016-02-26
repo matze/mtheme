@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamerouterthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerouterthememetropolis}[2015/12/04 Metropolis outer theme]
+\ProvidesPackage{beamerouterthememetropolis}[2016/02/21 Metropolis outer theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamerouterthememetropolis}
@@ -27,12 +27,15 @@
 %<*package>
 % ------------------------------------------------------------------------- \fi
 %
-% \subsection{\textsc{metropolis} outer theme}
+% \subsection{\themename outer theme}
 %
 % A |beamer| outer theme dictates the style of the frame elements traditionally
 % set outside the body of each slide: the head, footline, and frame title.
 %
-% Load required packages.
+%
+%
+% \subsubsection{Package dependencies}
+%
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{calc}
@@ -44,7 +47,7 @@
 % \subsubsection{Options}
 %
 % \begin{macro}{numbering}
-% This option controls the page numbering.
+%    Adds slide numbers to the bottom right of each slide.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/outer/numbering/.cd,
@@ -57,7 +60,7 @@
 % \end{macro}
 %
 % \begin{macro}{progressbar}
-% This option controls the progressbar.
+%    Adds a progress bar to the top, bottom, or frametitle of each slide.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/outer/progressbar/.cd,
@@ -86,58 +89,13 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{frametitleformat}
-% Control the titleformat of the frame title
+% \begin{macro}{\metropolis@outer@setdefaults}
+%    Sets default values for outer theme options.
 %    \begin{macrocode}
-\pgfkeys{
-  /metropolis/outer/titleformat frame/.cd,
-    .is choice,
-    regular/.code={%
-      \let\@metropolis@frametitleformat\@empty%
-      \setbeamerfont{frametitle}{shape=\normalfont}%
-      \renewcommand{\@metropolis@frametitlestrut}{%
-        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
-      }
-    },
-    smallcaps/.code={%
-      \let\@metropolis@frametitleformat\@empty%
-      \setbeamerfont{frametitle}{shape=\scshape}%
-      \renewcommand{\@metropolis@frametitlestrut}{%
-        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}%
-      }
-    },
-    allsmallcaps/.code={%
-      \let\@metropolis@frametitleformat\MakeLowercase%
-      \setbeamerfont{frametitle}{shape=\scshape}%
-      \renewcommand{\@metropolis@frametitlestrut}{%
-        \vphantom{abcdefghijklmnopqrstuvwxyz}%
-      }
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat frame=allsmallcaps can lead to problems%
-      }
-    },
-    allcaps/.code={%
-      \let\@metropolis@frametitleformat\MakeUppercase%
-      \setbeamerfont{frametitle}{shape=\normalfont}
-      \renewcommand{\@metropolis@frametitlestrut}{%
-        \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZ}%
-      }
-      \PackageWarning{beamerthememetropolis}{%
-        Be aware that titleformat frame=allcaps can lead to problems%
-      }
-    },
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@metropolis@outer@setdefaults}
-% Set default values for outer theme options.
-%    \begin{macrocode}
-\newcommand{\@metropolis@outer@setdefaults}{
+\newcommand{\metropolis@outer@setdefaults}{
   \pgfkeys{/metropolis/outer/.cd,
     numbering=counter,
     progressbar=none,
-    titleformat frame=regular,
   }
 }
 %    \end{macrocode}%
@@ -148,15 +106,15 @@
 % \subsubsection{Head and footline}
 %
 % All good |beamer| presentations should already remove the navigation symbols,
-% but \textsc{metropolis} removes them automatically (just in case).
+% but \themename removes them automatically (just in case).
 %
 %    \begin{macrocode}
 \setbeamertemplate{navigation symbols}{}
 %    \end{macrocode}
 %
-% Templates for the frame number. Can be omitted, shown or displayed as a
-% fraction of the total frames.
-%
+% \begin{macro}{frame numbering}
+%    Templates for the frame number. Can be omitted, shown or displayed as a
+%    fraction of the total frames.
 %    \begin{macrocode}
 \defbeamertemplate{frame footer}{none}{}
 \defbeamertemplate{frame footer}{custom}[1]{ #1 }
@@ -169,7 +127,11 @@
   \insertframenumber/\inserttotalframenumber
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{headline}
+% \begin{macro}{footline}
+%    Templates for the head- and footline at the top and bottom of each frame.
 %    \begin{macrocode}
 \defbeamertemplate{headline}{plain}{}
 \defbeamertemplate{footline}{plain}{%
@@ -181,68 +143,36 @@
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 %
 %
 % \subsubsection{Frametitle}
 %
-% \begin{macro}{\@metropolis@frametitleformat}
-%   Define a hook to change the case format of the frame title.
-%    \begin{macrocode}
-\def\@metropolis@frametitleformat#1{#1}
-%    \end{macrocode}
-% \end{macro}
-%
-% To make the |\MakeLowercase| and |\MakeUppercase| macros work in the
-% frame title we have to patch |\beamer@@frametitle|. This solution was
-% suggested by Enrico Gregorio in an answer to
-% \href{http://tex.stackexchange.com/questions/112526/}{this StackExchange
-% question}.
-%
-%    \begin{macrocode}
-\patchcmd{\beamer@@frametitle}
-  {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
-      \usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {\beamer@ifempty{#2}{}{%
-      \gdef\insertframetitle{{\@metropolis@frametitleformat{#2}\ifnum%
-      \beamer@autobreakcount>0\relax{}\space%
-      \usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {}
-  {\PackageError{beamerouterthememetropolis}{Patching frame title failed}}
-%    \end{macrocode}
-%
 % \begin{macro}{frametitle}
-%
-% Templates for the frame title, which is optionally underlined with a
-% progress bar.
-%
+%    Templates for the frame title, which is optionally underlined with a
+%    progress bar.
 %    \begin{macrocode}
-\newlength{\@metropolis@frametitlestrut}
+\newcommand{\metropolis@frametitlestrut}{
+  \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
+}
 \defbeamertemplate{frametitle}{plain}{%
   \nointerlineskip%
   \begin{beamercolorbox}[%
       wd=\paperwidth,%
       sep=1.5ex,%
     ]{frametitle}%
-  \@metropolis@frametitlestrut\insertframetitle\@metropolis@frametitlestrut%
+  \metropolis@frametitlestrut\insertframetitle\metropolis@frametitlestrut%
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{progress bar in head/foot}
-%
-% Template for the progress bar optionally displayed below the frame title
-% on each page. Much of this code is duplicated in the inner theme's template
-% |progress bar in section page|.
-%
+%    Template for the progress bar optionally displayed below the frame title
+%    on each page. Much of this code is duplicated in the inner theme's
+%    template |progress bar in section page|.
 %    \begin{macrocode}
 \newlength{\metropolis@progressinheadfoot}
 \setbeamertemplate{progress bar in head/foot}{
@@ -260,10 +190,28 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% Process package options
+%
+%
+% \begin{macro}{appendix}
+%    Removes page numbering and per-slide progress bars when |\appendix| is
+%    called. This makes it easier to include additional ``backup slides'' at
+%    the end of the presentation, especially in conjunction with the package
+%    |appendixnumberbeamer|.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \apptocmd{\appendix}{%
+    \pgfkeys{%
+      /metropolis/outer/.cd,
+      numbering=none,
+      progressbar=none}
+    }{}{}
+}
+%    \end{macrocode}
+% \end{macro}
+% \subsubsection{Process package options}
 %
 %    \begin{macrocode}
-\@metropolis@outer@setdefaults
+\metropolis@outer@setdefaults
 \ProcessPgfPackageOptions{/metropolis/outer}
 %    \end{macrocode}
 %

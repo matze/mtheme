@@ -13,7 +13,7 @@
 %<driver> \ProvidesFile{beamerthememetropolis.dtx}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthememetropolis}[2015/12/04 Metropolis Beamer theme]
+\ProvidesPackage{beamerthememetropolis}[2016/02/21 Metropolis Beamer theme]
 %</package>
 %<driver> \documentclass{ltxdoc}
 %<driver> \usepackage{beamerthememetropolis}
@@ -27,28 +27,26 @@
 %<*package>
 % ------------------------------------------------------------------------- \fi
 %
-% \subsection{\textsc{metropolis} main theme}
+% \subsection{\themename parent theme}
 %
 % The primary job of this package is to load the component sub-packages of the
-% \textsc{metropolis} theme and route the theme options accordingly. It also
+% \themename theme and route the theme options accordingly. It also
 % provides some custom commands and environments for the user.
 %
-% Load the required packages.
+%
+%
+% \subsubsection{Package dependencies}
+%
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 \RequirePackage{pgfopts}
 %    \end{macrocode}
 %
+%
+%
 % \subsubsection{Options}
 %
-% \begin{macro}{\metroset}
-% First of all we define a macro for the user to set options.
-%    \begin{macrocode}
-\newcommand{\metroset}[1]{\pgfkeys{/metropolis/.cd,#1}}
-%    \end{macrocode}
-% \end{macro}
-%
-% Then we need to pass the unknown options to the sub-packages.
+% Most options are passed off to the component sub-packages.
 %
 %    \begin{macrocode}
 \pgfkeys{/metropolis/.cd,
@@ -56,42 +54,34 @@
     /metropolis/inner,
     /metropolis/outer,
     /metropolis/color,
-  },
-%    \end{macrocode}
-%
-% We have to forwarded keys that affect multiple sub-packages manually.
-%
-%    \begin{macrocode}
-  block/.code=\pgfkeysalso{
-    inner/block=#1,
-    color/block=#1,
-  },
+    /metropolis/font,
+  }
 }
 %    \end{macrocode}
 %
 % \begin{macro}{titleformat plain}
-% Control the titleformat of the plain title
+%    Controls the formatting of the text on standout ``plain'' frames.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/titleformat plain/.cd,
     .is choice,
     regular/.code={%
-      \let\@metropolis@plaintitleformat\@empty%
+      \let\metropolis@plaintitleformat\@empty%
       \setbeamerfont{plain title}{shape=\normalfont}%
     },
     smallcaps/.code={%
-      \let\@metropolis@plaintitleformat\@empty%
+      \let\metropolis@plaintitleformat\@empty%
       \setbeamerfont{plain title}{shape=\scshape}%
     },
     allsmallcaps/.code={%
-      \let\@metropolis@plaintitleformat\MakeLowercase%
+      \let\metropolis@plaintitleformat\MakeLowercase%
       \setbeamerfont{plain title}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
         Be aware that titleformat plain=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
-      \let\@metropolis@plaintitleformat\MakeUppercase%
+      \let\metropolis@plaintitleformat\MakeUppercase%
       \setbeamerfont{plain title}{shape=\normalfont}%
       \PackageWarning{beamerthememetropolis}{%
         Be aware that titleformat plain=allcaps can lead to problems%
@@ -102,14 +92,15 @@
 % \end{macro}
 %
 % \begin{macro}{titleformat}
-% Control the titleformat of every title type together
+%    Sets a standard format for titles, subtitles, section titles, frame
+%    titles, and the text on standout ``plain'' frames.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/titleformat/.code=\pgfkeysalso{
-      inner/titleformat title=#1,
-      inner/titleformat subtitle=#1,
-      inner/titleformat section=#1,
-      outer/titleformat frame=#1,
+      font/titleformat title=#1,
+      font/titleformat subtitle=#1,
+      font/titleformat section=#1,
+      font/titleformat frame=#1,
       titleformat plain=#1,
     }
 }
@@ -133,7 +124,7 @@
 % Set default values for options.
 %
 %    \begin{macrocode}
-\newcommand{\@metropolis@setdefaults}{
+\newcommand{\metropolis@setdefaults}{
   \pgfkeys{/metropolis/.cd,
     titleformat plain=regular,
   }
@@ -146,6 +137,7 @@
 %
 % Having processed the options, we can now load the component sub-packages of
 % the theme.
+%
 %    \begin{macrocode}
 \useinnertheme{metropolis}
 \useoutertheme{metropolis}
@@ -167,31 +159,40 @@
 %
 % \subsubsection{Custom commands}
 %
-% We define custom commands in this package as their proper usage may depend
+% The parent theme defines custom commands as their proper usage may depend
 % on multiple sub-packages.
 %
-% \begin{macro}{\@metropolis@plaintitleformat}
-%   Define a hook to change the case format of the plain title.
+% \begin{macro}{\metroset}
+%    Allows the user to change options midway through a presentation.
 %    \begin{macrocode}
-\def\@metropolis@plaintitleformat#1{#1}
+\newcommand{\metroset}[1]{\pgfkeys{/metropolis/.cd,#1}}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\plain}
 %   Creates a plain frame with dark background, suitable for displaying images
-%   or a few words.
+%   or a few words. The format of the text can be set with the
+%   |titleformat plain| option.
 %    \begin{macrocode}
+\def\metropolis@plaintitleformat#1{#1}
 \newcommand{\plain}[2][]{%
   \begingroup
-    \setbeamercolor{background canvas}{
-      use=palette primary,
-      parent=palette primary
+    \ifbeamercolorempty[bg]{palette primary}{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=-palette primary.fg
+      }
+    }{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=palette primary.bg
+      }
     }
-    \begin{frame}[c]{#1}
+    \begin{frame}[c,noframenumbering]{#1}
       \begin{center}
         \usebeamercolor[fg]{palette primary}
         \usebeamerfont{plain title}
-        \@metropolis@plaintitleformat{#2}
+        \metropolis@plaintitleformat{#2}
       \end{center}
     \end{frame}
   \endgroup
@@ -205,10 +206,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% Process package options
+%
+%
+% \subsubsection{Process package options}
 %
 %    \begin{macrocode}
-\@metropolis@setdefaults
+\metropolis@setdefaults
 \ProcessPgfOptions{/metropolis}
 %    \end{macrocode}
 %

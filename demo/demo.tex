@@ -1,6 +1,7 @@
 \documentclass[10pt]{beamer}
 
 \usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
@@ -309,6 +310,19 @@ or show \textbf{bold} results.\end{verbatim}
 \end{frame}
 
 \plain{Questions?}
+
+\appendix
+
+\begin{frame}[fragile]{Backup slides}
+  Sometimes, it is useful to add slides at the end of your presentation to
+  refer to during audience questions.
+
+  The best way to do this is to include the \verb|appendixnumberbeamer|
+  package in your preamble and call \verb|\appendix| before your backup slides.
+
+  \themename will automatically turn off slide numbering and progress bars for
+  slides in the appendix.
+\end{frame}
 
 \begin{frame}[allowframebreaks]{References}
 
