@@ -43,26 +43,6 @@
 %
 % \subsubsection{Options}
 %
-% \begin{macro}{footer}
-% This option controls the page left footer text, using the
-% command
-% \setbeamertemplate{frame footer}{My custom footer}
-% but it can also be set with the command
-% \metroset{footer={custom=Some text}}
-% where, if no text is specified, i.e. doing
-% \metroset{footer={custom}}
-% it will show the section name.
-%    \begin{macrocode}
-\pgfkeys{
-  /metropolis/outer/footer/.cd,
-    .is choice,
-    none/.code=\setbeamertemplate{frame footer}[none],
-    custom/.code=\setbeamertemplate{frame footer}[custom]{#1},
-    custom/.default=\insertsection
-}
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{numbering}
 % This option controls the page numbering.
 %    \begin{macrocode}
