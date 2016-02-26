@@ -328,6 +328,9 @@
 \newlength{\metropolis@blocktitleadjustleft}
 \newlength{\metropolis@blocktitleadjustright}
 \newlength{\metropolis@blockbodyadjust}
+\providecommand{\metropolis@strut}{%
+  \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
+}
 \newcommand{\metropolis@block}[1]{
   \par\vskip\medskipamount
 %    \end{macrocode}
@@ -366,7 +369,9 @@
     leftskip=\metropolis@blocktitleadjustleft,
     rightskip=\metropolis@blocktitleadjustright]{block title#1}
       \usebeamerfont*{block title#1}%
+      \metropolis@strut%
       \insertblocktitle%
+      \metropolis@strut%
   \end{beamercolorbox}%
   \nointerlineskip%
   \usebeamerfont{block body#1}%
