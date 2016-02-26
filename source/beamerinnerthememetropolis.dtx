@@ -325,9 +325,9 @@
 %    the auxiliary macro |\metropolis@block| to define all three templates.
 %
 %    \begin{macrocode}
-\newlength{\metropolis@blocktitleadjustleft}
-\newlength{\metropolis@blocktitleadjustright}
-\newlength{\metropolis@blockbodyadjust}
+\newlength{\metropolis@blocktitlesep}
+\newlength{\metropolis@blockbodysep}
+\newcommand{\foo}{20}
 \providecommand{\metropolis@strut}{%
   \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
 }
@@ -337,7 +337,7 @@
 %
 %    If a background color is defined for the block title or body, we need to
 %    add a little bit of padding to the corresponding box. Ideally, this would
-%    be accomplished by setting |colsep=1ex|, which is intended to add
+%    be accomplished by setting |colsep=0.75ex|, which is intended to add
 %    ``color separation space'' only when the box has a colored background.
 %    Unfortunately, |colsep| also adds this separation if the background color
 %    is inherited, even if the inherited color is actually empty.
@@ -345,29 +345,26 @@
 %    directive does not expand macros.)
 %
 %    To achieve the correct spacing for |alertblock|s and |exampleblock|s
-%    as well as for normal blocks, we have to set |sep=1ex| in all cases and
-%    then subtract it from the left and right edges if |block title| has
-%    an empty background. This solution assumes that either all or none of
-%    |block title|, |block title alerted|, and |block title example| have an
-%    empty background, and likewise for |block body|, |block body alerted|,
+%    as well as for normal blocks, we have to explicitly set the amount of
+%    padding in a conditional based on whether the |block title| and
+%    |block body| have an empty background.
+%    This solution assumes that either all or none of |block title|,
+%    |block title alerted|, and |block title example| have an empty
+%    background, and likewise for |block body|, |block body alerted|,
 %    and |block body example|.
 %
 %    \begin{macrocode}
-  \ifbeamercolorempty[bg]{block title}{
-    \setlength{\metropolis@blocktitleadjustleft}{-1ex}
-    \setlength{\metropolis@blocktitleadjustright}{-1ex plus 4em}
-  }{
-    \setlength{\metropolis@blocktitleadjustleft}{0pt}
-    \setlength{\metropolis@blocktitleadjustright}{0pt plus 4em}
-  }
+  \ifbeamercolorempty[bg]{block title}
+    {\setlength{\metropolis@blocktitlesep}{0pt}}
+    {\setlength{\metropolis@blocktitlesep}{0.5ex}}
   \ifbeamercolorempty[bg]{block body}
-    {\setlength{\metropolis@blockbodyadjust}{-1ex}}
-    {\setlength{\metropolis@blockbodyadjust}{0ex}}
+    {\setlength{\metropolis@blockbodysep}{0pt}}
+    {\setlength{\metropolis@blockbodysep}{0.75ex}}
   \setlength{\parskip}{0pt}
   \begin{beamercolorbox}[%
-    sep=1ex,
-    leftskip=\metropolis@blocktitleadjustleft,
-    rightskip=\metropolis@blocktitleadjustright]{block title#1}
+    sep=\metropolis@blocktitlesep,
+    leftskip=0.5\metropolis@blocktitlesep,
+    rightskip=0.5\metropolis@blocktitlesep plus 4em]{block title#1}%
       \usebeamerfont*{block title#1}%
       \metropolis@strut%
       \insertblocktitle%
@@ -375,12 +372,8 @@
   \end{beamercolorbox}%
   \nointerlineskip%
   \usebeamerfont{block body#1}%
-  \begin{beamercolorbox}[%
-    sep=1ex,
-    leftskip=\metropolis@blockbodyadjust,
-    rightskip=\metropolis@blockbodyadjust,
-    vmode]{block body#1}%
-    \vspace{-\metropolis@parskip}
+  \begin{beamercolorbox}[sep=\metropolis@blockbodysep, vmode]{block body#1}%
+    \ifbeamercolorempty[bg]{block body}{}{\vspace{-\metropolis@parskip}}
     \setlength{\parskip}{\metropolis@parskip}
 }
 %    \end{macrocode}
