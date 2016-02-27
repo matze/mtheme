@@ -325,13 +325,16 @@
 %    the auxiliary macro |\metropolis@block| to define all three templates.
 %
 %    \begin{macrocode}
-\newlength{\metropolis@blocktitlesep}
-\newlength{\metropolis@blockbodysep}
+\newlength{\metropolis@blocksep}
+\newlength{\metropolis@blockadjust}
+\setlength{\metropolis@blocksep}{0.75ex}
+\setlength{\metropolis@blockadjust}{0.25ex}
 \providecommand{\metropolis@strut}{%
   \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
 }
 \newcommand{\metropolis@block}[1]{
-  \par\vskip\medskipamount
+  \par\vskip\medskipamount%
+  \setlength{\parskip}{0pt}
 %    \end{macrocode}
 %
 %    If a background color is defined for the block title or body, we need to
@@ -344,40 +347,66 @@
 %    directive does not expand macros.)
 %
 %    To achieve the correct spacing for |alertblock|s and |exampleblock|s
-%    as well as for normal blocks, we have to explicitly set the amount of
-%    padding in a conditional based on whether the |block title| and
-%    |block body| have an empty background.
-%    This solution assumes that either all or none of |block title|,
+%    as well as for normal blocks, we have to begin the |beamercolorbox|
+%    differently based on whether |block title| has an empty background.
+%    (We assume that either all or none of |block title|,
 %    |block title alerted|, and |block title example| have an empty
-%    background, and likewise for |block body|, |block body alerted|,
-%    and |block body example|.
+%    background).
+%
+%    If the |block title| background is empty, we just need to set a rightskip
+%    for a nice ragged-right block title.
 %
 %    \begin{macrocode}
-  \ifbeamercolorempty[bg]{block title}
-    {\setlength{\metropolis@blocktitlesep}{0pt}}
-    {\setlength{\metropolis@blocktitlesep}{0.5ex}}
-  \ifbeamercolorempty[bg]{block body}
-    {\setlength{\metropolis@blockbodysep}{0pt}}
-    {\setlength{\metropolis@blockbodysep}{0.75ex}}
-  \setlength{\parskip}{0pt}
-  \begin{beamercolorbox}[%
-    sep=\metropolis@blocktitlesep,
-    leftskip=0.5\metropolis@blocktitlesep,
-    rightskip=0.5\metropolis@blocktitlesep plus 4em]{block title#1}%
+  \ifbeamercolorempty[bg]{block title}{%
+    \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}%
+  }%
+%   \end{macrocode}
+%
+%   Otherwise, if the |block title| has a background, we set the padding based
+%   on |\metropolis@blockskip|. However, we have to visually compensate for
+%   the |\metropolis@strut| added to the block title (see below) by
+%   subtracting |\metropolis@blockadjust| from the top and bottom padding.
+%
+%   \begin{macrocode}
+  {%
+    \begin{beamercolorbox}[
+      sep=\dimexpr\metropolis@blocksep-\metropolis@blockadjust\relax,
+      leftskip=\metropolis@blockadjust,
+      rightskip=\dimexpr\metropolis@blockadjust plus 4em\relax
+    ]{block title#1}%
+  }%
+%   \end{macrocode}
+%
+%   We can now set the contents of the |block title|. The zero-width but
+%   positive-height box |\metropolis@strut| ensures that the block title box
+%   has a consistent height, even if it lacks punctuation, ascenders, or
+%   descenders.
+%
+%   \begin{macrocode}
       \usebeamerfont*{block title#1}%
       \metropolis@strut%
       \insertblocktitle%
       \metropolis@strut%
   \end{beamercolorbox}%
+%   \end{macrocode}
+%
+%   Next, we typeset the |block body|. This the code is similar to, but simpler
+%   than, the |block title| code since we don't need to adjust for any struts.
+%
+%   \begin{macrocode}
   \nointerlineskip%
-  \usebeamerfont{block body#1}%
-  \begin{beamercolorbox}[sep=\metropolis@blockbodysep, vmode]{block body#1}%
-    \ifbeamercolorempty[bg]{block body}{}{\vspace{-\metropolis@parskip}}
-    \setlength{\parskip}{\metropolis@parskip}
+  \ifbeamercolorempty[bg]{block body}{
+    \begin{beamercolorbox}[vmode]{block body#1}%
+  }{%
+    \begin{beamercolorbox}[sep=\metropolis@blocksep, vmode]{block body#1}%
+    \vspace{-\metropolis@parskip}
+  }%
+      \usebeamerfont{block body#1}%
+      \setlength{\parskip}{\metropolis@parskip}%
 }
 %    \end{macrocode}
 %
-%    This concludes the auxiliary macro |\metropolis@block|. Next,
+%    This concludes the auxiliary macro |\metropolis@block|. Finally,
 %    we define the block beamer templates using this macro.
 %
 %    \begin{macrocode}
