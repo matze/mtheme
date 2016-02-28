@@ -159,11 +159,7 @@
 \newcommand{\metropolis@frametitlestrut@start}{
   \rule{0pt}{\metropolis@frametitle@padding +%
     \totalheightof{%
-      \ifcsname metropolis@frametitleformat\endcsname%
-        \metropolis@frametitleformat X%
-      \else%
-        X%
-      \fi%
+      \ifcsdef{metropolis@frametitleformat}{\metropolis@frametitleformat X}{X}%
     }%
   }%
 }
