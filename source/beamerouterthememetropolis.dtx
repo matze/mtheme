@@ -148,7 +148,7 @@
 %    Templates for the frame title, which is optionally underlined with a
 %    progress bar.
 %    \begin{macrocode}
-\providecommand{\metropolis@strut}{%
+\newcommand{\metropolis@frametitlestrut}{
   \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
 }
 \defbeamertemplate{frametitle}{plain}{%
@@ -157,9 +157,7 @@
       wd=\paperwidth,%
       sep=1.5ex,%
     ]{frametitle}%
-  \metropolis@strut%
-  \insertframetitle%
-  \metropolis@strut%
+  \metropolis@frametitlestrut\insertframetitle\metropolis@frametitlestrut%
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
