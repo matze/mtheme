@@ -325,47 +325,88 @@
 %    the auxiliary macro |\metropolis@block| to define all three templates.
 %
 %    \begin{macrocode}
-\newlength{\metropolis@blocktitleskip}
-\newlength{\metropolis@blockbodyskip}
+\newlength{\metropolis@blocksep}
+\newlength{\metropolis@blockadjust}
+\setlength{\metropolis@blocksep}{0.75ex}
+\setlength{\metropolis@blockadjust}{0.25ex}
+\providecommand{\metropolis@strut}{%
+  \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
+}
 \newcommand{\metropolis@block}[1]{
-  \setlength{\parskip}{\metropolis@parskip}
+  \par\vskip\medskipamount%
+  \setlength{\parskip}{0pt}
 %    \end{macrocode}
 %
-%    If a background color is defined for the block title or body, a little
-%    bit of padding is added to the corresponding box.
+%    If a background color is defined for the block title or body, we need to
+%    add a little bit of padding to the corresponding box. Ideally, this would
+%    be accomplished by setting |colsep=0.75ex|, which is intended to add
+%    ``color separation space'' only when the box has a colored background.
+%    Unfortunately, |colsep| also adds this separation if the background color
+%    is inherited, even if the inherited color is actually empty.
+%    (The technical reason for this boils down to the fact that the |\ifx|
+%    directive does not expand macros.)
+%
+%    To achieve the correct spacing for |alertblock|s and |exampleblock|s
+%    as well as for normal blocks, we have to begin the |beamercolorbox|
+%    differently based on whether |block title| has an empty background.
+%    (We assume that either all or none of |block title|,
+%    |block title alerted|, and |block title example| have an empty
+%    background).
+%
+%    If the |block title| background is empty, we just need to set a rightskip
+%    for a nice ragged-right block title.
 %
 %    \begin{macrocode}
-  \ifbeamercolorempty[bg]{block title}
-    {\setlength{\metropolis@blocktitleskip}{0ex}}
-    {\setlength{\metropolis@blocktitleskip}{1ex}}
-  \ifbeamercolorempty[bg]{block body}
-    {\setlength{\metropolis@blockbodyskip}{0ex}}
-    {\setlength{\metropolis@blockbodyskip}{1ex}}
-  \vspace*{1ex}
-%    \end{macrocode}
+  \ifbeamercolorempty[bg]{block title}{%
+    \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}%
+  }%
+%   \end{macrocode}
 %
-%    Each block environment consists of two (possibly coloured) beamer boxes:
-%    one for the title and one for the body.
+%   Otherwise, if the |block title| has a background, we set the padding based
+%   on |\metropolis@blockskip|. However, we have to visually compensate for
+%   the |\metropolis@strut| added to the block title (see below) by
+%   subtracting |\metropolis@blockadjust| from the top and bottom padding.
 %
-%    \begin{macrocode}
-  \begin{beamercolorbox}[%
-    ht=2.4ex,
-    dp=1ex,
-    leftskip=\metropolis@blocktitleskip,
-    rightskip=\metropolis@blocktitleskip]{block title#1}
-      \usebeamerfont*{block title#1}\insertblocktitle%
+%   \begin{macrocode}
+  {%
+    \begin{beamercolorbox}[
+      sep=\dimexpr\metropolis@blocksep-\metropolis@blockadjust\relax,
+      leftskip=\metropolis@blockadjust,
+      rightskip=\dimexpr\metropolis@blockadjust plus 4em\relax
+    ]{block title#1}%
+  }%
+%   \end{macrocode}
+%
+%   We can now set the contents of the |block title|. The zero-width but
+%   positive-height box |\metropolis@strut| ensures that the block title box
+%   has a consistent height, even if it lacks punctuation, ascenders, or
+%   descenders.
+%
+%   \begin{macrocode}
+      \usebeamerfont*{block title#1}%
+      \metropolis@strut%
+      \insertblocktitle%
+      \metropolis@strut%
   \end{beamercolorbox}%
+%   \end{macrocode}
+%
+%   Next, we typeset the |block body|. This the code is similar to, but simpler
+%   than, the |block title| code since we don't need to adjust for any struts.
+%
+%   \begin{macrocode}
   \nointerlineskip%
-  \usebeamerfont{block body#1}%
-  \begin{beamercolorbox}[%
-    dp=1ex,
-    leftskip=\metropolis@blockbodyskip,
-    rightskip=\metropolis@blockbodyskip,
-    vmode]{block body#1}%
+  \ifbeamercolorempty[bg]{block body}{
+    \begin{beamercolorbox}[vmode]{block body#1}%
+  }{%
+    \begin{beamercolorbox}[sep=\metropolis@blocksep, vmode]{block body#1}%
+    \vspace{-\metropolis@parskip}
+  }%
+      \usebeamerfont{block body#1}%
+      \setlength{\parskip}{\metropolis@parskip}%
 }
 %    \end{macrocode}
 %
-%    This concludes the auxiliary macro |\metropolis@block|. Next,
+%    This concludes the auxiliary macro |\metropolis@block|. Finally,
 %    we define the block beamer templates using this macro.
 %
 %    \begin{macrocode}
