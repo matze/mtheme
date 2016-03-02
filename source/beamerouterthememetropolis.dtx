@@ -154,16 +154,27 @@
 %    Templates for the frame title, which is optionally underlined with a
 %    progress bar.
 %    \begin{macrocode}
-\newcommand{\metropolis@frametitlestrut}{
-  \vphantom{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz()}%
+\newlength{\metropolis@frametitle@padding}
+\setlength{\metropolis@frametitle@padding}{1.5ex}
+\newcommand{\metropolis@frametitlestrut@start}{
+  \rule{0pt}{\metropolis@frametitle@padding +%
+    \totalheightof{%
+      \ifcsdef{metropolis@frametitleformat}{\metropolis@frametitleformat X}{X}%
+    }%
+  }%
+}
+\newcommand{\metropolis@frametitlestrut@end}{
+  \rule[-\metropolis@frametitle@padding]{0pt}{\metropolis@frametitle@padding}
 }
 \defbeamertemplate{frametitle}{plain}{%
   \nointerlineskip%
   \begin{beamercolorbox}[%
       wd=\paperwidth,%
-      sep=1.5ex,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
     ]{frametitle}%
-  \metropolis@frametitlestrut\insertframetitle\metropolis@frametitlestrut%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
