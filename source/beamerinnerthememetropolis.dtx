@@ -257,12 +257,14 @@
 \defbeamertemplate{section page}{progressbar}{
   \centering
   \begin{minipage}{22em}
+    \raggedright
     \usebeamercolor[fg]{section title}
     \usebeamerfont{section title}
     \insertsectionhead\\[-1ex]
     \usebeamertemplate*{progress bar in section page}
   \end{minipage}
   \par
+  \vspace{\baselineskip}
 }
 \newcommand{\metropolis@sectionpage@progressbar}{
   \setbeamertemplate{section page}[progressbar]
