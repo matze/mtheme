@@ -95,16 +95,24 @@
 %
 %    \begin{macrocode}
   \iffontsavailable{Fira Sans Light,%
-                Fira Sans Light Italic,%
-                Fira Sans,%
-                Fira Sans Italic}{%
-    \setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}%
+                    Fira Sans Light Italic,%
+                    Fira Sans,%
+                    Fira Sans Italic}%
+  {%
+    \setsansfont[ItalicFont={Fira Sans Light Italic},%
+                 BoldFont={Fira Sans},%
+                 BoldItalicFont={Fira Sans Italic}]%
+                {Fira Sans Light}%
   }{%
     \iffontsavailable{Fira Sans Light OT,%
-                  Fira Sans Light Italic OT,%
-                  Fira Sans OT,%
-                  Fira Sans Italic OT}{%
-      \setsansfont[BoldFont={Fira Sans OT}]{Fira Sans Light OT}%
+                      Fira Sans Light Italic OT,%
+                      Fira Sans OT,%
+                      Fira Sans Italic OT}%
+    {%
+      \setsansfont[ItalicFont={Fira Sans Light Italic OT},%
+                   BoldFont={Fira Sans OT},%
+                   BoldItalicFont={Fira Sans Italic OT}]%
+                  {Fira Sans Light OT}%
     }{%
       \PackageWarning{beamerthememetropolis}{%
         Could not find Fira Sans fonts%
@@ -112,10 +120,10 @@
     }
   }
   \iffontsavailable{Fira Mono, Fira Mono Bold}{%
-    \setmonofont{Fira Mono}%
+    \setmonofont[BoldFont={Fira Mono Medium}]{Fira Mono}%
   }{%
     \iffontsavailable{Fira Mono OT, Fira Mono Bold OT}{%
-      \setmonofont{Fira Mono OT}%
+      \setmonofont[BoldFont={Fira Mono Medium OT}]{Fira Mono OT}%
     }{%
       \PackageWarning{beamerthememetropolis}{%
         Could not find Fira Mono fonts%
