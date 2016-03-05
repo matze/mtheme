@@ -46,6 +46,7 @@
 %
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
+\RequirePackage{keyval}
 \RequirePackage{calc}
 \RequirePackage{pgfopts}
 \RequirePackage{tikz}
@@ -430,6 +431,60 @@
 %    \end{macrocode}
 %
 %
+%
+% \subsubsection{Standout frames}
+%
+% \themename offers a custom frame format with large, centered text and an
+% inverted background. To use it, add the key |standout| to the frame:
+% |\begin{frame}[standout] ... \end{frame}|.
+%
+% \begin{macro}{standout}
+%
+%     Optional arguments to Beamer's frames are implemented using
+%     |\define@key| from the |keyval| package, which will execute code when the
+%     defined option is called. For the |standout| option, we begin a group,
+%     change the colors and fonts, and set a \centering alignment.
+%
+%    \begin{macrocode}
+\providebool{metropolis@standout}
+\define@key{beamerframe}{standout}[true]{%
+  \booltrue{metropolis@standout}
+  \begingroup
+    \setkeys{beamerframe}{c}
+    \setkeys{beamerframe}{noframenumbering}
+    \ifbeamercolorempty[bg]{palette primary}{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=-palette primary.fg
+      }
+    }{
+      \setbeamercolor{background canvas}{
+        use=palette primary,
+        bg=palette primary.bg
+      }
+    }
+  \centering
+  \usebeamercolor[fg]{palette primary}
+  \usebeamerfont{standout}
+}
+%    \end{macrocode}
+%
+%    Then we just have to close the group after the standout slide is finished
+%    in order to restore the colours and fonts for the rest of the
+%    presentation. Unfortunately, we cannot use \AfterEndEnvironment{frame} for
+%    this (see \url{http://tex.stackexchange.com/questions/226319/}).
+%    Instead, we add the |\endgroup| to |\beamer@reseteecodes|, which is run
+%    exactly once at the end of each slide.
+%
+%    \begin{macrocode}
+  \apptocmd{\beamer@reseteecodes}{%
+    \ifbool{metropolis@standout}{
+      \endgroup
+      \boolfalse{metropolis@standout}
+    }{}
+  }{}{}
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsubsection{Process package options}
 %
