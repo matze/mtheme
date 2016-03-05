@@ -56,14 +56,31 @@
 % \subsubsection{Options}
 %
 % \begin{macro}{sectionpage}
-% The |sectionpage| option defines the behaviour of the sectionpage.
+%    Optionally add a slide marking the beginning of each section.
 %    \begin{macrocode}
 \pgfkeys{
   /metropolis/inner/sectionpage/.cd,
     .is choice,
-    none/.code=\metropolis@sectionpage@none,
-    simple/.code=\metropolis@sectionpage@simple,
-    progressbar/.code=\metropolis@sectionpage@progressbar,
+    none/.code=\metropolis@disablesectionpage,
+    simple/.code={\metropolis@enablesectionpage
+                  \setbeamertemplate{section page}[simple]},
+    progressbar/.code={\metropolis@enablesectionpage
+                       \setbeamertemplate{section page}[progressbar]},
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{sectionpage}
+%    Optionally add a slide marking the beginning of each subsection.
+%    \begin{macrocode}
+\pgfkeys{
+  /metropolis/inner/subsectionpage/.cd,
+    .is choice,
+    none/.code=\metropolis@disablesubsectionpage,
+    simple/.code={\metropolis@enablesubsectionpage
+                  \setbeamertemplate{section page}[simple]},
+    progressbar/.code={\metropolis@enablesubsectionpage
+                       \setbeamertemplate{section page}[progressbar]},
 }
 %    \end{macrocode}
 % \end{macro}
@@ -74,6 +91,7 @@
 \newcommand{\metropolis@inner@setdefaults}{
   \pgfkeys{/metropolis/inner/.cd,
     sectionpage=progressbar,
+    subsectionpage=none
   }
 }
 %    \end{macrocode}
@@ -233,26 +251,17 @@
 %   Template for the section title slide at the beginning of each section.
 %
 %    \begin{macrocode}
-\newcommand{\metropolis@sectionpage@none}{
-  \AtBeginSection{
-    % intenionally empty
-  }
-}
 \defbeamertemplate{section page}{simple}{
-  \centering
-  \usebeamercolor[fg]{section title}
-  \usebeamerfont{section title}
-  \insertsectionhead\\
-}
-\newcommand{\metropolis@sectionpage@simple}{
-  \setbeamertemplate{section page}[simple]
-  \AtBeginSection{
-    \ifbeamer@inframe
-      \sectionpage
-    \else
-      \frame[plain,c,noframenumbering]{\sectionpage}
+  \begin{center}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\par
+    \ifx\insertsubsection\@empty\else
+      \usebeamercolor[fg]{subsection title}
+      \usebeamerfont{subsection title}
+      \insertsubsection
     \fi
-  }
+  \end{center}
 }
 \defbeamertemplate{section page}{progressbar}{
   \centering
@@ -262,17 +271,53 @@
     \usebeamerfont{section title}
     \insertsectionhead\\[-1ex]
     \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsection\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsection
+    \fi
   \end{minipage}
   \par
   \vspace{\baselineskip}
 }
-\newcommand{\metropolis@sectionpage@progressbar}{
-  \setbeamertemplate{section page}[progressbar]
+\newcommand{\metropolis@disablesectionpage}{
+  \AtBeginSection{
+    % intentionally empty
+  }
+}
+\newcommand{\metropolis@enablesectionpage}{
   \AtBeginSection{
     \ifbeamer@inframe
       \sectionpage
     \else
       \frame[plain,c,noframenumbering]{\sectionpage}
+    \fi
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{subsection page}
+%
+%   Template for the subsection title slide that can optionally be added to
+%   at the beginning of each subsection.
+%
+%    \begin{macrocode}
+\setbeamertemplate{subsection page}{%
+  \usebeamertemplate*{section page}
+}
+\newcommand{\metropolis@disablesubsectionpage}{
+  \AtBeginSubsection{
+    % intentionally empty
+  }
+}
+\newcommand{\metropolis@enablesubsectionpage}{
+  \AtBeginSubsection{
+    \ifbeamer@inframe
+      \subsectionpage
+    \else
+      \frame[plain,c,noframenumbering]{\subsectionpage}
     \fi
   }
 }
