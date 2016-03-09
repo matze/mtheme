@@ -594,6 +594,27 @@ background color for the title; this will cause issues when using color themes
 like |whale| which set a white foreground for the title.
 
 
+\subsection{Notes on second screen}
+
+If you use the |[show notes on second screen]| option built in to Beamer and
+compile with \XeLaTeX, text on slides following the first section slide may
+be rendered in white instead of the regular colour. This is due to
+\href{http://tex.stackexchange.com/questions/288408/}{a bug} in Beamer
+or \XeLaTeX\ itself. You can work around it either by compiling with \LuaTeX\
+or by adding the following code to your preamble to reset the text color
+on each slide.
+
+\begin{lstlisting}
+\makeatletter
+\def\beamer@framenotesbegin{% at beginning of slide
+     \usebeamercolor[fg]{normal text}
+      \gdef\beamer@noteitems{}%
+      \gdef\beamer@notes{}%
+}
+\makeatother
+\end{lstlisting}
+
+
 \section{License}
 
 \themename is licensed under a
