@@ -401,10 +401,13 @@
 %    |block title alerted|, and |block title example| have an empty
 %    background).
 %
-%    If the |block title| background is empty, we just need to set a rightskip
-%    for a nice ragged-right block title.
+%    If the |block title| background is empty, or the user has explicitly
+%    removed the background from (e.g.) |block title alerted|, we just need to
+%    set a rightskip for a nice ragged-right block title.
 %
 %    \begin{macrocode}
+  \ifbeamercolorempty[bg]{block title#1}{%
+    \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}}{%
   \ifbeamercolorempty[bg]{block title}{%
     \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}%
   }%
@@ -422,7 +425,7 @@
       leftskip=\metropolis@blockadjust,
       rightskip=\dimexpr\metropolis@blockadjust plus 4em\relax
     ]{block title#1}%
-  }%
+  }}%
 %   \end{macrocode}
 %
 %   We can now set the contents of the |block title|. The zero-width but
@@ -443,12 +446,14 @@
 %
 %   \begin{macrocode}
   \nointerlineskip%
-  \ifbeamercolorempty[bg]{block body}{
+  \ifbeamercolorempty[bg]{block body#1}{%
+    \begin{beamercolorbox}[vmode]{block body#1}}{
+  \ifbeamercolorempty[bg]{block body}{%
     \begin{beamercolorbox}[vmode]{block body#1}%
   }{%
     \begin{beamercolorbox}[sep=\metropolis@blocksep, vmode]{block body#1}%
     \vspace{-\metropolis@parskip}
-  }%
+  }}%
       \usebeamerfont{block body#1}%
       \setlength{\parskip}{\metropolis@parskip}%
 }
