@@ -22,6 +22,10 @@ Not convinced? Have a look at the [demo slides][].
 
 ## Installation
 
+To install a stable version of this theme, please refer to update instructions
+of your TeX distribution. Metropolis is on [CTAN][] since December
+2014 thus it is part of MikTeX and will be part of TeX Live 2016.
+
 Installing Metropolis from source, like any Beamer theme, involves four easy
 steps:
 
@@ -74,3 +78,4 @@ does not affect the presentation that you create with the theme.
 
 [demo slides]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/demo/demo.pdf
 [manual]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
+[CTAN]: http://ctan.org/pkg/beamertheme-metropolis
