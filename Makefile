@@ -38,16 +38,16 @@ install: $(PACKAGE_STY) $(DOC_PDF)
 	@cp $(DOC_PDF) $(DOC_DIR)
 
 uninstall:
-	@rm -f $(addprefix $(INSTALL_DIR)/, $(PACKAGE_STY))
-	@rmdir $(INSTALL_DIR)
-	@rm -f $(DOC_DIR)/$(notdir $(DOC_PDF))
-	@rmdir $(DOC_DIR)
+	@rm -f "$(addprefix $(INSTALL_DIR)/, $(PACKAGE_STY))"
+	@rmdir "$(INSTALL_DIR)"
+	@rm -f "$(DOC_DIR)/$(notdir $(DOC_PDF))"
+	@rmdir "$(DOC_DIR)"
 
 clean-cache:
-	@rm -f $(CACHE_DIR)/*
+	@rm -f "$(CACHE_DIR)/*"
 
 clean-sty:
-	@rm -f $(PACKAGE_STY)
+	@rm -f "$(PACKAGE_STY)"
 
 ctan: $(CTAN_CONTENT) ctan-version
 	@tar --transform "s@\(.*\)@metropolis/\1@" -cf metropolis-$(shell date "+%Y-%m-%d").tar.gz $(CTAN_CONTENT)
