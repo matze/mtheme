@@ -68,22 +68,22 @@
     .is choice,
     regular/.code={%
       \let\metropolis@plaintitleformat\@empty%
-      \setbeamerfont{plain title}{shape=\normalfont}%
+      \setbeamerfont{standout}{shape=\normalfont}%
     },
     smallcaps/.code={%
       \let\metropolis@plaintitleformat\@empty%
-      \setbeamerfont{plain title}{shape=\scshape}%
+      \setbeamerfont{standout}{shape=\scshape}%
     },
     allsmallcaps/.code={%
       \let\metropolis@plaintitleformat\MakeLowercase%
-      \setbeamerfont{plain title}{shape=\scshape}%
+      \setbeamerfont{standout}{shape=\scshape}%
       \PackageWarning{beamerthememetropolis}{%
         Be aware that titleformat plain=allsmallcaps can lead to problems%
       }
     },
     allcaps/.code={%
       \let\metropolis@plaintitleformat\MakeUppercase%
-      \setbeamerfont{plain title}{shape=\normalfont}%
+      \setbeamerfont{standout}{shape=\normalfont}%
       \PackageWarning{beamerthememetropolis}{%
         Be aware that titleformat plain=allcaps can lead to problems%
       }
@@ -177,26 +177,13 @@
 %    \begin{macrocode}
 \def\metropolis@plaintitleformat#1{#1}
 \newcommand{\plain}[2][]{%
-  \begingroup
-    \ifbeamercolorempty[bg]{palette primary}{
-      \setbeamercolor{background canvas}{
-        use=palette primary,
-        bg=-palette primary.fg
-      }
-    }{
-      \setbeamercolor{background canvas}{
-        use=palette primary,
-        bg=palette primary.bg
-      }
-    }
-    \begin{frame}[c,noframenumbering]{#1}
-      \begin{center}
-        \usebeamercolor[fg]{palette primary}
-        \usebeamerfont{plain title}
-        \metropolis@plaintitleformat{#2}
-      \end{center}
-    \end{frame}
-  \endgroup
+  \PackageWarning{beamerthememetropolis}{%
+    The syntax `\plain' may be deprecated in a future version of Metropolis.
+    Please use a frame with [standout] instead.
+  }
+  \begin{frame}[standout]{#1}
+    \metropolis@plaintitleformat{#2}
+  \end{frame}
 }
 %    \end{macrocode}
 % \end{macro}

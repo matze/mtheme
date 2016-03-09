@@ -453,11 +453,18 @@ regular lined figures for math, you could add the following to your preamble:
 
 \subsection{Commands}
 
-\begin{macro}{\plain}
-The \lstinline|\plain{title=[]}{<body>}| command sets a slide in with a plain
-dark background, which can be useful to focus attention on a single sentence
-or image.
-\end{macro}
+\subsubsection{Standout frames}
+
+The \themename inner theme offers a custom frame format with large, centered
+text and an inverted background --- perfect for focusing attention on
+single sentence or image. To use it, add the key |standout| to the frame:
+
+\begin{lstlisting}
+\begin{frame}[standout]
+    Thank you!
+\end{frame}
+\end{lstlisting}
+
 
 
 \section{\texttt{pgfplots} integration}
@@ -551,8 +558,7 @@ only alphabetic characters and do not require the expansion of any macros.
 \themename can be used along with any other Beamer color theme, such as
 |crane| or |seahorse|. If you wish to do this, it is usually best to include
 the \themename subpackages individually so the \themename color theme is
-never loaded. Although this will disable some features, including
-|\plain| slides, it will prevent conflicts between the \themename color theme
+never loaded. This will prevent conflicts between the \themename color theme
 and your preferred theme.
 
 For example, overriding the color theme as follows may not work as expected because |\usetheme{metropolis}| loads the \themename color theme, which
