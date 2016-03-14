@@ -1,0 +1,17 @@
+Overview of changes in Metropolis 1.1
+=====================================
+
+* New features:
+
+- Support backup slides
+- Support for subsections
+- Add standout frame key for standout slides
+
+* Bugs fixed:
+
+- Avoid justification of title in section pages.
+- Improve frame title with new struts
+- Fix multi-line block titles
+- Ensure consistent line height
+- Known issue with beamercolortheme fly
+- Do not increase frame number for section and titlepage
