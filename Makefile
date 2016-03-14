@@ -53,7 +53,7 @@ ctan: $(CTAN_CONTENT) ctan-version
 	@tar --transform "s@\(.*\)@metropolis/\1@" -cf metropolis-$(shell date "+%Y-%m-%d").tar.gz $(CTAN_CONTENT)
 
 ctan-version:
-	@sed -i 's@\(ProvidesPackage.*\[\)[0-9/]*@\1$(shell date "+%Y/%m/%d")@' $(PACKAGE_SRC)
+	@sed -i 's@20[0-9][0-9]/[0-9]*/[0-9]*@$(shell date "+%Y/%m/%d")@' $(PACKAGE_SRC)
 
 $(CACHE_DIR):
 	@mkdir -p $(CACHE_DIR)
