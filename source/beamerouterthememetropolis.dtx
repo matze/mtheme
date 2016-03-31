@@ -168,7 +168,10 @@
       leftskip=\metropolis@frametitle@padding,%
       rightskip=\metropolis@frametitle@padding,%
     ]{frametitle}%
-  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \metropolis@frametitlestrut@start%
+  \insertframetitle%
+  \nolinebreak%
+  \metropolis@frametitlestrut@end%
   \end{beamercolorbox}%
 }
 %    \end{macrocode}
