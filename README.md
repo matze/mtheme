@@ -66,6 +66,9 @@ Metropolis.
 
 Detailed information on using Metropolis can be found in the [manual][].
 
+For an alternative dark color theme, please have a look at Ross Churchley's
+excellent [owl](https://github.com/rchurchley/beamercolortheme-owl) theme.
+
 
 ## License
 
