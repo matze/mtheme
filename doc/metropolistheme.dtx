@@ -630,6 +630,39 @@ on each slide.
 \end{lstlisting}
 
 
+\subsection{Standout frames with labels}
+
+Because the |standout| frame option creates a group to restrict the colour
+change to a single slide, labels defined after calling |standout| will stay
+local to the group. In other words, the following may result in a ``label undefined'' error.
+
+\begin{lstlisting}
+\begin{frame}[standout, label=conclusion]{Conclusion}
+  Awesome slide
+\end{frame}
+\end{lstlisting}
+
+To fix this problem, change the order of the keys in the frame.
+
+\begin{lstlisting}
+\begin{frame}[label=conclusion, standout]{Conclusion}
+    Awesome slide
+\end{frame}
+\end{lstlisting}
+
+This error can be unwittingly triggered if you export your slides from Emacs
+Org mode, which automatically adds labels after frame options. Alex Branham
+\href{https://github.com/matze/mtheme/issues/203}{offers} the following
+solution for Org mode users, using |org-set-property|.
+
+\begin{lstlisting}
+* Start of a frame
+   :PROPERTIES:
+   :BEAMER_opt: label=conclusion,standout
+   :END:
+\end{lstlisting}
+
+
 \section{License}
 
 \themename is licensed under a
