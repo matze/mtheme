@@ -65,7 +65,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{sectionpage}
+% \begin{macro}{subsectionpage}
 %    Optionally add a slide marking the beginning of each subsection.
 %    \begin{macrocode}
 \pgfkeys{
@@ -251,10 +251,10 @@
     \usebeamercolor[fg]{section title}
     \usebeamerfont{section title}
     \insertsectionhead\par
-    \ifx\insertsubsection\@empty\else
+    \ifx\insertsubsectionhead\@empty\else
       \usebeamercolor[fg]{subsection title}
       \usebeamerfont{subsection title}
-      \insertsubsection
+      \insertsubsectionhead
     \fi
   \end{center}
 }
@@ -267,10 +267,10 @@
     \insertsectionhead\\[-1ex]
     \usebeamertemplate*{progress bar in section page}
     \par
-    \ifx\insertsubsection\@empty\else%
+    \ifx\insertsubsectionhead\@empty\else%
       \usebeamercolor[fg]{subsection title}%
       \usebeamerfont{subsection title}%
-      \insertsubsection
+      \insertsubsectionhead
     \fi
   \end{minipage}
   \par
