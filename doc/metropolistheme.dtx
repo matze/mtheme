@@ -663,6 +663,16 @@ solution for Org mode users, using |org-set-property|.
 \end{lstlisting}
 
 
+\subsection{Standout frames with Pandoc}
+
+It is not currently possible to create standout frames if you create your
+presentation with Pandoc. This is because Pandoc only supports a specific list
+of frame attributes --- namely, |allowdisplaybreaks|, |allowframebreaks|, |b|,
+|c|, |t|, |environment|, |label|, |plain|, and |shrink|. In other words,
+Pandoc will ignore the attribute |{.standout}| instead of adding the option to
+the frame.
+
+
 \section{License}
 
 \themename is licensed under a
