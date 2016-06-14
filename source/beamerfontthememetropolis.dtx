@@ -369,6 +369,12 @@
     \metropolis@sectiontitleformat{#1}}}}
   {}
   {\PackageError{beamerfontthememetropolis}{Patching section title failed}}
+\patchcmd{\beamer@subsection}
+  {\def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
+  {\def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{%
+    \metropolis@sectiontitleformat{#1}}}}
+  {}
+  {\PackageError{beamerfontthememetropolis}{Patching section title failed}}
 %    \end{macrocode}
 %
 % Similarly, to make the |\MakeLowercase| and |\MakeUppercase| macros work in

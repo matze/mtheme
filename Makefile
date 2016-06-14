@@ -44,10 +44,10 @@ uninstall:
 	@rmdir "$(DOC_DIR)"
 
 clean-cache:
-	@rm -f "$(CACHE_DIR)/*"
+	@rm -rf "$(CACHE_DIR)"
 
 clean-sty:
-	@rm -f "$(PACKAGE_STY)"
+	@rm -f $(PACKAGE_STY)
 
 ctan: $(CTAN_CONTENT) ctan-version
 	@tar --transform "s@\(.*\)@metropolis/\1@" -cf metropolis-$(shell date "+%Y-%m-%d").tar.gz $(CTAN_CONTENT)
@@ -58,15 +58,15 @@ ctan-version:
 $(CACHE_DIR):
 	@mkdir -p $(CACHE_DIR)
 
-$(PACKAGE_STY): $(PACKAGE_SRC) $(INS) | $(CACHE_DIR) clean-cache
+$(PACKAGE_STY): $(PACKAGE_SRC) $(INS) | clean-cache $(CACHE_DIR)
 	@cd $(dir $(INS)) && latex -output-directory=$(CACHE_DIR) $(notdir $(INS))
 	@cp $(addprefix $(CACHE_DIR)/,$(PACKAGE_STY)) .
 
-$(DOC_PDF): $(DOC_SRC) $(PACKAGE_STY) | $(CACHE_DIR) clean-cache
+$(DOC_PDF): $(DOC_SRC) $(PACKAGE_STY) | clean-cache $(CACHE_DIR)
 	@cd $(dir $(DOC_SRC)) && $(COMPILE_TEX) $(notdir $(DOC_SRC))
 	@cp $(CACHE_DIR)/$(notdir $(DOC_PDF)) $(DOC_PDF)
 
-$(DEMO_PDF): $(DEMO_SRC) $(PACKAGE_STY) | $(CACHE_DIR) clean-cache
+$(DEMO_PDF): $(DEMO_SRC) $(PACKAGE_STY) | clean-cache $(CACHE_DIR)
 	@cd $(dir $(DEMO_SRC)) && $(COMPILE_TEX) $(notdir $(DEMO_SRC))
 	@cp $(CACHE_DIR)/$(notdir $(DEMO_PDF)) $(DEMO_PDF)
 
