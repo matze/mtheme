@@ -14,7 +14,7 @@ unzip FiraMonoFonts3206.zip
 
 sudo mkdir -p /usr/share/fonts/truetype/FiraSans
 sudo mkdir -p /usr/share/fonts/opentype/FiraSans
-sudo cp Fira*/WEB/*.ttf /usr/share/fonts/truetype/FiraSans/
+sudo cp Fira*/WEB/TTF/*.ttf /usr/share/fonts/truetype/FiraSans/
 sudo cp Fira*/OTF/Fira* /usr/share/fonts/opentype/FiraSans/
 
 sudo fc-cache -fv
