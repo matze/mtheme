@@ -187,6 +187,8 @@
 %    template |progress bar in section page|.
 %    \begin{macrocode}
 \newlength{\metropolis@progressinheadfoot}
+\newlength{\metropolis@progressinheadfoot@linewidth}
+\setlength{\metropolis@progressinheadfoot@linewidth}{0.4pt}
 \setbeamertemplate{progress bar in head/foot}{
   \nointerlineskip
   \setlength{\metropolis@progressinheadfoot}{%
@@ -194,8 +196,8 @@
   }%
   \begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
     \begin{tikzpicture}
-      \fill[bg] (0,0) rectangle (\paperwidth, 0.4pt);
-      \fill[fg] (0,0) rectangle (\metropolis@progressinheadfoot, 0.4pt);
+      \fill[bg] (0,0) rectangle (\paperwidth, \metropolis@progressinheadfoot@linewidth);
+      \fill[fg] (0,0) rectangle (\metropolis@progressinheadfoot, \metropolis@progressinheadfoot@linewidth);
     \end{tikzpicture}%
   \end{beamercolorbox}
 }
