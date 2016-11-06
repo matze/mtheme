@@ -196,9 +196,11 @@
 %   Template to set the title graphic in a zero-height box. (It won't
 %   change the position of other elements.)
 %    \begin{macrocode}
+\newlength{\metropolis@titleseparator@linewidth}
+\setlength{\metropolis@titleseparator@linewidth}{0.4pt}
 \setbeamertemplate{title separator}{
   \begin{tikzpicture}
-    \fill[fg] (0,0) rectangle (\textwidth, 0.4pt);
+    \fill[fg] (0,0) rectangle (\textwidth, \metropolis@titleseparator@linewidth);
   \end{tikzpicture}%
   \par%
 }
@@ -328,13 +330,15 @@
 %
 %    \begin{macrocode}
 \newlength{\metropolis@progressonsectionpage}
+\newlength{\metropolis@progressonsectionpage@linewidth}
+\setlength{\metropolis@progressonsectionpage@linewidth}{0.4pt}
 \setbeamertemplate{progress bar in section page}{
   \setlength{\metropolis@progressonsectionpage}{%
     \textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
   \begin{tikzpicture}
-    \fill[bg] (0,0) rectangle (\textwidth, 0.4pt);
-    \fill[fg] (0,0) rectangle (\metropolis@progressonsectionpage, 0.4pt);
+    \fill[bg] (0,0) rectangle (\textwidth, \metropolis@progressonsectionpage@linewidth);
+    \fill[fg] (0,0) rectangle (\metropolis@progressonsectionpage, \metropolis@progressonsectionpage@linewidth);
   \end{tikzpicture}%
 }
 %    \end{macrocode}
