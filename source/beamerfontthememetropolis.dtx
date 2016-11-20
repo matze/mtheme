@@ -45,7 +45,11 @@
 %
 %    \begin{macrocode}
 \ifboolexpr{bool {xetex} or bool {luatex}}{
-  \RequirePackage[no-math]{fontspec}
+  \@ifpackageloaded{fontspec}{
+    \PassOptionsToPackage{no-math}{fontspec}
+  }{
+    \RequirePackage[no-math]{fontspec}
+  }
 %    \end{macrocode}
 %
 % \begin{macro}{\checkfont}
