@@ -1,0 +1,48 @@
+% \iffalse meta-comment -------------------------------------------------------
+% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+% contributors can be found at
+%
+%     https://github.com/matze/mtheme/graphs/contributors
+%
+% and the original template was based on the HSRM theme by Benjamin Weiss.
+%
+% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+% ------------------------------------------------------------------------- \fi
+% \iffalse
+%<*package>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthememetropolis-minimal}[2016/03/14 Metropolis color theme]
+%</package>
+% \fi
+% \CheckSum{0}
+% \StopEventually{}
+% \iffalse
+%<*package>
+% ------------------------------------------------------------------------- \fi
+%
+\usecolortheme{metropolis}
+
+\definecolor{mAlert}{HTML}{AD003D}
+\definecolor{mExample}{HTML}{005580}
+
+\setbeamercolor{normal text}{%
+  fg=black,
+  bg=white
+}
+\setbeamercolor{alerted text}{%
+  fg=mAlert,
+}
+\setbeamercolor{example text}{%
+  fg=mExample,
+}
+%
+%    \begin{macrocode}
+\mode<all>
+%    \end{macrocode}
+%
+% \iffalse
+%</package>
+% \fi
+% \Finale
+\endinput
