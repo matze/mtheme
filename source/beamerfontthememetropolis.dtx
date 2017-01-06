@@ -367,18 +367,38 @@
   {\def\insertsectionhead{\metropolis@sectiontitleformat{#2}}}
   {}
   {\PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc}
+\@tempswafalse
 \patchcmd{\beamer@section}
   {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
   {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{%
     \metropolis@sectiontitleformat{#1}}}}
+  {\@tempswatrue}
   {}
-  {\PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc}
+\patchcmd{\beamer@section}
+  {\protected@edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}}
+  {\protected@edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{%
+    \noexpand\metropolis@sectiontitleformat{#1}}}}
+  {\@tempswatrue}
+  {}
+\if@tempswa\else
+  \PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc
+\fi
+\@tempswafalse
 \patchcmd{\beamer@subsection}
   {\def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
   {\def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{%
     \metropolis@sectiontitleformat{#1}}}}
+  {\@tempswatrue}
   {}
-  {\PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc}
+\patchcmd{\beamer@subsection}
+  {\protected@edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}}
+  {\protected@edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{%
+    \noexpand\metropolis@sectiontitleformat{#1}}}}
+  {\@tempswatrue}
+  {}
+\if@tempswa\else
+  \PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc
+\fi
 %    \end{macrocode}
 %
 % Similarly, to make the |\MakeLowercase| and |\MakeUppercase| macros work in
