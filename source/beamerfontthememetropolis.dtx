@@ -406,13 +406,13 @@
 %
 %    \begin{macrocode}
 \patchcmd{\beamer@@frametitle}
-  {\beamer@ifempty{#2}{}{%
+  {{%
       \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
       \usebeamertemplate*{frametitle continuation}\fi}}%
     \gdef\beamer@frametitle{#2}%
     \gdef\beamer@shortframetitle{#1}%
     }}
-  {\beamer@ifempty{#2}{}{%
+  {{%
       \gdef\insertframetitle{{\metropolis@frametitleformat{#2}\ifnum%
       \beamer@autobreakcount>0\relax{}\space%
       \usebeamertemplate*{frametitle continuation}\fi}}%
