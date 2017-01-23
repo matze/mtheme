@@ -1,3 +1,21 @@
+Overview of changes in Metropolis 1.2
+=====================================
+
+* New features:
+
+- Added a highcontrast color theme
+
+* Bugs fixed:
+
+- Fixed issues with Beamer 3.37+
+- Fix the "Overfull \hbox (0.4pt too wide)" bug when using progress bar.
+- Only load fontspec if it’s not loaded
+- Fix problem w/ inverting colours mid-presentation
+- Use sectiontitleformat for subsection title
+- Fix empty second line in certain frametitles
+- Fixed #206, #214, #216
+
+
 Overview of changes in Metropolis 1.1
 =====================================
 
