@@ -1,3 +1,4 @@
+MAKEFLAGS  := -j 1
 INS         = source/beamerthememetropolis.ins
 PACKAGE_SRC = $(wildcard source/*.dtx)
 PACKAGE_STY = $(notdir $(PACKAGE_SRC:%.dtx=%.sty))
@@ -9,8 +10,8 @@ DOC_PDF     = doc/metropolistheme.pdf
 CTAN_CONTENT = README.md $(INS) $(PACKAGE_SRC) $(DOC_SRC) $(DOC_PDF) $(DEMO_SRC) $(DEMO_PDF)
 
 DESTDIR     ?= $(shell kpsewhich -var-value=TEXMFHOME)
-INSTALL_DIR = $(DESTDIR)/tex/latex/metropolis
-DOC_DIR     = $(DESTDIR)/doc/latex/metropolis
+INSTALL_DIR  = $(DESTDIR)/tex/latex/metropolis
+DOC_DIR      = $(DESTDIR)/doc/latex/metropolis
 CACHE_DIR   := $(shell pwd)/.latex-cache
 
 COMPILE_TEX := latexmk -xelatex -output-directory=$(CACHE_DIR)
