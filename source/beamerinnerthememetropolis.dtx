@@ -199,9 +199,11 @@
 \newlength{\metropolis@titleseparator@linewidth}
 \setlength{\metropolis@titleseparator@linewidth}{0.4pt}
 \setbeamertemplate{title separator}{
+  \tikzexternaldisable%
   \begin{tikzpicture}
     \fill[fg] (0,0) rectangle (\textwidth, \metropolis@titleseparator@linewidth);
   \end{tikzpicture}%
+  \tikzexternalenable%
   \par%
 }
 %    \end{macrocode}
@@ -336,10 +338,12 @@
   \setlength{\metropolis@progressonsectionpage}{%
     \textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
+  \tikzexternaldisable%
   \begin{tikzpicture}
     \fill[bg] (0,0) rectangle (\textwidth, \metropolis@progressonsectionpage@linewidth);
     \fill[fg] (0,0) rectangle (\metropolis@progressonsectionpage, \metropolis@progressonsectionpage@linewidth);
   \end{tikzpicture}%
+  \tikzexternalenable%
 }
 %    \end{macrocode}
 %

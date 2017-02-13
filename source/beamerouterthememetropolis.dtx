@@ -195,10 +195,12 @@
     \paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
   }%
   \begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
+    \tikzexternaldisable%
     \begin{tikzpicture}
       \fill[bg] (0,0) rectangle (\paperwidth, \metropolis@progressinheadfoot@linewidth);
       \fill[fg] (0,0) rectangle (\metropolis@progressinheadfoot, \metropolis@progressinheadfoot@linewidth);
     \end{tikzpicture}%
+    \tikzexternalenable%
   \end{beamercolorbox}
 }
 %    \end{macrocode}
