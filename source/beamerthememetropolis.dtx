@@ -126,7 +126,15 @@
 }
 %    \end{macrocode}
 %
+% To avoid generating externalized figures of the progressbar we have to disable
+% them with ``tikzexternalenable'' and ``tikzexternaldisable''. However, if the
+% ``external'' libray is not loaded we would get undefined control sequence
+% problems, hence we define them as no-ops if they are not defined yet.
 %
+%    \begin{macrocode}
+\ifx\tikzexternalenable\undefined \newcommand{\tikzexternalenable}{} \fi
+\ifx\tikzexternaldisable\undefined \newcommand{\tikzexternaldisable}{} \fi
+%    \end{macrocode}
 %
 % \subsubsection{Component sub-packages}
 %
