@@ -132,8 +132,8 @@
 % problems, hence we define them as no-ops if they are not defined yet.
 %
 %    \begin{macrocode}
-\ifx\tikzexternalenable\undefined \newcommand{\tikzexternalenable}{} \fi
-\ifx\tikzexternaldisable\undefined \newcommand{\tikzexternaldisable}{} \fi
+\providecommand{\tikzexternalenable}{}
+\providecommand{\tikzexternaldisable}{}
 %    \end{macrocode}
 %
 % \subsubsection{Component sub-packages}
