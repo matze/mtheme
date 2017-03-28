@@ -556,9 +556,12 @@
         bg=palette primary.bg
       }
     }
-  \centering
-  \usebeamercolor[fg]{palette primary}
-  \usebeamerfont{standout}
+    \setbeamercolor{local structure}{
+      fg=palette primary.fg
+    }
+    \centering
+    \usebeamercolor[fg]{palette primary}
+    \usebeamerfont{standout}
 }
 %    \end{macrocode}
 %
