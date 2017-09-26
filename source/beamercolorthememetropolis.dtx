@@ -221,6 +221,17 @@
 \setbeamercolor{footnote mark}{fg=.}
 %    \end{macrocode}
 %
+% We also reset the bibliography colors in order to pick up the surrounding
+% colors at the time of use. This prevents us having to set the correct color in
+% normal and standout mode.
+%
+%    \begin{macrocode}
+\setbeamercolor{bibliography entry author}{fg=, bg=}
+\setbeamercolor{bibliography entry title}{fg=, bg=}
+\setbeamercolor{bibliography entry location}{fg=, bg=}
+\setbeamercolor{bibliography entry note}{fg=, bg=}
+%    \end{macrocode}
+%
 %
 %
 % \subsubsection{Process package options}
