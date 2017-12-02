@@ -369,6 +369,12 @@
   {\PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc}
 \@tempswafalse
 \patchcmd{\beamer@section}
+  {\edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}}
+  {\edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{%
+    \noexpand\metropolis@sectiontitleformat{\unexpanded{#1}}}}}
+  {\@tempswatrue}
+  {}
+\patchcmd{\beamer@section}
   {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
   {\def\insertsectionhead{\hyperlink{Navigation\the\c@page}{%
     \metropolis@sectiontitleformat{#1}}}}
@@ -384,6 +390,12 @@
   \PackageError{beamerfontthememetropolis}{Patching section title failed}\@ehc
 \fi
 \@tempswafalse
+\patchcmd{\beamer@subsection}
+  {\edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}}
+  {\edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{%
+    \noexpand\metropolis@sectiontitleformat{\unexpanded{#1}}}}}
+  {\@tempswatrue}
+  {}
 \patchcmd{\beamer@subsection}
   {\def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}}
   {\def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{%
