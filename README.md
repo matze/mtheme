@@ -40,7 +40,7 @@ steps:
    `sudo` rights).
 4. **Use the theme for your presentation** by declaring `\usetheme{metropolis}` in
     the preamble of your Beamer document.
-5. **For best results** install Mozilla's [Fira Sans](https://mozilla.github.io/Fira/).
+5. **For best results** install Mozilla's [Fira Sans](https://github.com/bBoxType/FiraSans).
 
 
 ## Usage
