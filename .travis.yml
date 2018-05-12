@@ -1,0 +1,22 @@
+sudo: required
+dist: trusty
+before_install:
+- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended
+  texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
+
+script:
+- make sty
+
+before_deploy:
+- zip metropolis.zip *.sty
+- tar -czf metropolis.tar.gz *.sty
+deploy:
+  provider: releases
+  api_key:
+    secure: evcPKEWOizwYAKE5hj4lW2TLJKdP+sl51fniYInR9NwpcGKE8+N4MIWdjZWzW775s87ReSoNxBkE9ipxc5+ViZvmQAbFnZ/j1DfPJlJ8Fy5w0BOPZ8Ui9o405l4Tt3H/wyi25cGOwAYgeXyjOLC5777JAc9znSoXdJbkqC6kSsqEJ8meFo9oumyRmuJ7AWh9dFTw8ZgrEuKoOOyx7tTaiTzv1l/meNJ1Wq0N5RISvWqTQY6Ra3gOE5cJFa9N3Oo7mPtwmBaeac2H+HGeE5iCvLJtn9mt1hWVqo1vos3M1r6ZrQnaoY3SnqNjuMcWwUbqer6taJ6UKvhqs3pHUfifNlr6tPqiTzqDKHugn9afn5swZiViVXc4RuBbYwLQLJE+wLe4DAkA6RyCXvYvlpjxtuw/71uKSI08K962wskcADHVWVH5IPtvL7Y1EVzHqdJkYWcZo/QDEfodL8BZOqXbdYdhiB2nFrjELF6a1EHNCxMKJFZV87xNW1xspdhKetrTx0OM7QhqSx8E2OGOYENqM2YEG4p9MyU1QPv+VomUXhI2kPMsIK1IFqEZUxdrHjwTx3zN4zkfvKM9phClNRMIxEe/OXSEbfKAKe7mrRDconpOx9TBerSO8oNqsH833vZoI8rj8moZttQkUMXYMIS+YM1MYx3xi4pCrBRx/DLaNhc=
+  file: 
+    - metropolis.zip
+    - metropolis.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
