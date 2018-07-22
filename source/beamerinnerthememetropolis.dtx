@@ -569,11 +569,11 @@
 %    in order to restore the colours and fonts for the rest of the
 %    presentation. Unfortunately, we cannot use \AfterEndEnvironment{frame} for
 %    this (see \url{http://tex.stackexchange.com/questions/226319/}).
-%    Instead, we add the |\endgroup| to |\beamer@reseteecodes|, which is run
+%    Instead, we prepend the |\endgroup| to |\beamer@reseteecodes|, which is run
 %    exactly once at the end of each slide.
 %
 %    \begin{macrocode}
-  \apptocmd{\beamer@reseteecodes}{%
+  \pretocmd{\beamer@reseteecodes}{%
     \ifbool{metropolis@standout}{
       \endgroup
       \boolfalse{metropolis@standout}
