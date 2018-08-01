@@ -536,7 +536,7 @@
 %     Optional arguments to Beamer's frames are implemented using
 %     |\define@key| from the |keyval| package, which will execute code when the
 %     defined option is called. For the |standout| option, we begin a group,
-%     change the colors and fonts, and set a \centering alignment.
+%     change the colors and set frame options.
 %
 %    \begin{macrocode}
 \providebool{metropolis@standout}
@@ -559,9 +559,7 @@
     \setbeamercolor{local structure}{
       fg=palette primary.fg
     }
-    \centering
     \usebeamercolor[fg]{palette primary}
-    \usebeamerfont{standout}
 }
 %    \end{macrocode}
 %
@@ -579,6 +577,19 @@
       \boolfalse{metropolis@standout}
     }{}
   }{}{}
+%    \end{macrocode}
+%
+%    We set the fonts and the \centering alignment on the inner content,
+%    in such a way that the speaker's note layout isn't affected by the custom
+%    formatting.
+%
+%    \begin{macrocode}
+  \AtBeginEnvironment{beamer@frameslide}{
+    \ifbool{metropolis@standout}{
+      \centering
+      \usebeamerfont{standout}
+    }{}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
