@@ -335,9 +335,7 @@
 \newlength{\metropolis@progressonsectionpage@linewidth}
 \setlength{\metropolis@progressonsectionpage@linewidth}{0.4pt}
 \setbeamertemplate{progress bar in section page}{
-  \setlength{\metropolis@progressonsectionpage}{%
-    \textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
-  }%
+  \pgfmathsetlength{\metropolis@progressonsectionpage}{\textwidth * min(1,\insertframenumber/\inserttotalframenumber}%
   \tikzexternaldisable%
   \begin{tikzpicture}
     \fill[bg] (0,0) rectangle (\textwidth, \metropolis@progressonsectionpage@linewidth);
@@ -345,20 +343,6 @@
   \end{tikzpicture}%
   \tikzexternalenable%
 }
-%    \end{macrocode}
-%
-%   The above code assumes that |\insertframenumber| is less than or equal to
-%   |\inserttotalframenumber|. However, this is not true on the first compile;
-%   in the absence of an |.aux| file, |\inserttotalframenumber| defaults to 1.
-%   This behaviour could cause fatal errors for long presentations, as
-%   |\metropolis@progressonsectionpage| would exceed \TeX's maximum length
-%   (16383.99999pt, roughly 5.75 metres or 18.9 feet).
-%   To avoid this, we increase the default value for |\inserttotalframenumber|;
-%   presentations with over 4000 slides will still break on first compile, but
-%   users in that situation likely have deeper problems to solve.
-%
-%    \begin{macrocode}
-\def\inserttotalframenumber{100}
 %    \end{macrocode}
 % \end{macro}
 %
