@@ -29,7 +29,7 @@ Not convinced? Have a look at the [demo slides][].
 - Move file `impress/metropolis-for-impress.otp` to any location of your choice
   where it can stay permanently.
 - Install the [FiraSans][] and [FiraMono][] fonts on your system.
-- When you now open the metropolic-for-impress.otp file, Impress creates a new
+- When you now open the metropolis-for-impress.otp file, Impress creates a new
   document based on the template, including some example slides.
 
 ## Installation (LaTeX)
