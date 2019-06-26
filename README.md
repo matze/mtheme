@@ -1,5 +1,8 @@
 ## Metropolis
 
+This fork adds a Libreoffice Impress template and color palette based on
+metropolis, for anybody who likes the theme but rather would prefer to use
+Impress.
 
 **IMPORTANT NOTICES FOR VERSION 1.0**
 
@@ -19,8 +22,17 @@ Not convinced? Have a look at the [demo slides][].
 
 ![Sample](http://i.imgur.com/Bxu52fz.png)
 
+## Installation (Impress)
 
-## Installation
+- Move file `impress/metropolis.soc` to (this works for an Ubuntu system)
+  `~/.config/libreoffice/4/user/config/metropolis.soc`
+- Move file `impress/metropolis-for-impress.otp` to any location of your choice
+  where it can stay permanently.
+- Install the [FiraSans][] and [FiraMono][] fonts on your system.
+- When you now open the metropolic-for-impress.otp file, Impress creates a new
+  document based on the template, including some example slides.
+
+## Installation (LaTeX)
 
 To install a stable version of this theme, please refer to update instructions
 of your TeX distribution. Metropolis is on [CTAN][] since December
@@ -81,4 +93,6 @@ does not affect the presentation that you create with the theme.
 
 [demo slides]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/demo/demo.pdf
 [manual]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
-[CTAN]: http://ctan.org/pkg/beamertheme-metropolis
+[CTAN]: http://ctan.org/pkg/beamertheme-metropolisa
+[FiraSans]: https://fonts.google.com/specimen/Fira+Sans
+[FiraMono]: https://fonts.google.com/specimen/Fira+Mono
