@@ -93,6 +93,6 @@ does not affect the presentation that you create with the theme.
 
 [demo slides]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/demo/demo.pdf
 [manual]: http://mirrors.ctan.org/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
-[CTAN]: http://ctan.org/pkg/beamertheme-metropolisa
+[CTAN]: http://ctan.org/pkg/beamertheme-metropolis
 [FiraSans]: https://fonts.google.com/specimen/Fira+Sans
 [FiraMono]: https://fonts.google.com/specimen/Fira+Mono
