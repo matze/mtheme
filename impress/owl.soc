@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:color-table xmlns:office="http://openoffice.org/2000/office" xmlns:style="http://openoffice.org/2000/style" xmlns:text="http://openoffice.org/2000/text" xmlns:table="http://openoffice.org/2000/table" xmlns:draw="http://openoffice.org/2000/drawing" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="http://openoffice.org/2000/meta" xmlns:number="http://openoffice.org/2000/datastyle" xmlns:svg="http://www.w3.org/2000/svg" xmlns:chart="http://openoffice.org/2000/chart" xmlns:dr3d="http://openoffice.org/2000/dr3d" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="http://openoffice.org/2000/form" xmlns:script="http://openoffice.org/2000/script">
+  <!-- this file is an extended copy of the "standard.soc" shipped with inkscape -->
+  <draw:color draw:name="Owl FG" draw:color="#ffffff"/>
+  <draw:color draw:name="Owl BG" draw:color="#000000"/>
+
+  <draw:color draw:name="Owl Primary Red" draw:color="#ff5Ca8"/>
+  <draw:color draw:name="Owl Primary Green" draw:color="#5aa800"/>
+  <draw:color draw:name="Owl Primary Blue" draw:color="#0098e9"/>
+  <draw:color draw:name="Owl Primary Yellow" draw:color="#F29318"/>
+
+  <draw:color draw:name="Owl Secondary Violet" draw:color="#7f79c8"/>
+  <draw:color draw:name="Owl Secondary Brown" draw:color="#ac8253"/>
+  <draw:color draw:name="Owl Secondary Orange" draw:color="#f8775f"/>
+  <draw:color draw:name="Owl Secondary Cyan" draw:color="#2c9f74"/>
+</office:color-table>
