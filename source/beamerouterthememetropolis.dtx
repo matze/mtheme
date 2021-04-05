@@ -166,7 +166,7 @@
       wd=\paperwidth,%
       sep=0pt,%
       leftskip=\metropolis@frametitle@padding,%
-      rightskip=\metropolis@frametitle@padding,%
+      rightskip=\the\glueexpr \metropolis@frametitle@padding plus 1fill\relax,%
     ]{frametitle}%
   \metropolis@frametitlestrut@start%
   \insertframetitle%
