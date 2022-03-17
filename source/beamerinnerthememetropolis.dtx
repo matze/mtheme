@@ -411,14 +411,14 @@
   \ifbeamercolorempty[bg]{block title}{%
     \begin{beamercolorbox}[rightskip=0pt plus 4em]{block title#1}%
   }%
-%   \end{macrocode}
+%    \end{macrocode}
 %
 %   Otherwise, if the |block title| has a background, we set the padding based
 %   on |\metropolis@blockskip|. However, we have to visually compensate for
 %   the |\metropolis@strut| added to the block title (see below) by
 %   subtracting |\metropolis@blockadjust| from the top and bottom padding.
 %
-%   \begin{macrocode}
+%    \begin{macrocode}
   {%
     \begin{beamercolorbox}[
       sep=\dimexpr\metropolis@blocksep-\metropolis@blockadjust\relax,
@@ -426,25 +426,25 @@
       rightskip=\dimexpr\metropolis@blockadjust plus 4em\relax
     ]{block title#1}%
   }}%
-%   \end{macrocode}
+%    \end{macrocode}
 %
 %   We can now set the contents of the |block title|. The zero-width but
 %   positive-height box |\metropolis@strut| ensures that the block title box
 %   has a consistent height, even if it lacks punctuation, ascenders, or
 %   descenders.
 %
-%   \begin{macrocode}
+%    \begin{macrocode}
       \usebeamerfont*{block title#1}%
       \metropolis@strut%
       \insertblocktitle%
       \metropolis@strut%
   \end{beamercolorbox}%
-%   \end{macrocode}
+%    \end{macrocode}
 %
 %   Next, we typeset the |block body|. This the code is similar to, but simpler
 %   than, the |block title| code since we don't need to adjust for any struts.
 %
-%   \begin{macrocode}
+%    \begin{macrocode}
   \nointerlineskip%
   \ifbeamercolorempty[bg]{block body#1}{%
     \begin{beamercolorbox}[vmode]{block body#1}}{
