@@ -418,19 +418,22 @@
 %
 %    \begin{macrocode}
 \patchcmd{\beamer@@frametitle}
-  {{%
-      \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space%
-      \usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
-  {{%
-      \gdef\insertframetitle{{\metropolis@frametitleformat{#2}\ifnum%
-      \beamer@autobreakcount>0\relax{}\space%
-      \usebeamertemplate*{frametitle continuation}\fi}}%
-    \gdef\beamer@frametitle{#2}%
-    \gdef\beamer@shortframetitle{#1}%
-    }}
+  {\gdef\insertframetitle{{%
+      #2%
+      \ifnum\beamer@autobreakcount>0
+        \relax{}\space%
+        \beamer@insertframetitlecontinuation%
+      \fi%
+    }}%
+  }
+  {\gdef\insertframetitle{{%
+      \metropolis@frametitleformat{#2}%
+      \ifnum\beamer@autobreakcount>0
+        \relax{}\space%
+        \beamer@insertframetitlecontinuation%
+      \fi%
+    }}%
+  }
   {}
   {\PackageError{beamerfontthememetropolis}{Patching frame title failed}\@ehc}
 %    \end{macrocode}
